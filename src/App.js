@@ -7,17 +7,21 @@ import SignupPage from './pages/signup';
 import ForgotPasswordPage from './pages/forgot-password';
 import VerifyOTPPage from './pages/verify-otp';
 import ResetPasswordPage from './pages/reset-password';
+import HomePage from './pages/Home';
+import NewsPage from './pages/News';
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/news" element={<NewsPage />} />
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/verify-otp" element={<VerifyOTPPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-        <Route path="/" element={<LoginPage />} />
       </Routes>
     </Router>
   );
