@@ -68,13 +68,13 @@ const AboutUs = () => {
             </div>
             
             {/* Bottom left image with overlay */}
-            <div className="relative col-span-1">
+            <div className="relative col-span-1 -mt-16 -ml-10 border-2 border-white rounded-lg">
               <img 
                 src="/images/about-us-third.png" 
                 alt="People hiking" 
                 className="w-full h-32 object-cover rounded-lg"
               />
-              <div className="absolute bottom-4 right-4 bg-yellow-400 text-blue-800 font-bold p-2 rounded">
+              <div className="absolute -bottom-4 -right-4 bg-yellow-400 text-blue-800 font-bold p-2 rounded">
                 <p className="text-lg mb-0">10k+</p>
                 <p className="text-xs">Community Members</p>
               </div>

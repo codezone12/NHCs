@@ -10,14 +10,14 @@ const BlueSection = () => {
           <div className="w-full lg:w-1/2 flex flex-wrap justify-center gap-8 mb-8 lg:mb-10">
             {/* Top Images Row */}
             <div className="flex gap-4 justify-center md:justify-around w-full">
-              <div className="w-[30%] rounded-lg overflow-hidden">
+              <div className="w-[30%] rounded-lg overflow-hidden hover:scale-105 duration-300 shadow-lg shadow-black">
                 <img 
                   src="/images/blue-section-image-1.png" 
                   alt="Newspaper and coffee" 
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="w-[30%] rounded-lg overflow-hidden md:translate-y-[40px] md:translate-x-[-40px]">
+              <div className="w-[30%] rounded-lg overflow-hidden md:translate-y-[40px] md:translate-x-[-40px]  hover:scale-105 duration-300 shadow-lg shadow-black">
                 <img 
                   src="/images/blue-section-image-2.png" 
                   alt="Writing tools and papers" 
@@ -28,14 +28,14 @@ const BlueSection = () => {
             
             {/* Bottom Images Row */}
             <div className="flex gap-4 justify-center md:justify-around w-full">
-              <div className="w-[30%] rounded-lg overflow-hidden md:translate-x-[40px]">
+              <div className="w-[30%] rounded-lg overflow-hidden md:translate-x-[40px]  hover:scale-105 duration-300 shadow-lg shadow-black">
                 <img 
                   src="/images/blue-section-image-3.png" 
                   alt="Woman celebrating with arms raised" 
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="w-[30%] rounded-lg overflow-hidden md:translate-y-[40px]">
+              <div className="w-[30%] rounded-lg overflow-hidden md:translate-y-[40px]  hover:scale-105 duration-300 shadow-lg shadow-black">
                 <img 
                   src="/images/blue-section-image-4.png" 
                   alt="Person reading" 

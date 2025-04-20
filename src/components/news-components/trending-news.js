@@ -11,8 +11,11 @@ const TrendingNewsSection = () => {
       
       {/* Top View All with Line */}
       <div className="relative mb-8">
-        <div className="w-full h-px bg-gray-200 absolute top-1/2"></div>
-        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white pr-1">
+        <div className="flex justify-start w-full h-[4px] bg-gray-200 overflow-hidden border-[0px] border-x-0 border-gray-500 absolute top-1/2">
+          <div className='w-[100px] h-[100px] -translate-x-[50%] -translate-y-[60%] bg-yellow-400 transform rotate-45'></div>
+          <div className='w-[10px] h-[100px] -translate-x-[400%] -translate-y-[50%] bg-blue-500 transform rotate-45'></div>
+        </div>
+        <div className="absolute right-0 transform -translate-y-full bg-white pr-1">
           <button className="bg-blue-600 text-white text-xs uppercase font-medium px-4 py-1">
             View All →
           </button>

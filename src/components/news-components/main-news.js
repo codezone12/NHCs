@@ -3,14 +3,14 @@ import React from 'react';
 const MainNewsSection = () => {
   return (
     <div className="container mx-auto p-4">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Featured Article - Left Side */}
-        <div className="lg:col-span-1 bg-white rounded-lg shadow overflow-hidden">
+        <div className="lg:col-span-1 rounded-lg overflow-hidden">
           <div className="relative">
             <img 
-              src="/images/blue-section-image-1.png" 
+              src="/images/slider-images-2.jpg" 
               alt="Newspaper and cookies" 
-              className="w-full h-64 object-cover"
+              className="w-full h-86 object-cover"
             />
             <h2 className="text-2xl font-bold p-4 pb-2">Latest Insights and News from NHCS</h2>
             <p className="p-4 pt-0 text-gray-600 text-sm">
@@ -23,16 +23,16 @@ const MainNewsSection = () => {
         </div>
 
         {/* Right Side Articles Grid */}
-        <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="lg:col-span-1 grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Blockchain Fundraising Article */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="rounded-lg overflow-hidden">
             <div className="relative h-40">
               <img 
                 src="/images/bitcoin-image.png" 
                 alt="Blockchain digital concept" 
                 className="w-full h-full object-cover"
               />
-              <span className="absolute top-2 right-2 bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded">BITCOIN</span>
+              <span className="absolute top-[100%] left-[50%] -translate-y-[50%] -translate-x-[50%] bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded">BITCOIN</span>
             </div>
             <div className="p-4">
               <h3 className="font-bold text-sm mb-2">Blockchain Can Help with Fundraising</h3>
@@ -57,14 +57,14 @@ const MainNewsSection = () => {
           </div>
 
           {/* Bank Security Article */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="rounded-lg overflow-hidden">
             <div className="relative h-40">
               <img 
                 src="/images/cr_mining_post05.jpg.png" 
                 alt="Financial data screen" 
                 className="w-full h-full object-cover"
               />
-              <span className="absolute top-2 right-2 bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded">MARKET</span>
+              <span className="absolute top-[100%] left-[50%] -translate-y-[50%] -translate-x-[50%] bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded">MARKET</span>
             </div>
             <div className="p-4">
               <h3 className="font-bold text-sm mb-2">Benefits of Blockchain for Bank Security</h3>
@@ -89,14 +89,14 @@ const MainNewsSection = () => {
           </div>
 
           {/* Market Changes Article */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="rounded-lg overflow-hidden">
             <div className="relative h-40">
               <img 
                 src="/images/cr_mining_post01.jpg.png" 
                 alt="Business presentation" 
                 className="w-full h-full object-cover"
               />
-              <span className="absolute top-2 right-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded">NEWS</span>
+              <span className="absolute top-[100%] left-[50%] -translate-y-[50%] -translate-x-[50%] bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded">NEWS</span>
             </div>
             <div className="p-4">
               <h3 className="font-bold text-sm mb-2">What You Miss in the Market Changes</h3>
@@ -121,14 +121,14 @@ const MainNewsSection = () => {
           </div>
 
           {/* Crypto Taxes Article */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="rounded-lg overflow-hidden">
             <div className="relative h-40">
               <img 
                 src="/images/cr_mining_post02.jpg.png" 
                 alt="Cryptocurrency and money" 
                 className="w-full h-full object-cover"
               />
-              <span className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">CRYPTO</span>
+              <span className="absolute top-[100%] left-[50%] -translate-y-[50%] -translate-x-[50%] bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded">CRYPTO</span>
             </div>
             <div className="p-4">
               <h3 className="font-bold text-sm mb-2">New Bill Allows to Pay Crypto Taxes</h3>

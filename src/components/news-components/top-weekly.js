@@ -104,10 +104,13 @@ const TopWeekly = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <h2 className="text-lg font-bold mb-6 border-b-2 border-yellow-400 pb-2 inline-block">
+          <div className="w-full text-lg font-bold mb-6 pb-2 inline-block relative">
             Weekly Best News
-          </h2>
-          
+            <div className="absolute flex justify-start w-full h-[4px] bg-gray-200 overflow-hidden border-[0px] border-x-0 border-gray-500 top-full">
+              <div className='w-[100px] h-[100px] -translate-x-[50%] -translate-y-[60%] bg-yellow-400 transform rotate-45'></div>
+              <div className='w-[10px] h-[100px] -translate-x-[400%] -translate-y-[50%] bg-blue-500 transform rotate-45'></div>
+            </div>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {articles.slice(0, 2).map(article => (
               <ArticleCard key={article.id} article={article} isLarge={true} />
@@ -122,8 +125,12 @@ const TopWeekly = () => {
         </div>
 
         <div>
-          <h2 className="text-lg font-bold mb-6 border-b-2 border-yellow-400 pb-2 inline-block">
+          <h2 className="w-full text-lg font-bold mb-6 pb-2 inline-block relative">
             Popular News
+            <div className="absolute flex justify-start w-full h-[4px] bg-gray-200 overflow-hidden border-[0px] border-x-0 border-gray-500 top-full">
+              <div className='w-[100px] h-[100px] -translate-x-[50%] -translate-y-[60%] bg-yellow-400 transform rotate-45'></div>
+              <div className='w-[10px] h-[100px] -translate-x-[400%] -translate-y-[50%] bg-blue-500 transform rotate-45'></div>
+            </div>
           </h2>
           
           <div className="space-y-6">

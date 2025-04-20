@@ -17,7 +17,7 @@ const Header = () => {
             <button className="text-white hover:text-blue-200 transition flex items-center">
               More <span className="ml-1">▼</span>
             </button>
-            <div className="absolute hidden group-hover:block bg-white/20 backdrop-blur-md rounded mt-1 w-40">
+            <div className="absolute hidden group-hover:block bg-white/20 backdrop-blur-md rounded mt-0 w-40">
               <a href="/contact" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition">Contact Us</a>
               <a href="/privacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition">Privacy Policy</a>
               <a href="/login" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition">User Login</a>
@@ -38,7 +38,7 @@ const Header = () => {
           
         {/* Menu Button */}
         <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
-            Menu
+            Join
         </button>
 
         {/* Mobile Menu Button */}

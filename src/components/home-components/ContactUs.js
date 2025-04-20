@@ -63,7 +63,7 @@ const ContactUs = () => {
                     placeholder="Enter First Name"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500"
+                    className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500 bg-transparent"
                   />
                 </div>
                 
@@ -76,7 +76,7 @@ const ContactUs = () => {
                     placeholder="Enter Last Name"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500"
+                    className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500 bg-transparent"
                   />
                 </div>
               </div>
@@ -91,7 +91,7 @@ const ContactUs = () => {
                     placeholder="Enter Email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500"
+                    className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500 bg-transparent"
                   />
                 </div>
                 
@@ -104,7 +104,7 @@ const ContactUs = () => {
                     placeholder="Enter Phone Number"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500"
+                    className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500 bg-transparent"
                   />
                 </div>
               </div>
@@ -118,7 +118,7 @@ const ContactUs = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows="3"
-                  className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500"
+                  className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500 bg-transparent"
                 ></textarea>
               </div>
               

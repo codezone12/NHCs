@@ -9,7 +9,7 @@ import ShareNewsSection from '../components/news-components/share-news';
 
 const NewsPage = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Header />
       <MainNewsSection />
       <TrendingNewsSection />
