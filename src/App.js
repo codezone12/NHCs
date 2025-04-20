@@ -9,6 +9,7 @@ import VerifyOTPPage from './pages/verify-otp';
 import ResetPasswordPage from './pages/reset-password';
 import HomePage from './pages/Home';
 import NewsPage from './pages/News';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/news" element={<NewsPage />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

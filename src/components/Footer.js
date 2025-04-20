@@ -13,7 +13,7 @@ const Footer = () => {
               <img 
                 src="/images/logo.png" 
                 alt="NHCS Logo" 
-                className="h-10"
+                className="h-16"
               />
             </div>
             

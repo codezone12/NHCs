@@ -18,10 +18,14 @@ const HomePage = () => {
       <ThreeTornImages />
       <BlueSection />
       <ThreeCardsSection />
-      <AboutUs />
+      <div id="about-section">
+        <AboutUs />
+      </div>
       <ImpactStatsSection />
       <JoinCommunitySection />
-      <ContactUs />
+      <div id="contact-section">
+        <ContactUs />
+      </div>
       <Footer />
     </div>
   );
