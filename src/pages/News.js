@@ -6,14 +6,16 @@ import TrendingNewsSection from '../components/news-components/trending-news';
 import LatestInsightsUpdatesSection from '../components/news-components/latest-insights';
 import TopWeekly from '../components/news-components/top-weekly';
 import ShareNewsSection from '../components/news-components/share-news';
+import NewsGrid from '../components/news-components/news-grid';
 
 const NewsPage = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      <MainNewsSection />
+      {/* <MainNewsSection />
       <TrendingNewsSection />
-      <LatestInsightsUpdatesSection />
+      <LatestInsightsUpdatesSection /> */}
+      <NewsGrid />
       <TopWeekly />
       <ShareNewsSection />
       <Footer />

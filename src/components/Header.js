@@ -16,82 +16,115 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-20 bg-gray-500/30 backdrop-blur-md">
+    <header className="sticky top-0 left-0 right-0 z-20 bg-blue-500 backdrop-blur-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <a href="/" className="text-white hover:text-blue-200 transition">Home</a>
+        <nav className="hidden md:flex items-center space-x-6 lg:ml-3">
+          <a href="/" className="text-white hover:text-yellow-400 transition relative group">
+            Home
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
           <button 
             onClick={() => scrollToSection('contact-section')}
-            className="text-white hover:text-blue-200 transition cursor-pointer"
+            className="text-white hover:text-yellow-400 transition cursor-pointer relative group"
           >
             Contact Us
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
           <button 
             onClick={() => scrollToSection('about-section')}
-            className="text-white hover:text-blue-200 transition cursor-pointer"
+            className="text-white hover:text-yellow-400 transition cursor-pointer relative group"
           >
             About Us
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
-          <a href="/news" className="text-white hover:text-blue-200 transition">News Feed</a>
+          <a href="/news" className="text-white hover:text-yellow-400 transition relative group">
+            News Feed
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
           
           {/* More Dropdown */}
           <div className="relative group">
-            <button className="text-white hover:text-blue-200 transition flex items-center">
+            <button className="text-white hover:text-yellow-400 transition flex items-center relative">
               More <span className="ml-1">▼</span>
+              <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
             </button>
-            <div className="absolute hidden group-hover:block bg-white/20 backdrop-blur-md rounded mt-0 w-40">
-              {/* <a href="/contact" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition">Contact Us</a> */}
-              <a href="/privacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition">Privacy Policy</a>
-              <a href="/login" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition">User Login</a>
+            <div className="absolute hidden group-hover:block bg-yellow-500/50 backdrop-blur-md rounded mt-0 w-40">
+              <a href="/privacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
+                Privacy Policy
+                {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
+              </a>
+              <a href="/login" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
+                User Login
+                {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
+              </a>
             </div>
           </div>
-
-          
         </nav>
         
         {/* Logo - Centered */}
-        <div className="absolute left-1/2 transform -translate-x-1/2">
+        <div className="flex gap-6 items-center">
           <img 
             src="/images/logo.png" 
             alt="NHCS Logo" 
             className="h-10"
           />
-        </div>
           
-        {/* Menu Button */}
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
-            Join
-        </button>
+          {/* Menu Button */}
+          {/* <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
+              Join
+          </button> */}
+          <a className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10">
+            <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-yellow-300 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+            <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
+            Join Community
+            </span>
+          </a>
+        </div>
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-white"
+          className="md:hidden text-white relative group"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? 'Close' : 'Menu'}
+          <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
         </button>
       </div>
       
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-blue-900/80 backdrop-blur-md">
-          <a href="/" className="block p-4 text-white hover:bg-blue-800/50">Home</a>
+          <a href="/" className="block p-4 text-white hover:bg-blue-800/50 relative group">
+            Home
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
           <button 
             onClick={() => scrollToSection('about-section')}
-            className="block p-4 text-white hover:bg-blue-800/50 w-full text-left"
+            className="block p-4 text-white hover:bg-blue-800/50 w-full text-left relative group"
           >
             About Us
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
-          <a href="/news" className="block p-4 text-white hover:bg-blue-800/50">News Feed</a>
+          <a href="/news" className="block p-4 text-white hover:bg-blue-800/50 relative group">
+            News Feed
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
           <button 
             onClick={() => scrollToSection('contact-section')}
-            className="block p-4 text-white hover:bg-blue-800/50 w-full text-left"
+            className="block p-4 text-white hover:bg-blue-800/50 w-full text-left relative group"
           >
             Contact Us
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
-          <a href="/privacy" className="block p-4 text-white hover:bg-blue-800/50">Privacy Policy</a>
-          <a href="/login" className="block p-4 text-white hover:bg-blue-800/50">User Login</a>
+          <a href="/privacy" className="block p-4 text-white hover:bg-blue-800/50 relative group">
+            Privacy Policy
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
+          <a href="/login" className="block p-4 text-white hover:bg-blue-800/50 relative group">
+            User Login
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
         </div>
       )}
     </header>

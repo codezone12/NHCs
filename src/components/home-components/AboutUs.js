@@ -1,6 +1,71 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const AboutUs = () => {
+  // Stats data with start and end values
+  const statsData = [
+    { start: 0, end: 500, suffix: '+', label: 'Projects completed' },
+    { start: 0, end: 200, suffix: '%', label: 'Year on year growth' },
+    { start: 0, end: 50, suffix: 'm', prefix: '$', label: 'Funded' },
+    { start: 0, end: 10, suffix: 'k', label: 'Downloads' }
+  ];
+
+  // State to track animated values
+  const [animatedValues, setAnimatedValues] = useState(statsData.map(stat => stat.start));
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const statsRef = useRef(null);
+
+  useEffect(() => {
+    // Create intersection observer
+    const observer = new IntersectionObserver((entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && !hasAnimated) {
+        animateNumbers();
+        setHasAnimated(true);
+      }
+    }, { threshold: 0.3 }); // Trigger when 30% of the element is visible
+
+    // Observe the stats section
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => {
+      if (statsRef.current) {
+        observer.unobserve(statsRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
+  // Function to animate numbers
+  const animateNumbers = () => {
+    // Duration of animation in ms
+    const animationDuration = 2000;
+    // Number of steps in the animation
+    const steps = 60;
+    // Time per step
+    const stepTime = animationDuration / steps;
+
+    let currentStep = 0;
+
+    const interval = setInterval(() => {
+      currentStep++;
+      
+      const newValues = statsData.map((stat, index) => {
+        const progress = currentStep / steps;
+        const value = Math.floor(stat.start + progress * (stat.end - stat.start));
+        return value;
+      });
+
+      setAnimatedValues(newValues);
+
+      if (currentStep >= steps) {
+        clearInterval(interval);
+        // Ensure final values are exact
+        setAnimatedValues(statsData.map(stat => stat.end));
+      }
+    }, stepTime);
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       {/* Header */}
@@ -26,23 +91,15 @@ const AboutUs = () => {
           </p>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-4xl font-bold">500+</h4>
-              <p className="text-gray-600 text-sm">Projects completed</p>
-            </div>
-            <div>
-              <h4 className="text-4xl font-bold">200%</h4>
-              <p className="text-gray-600 text-sm">Year on year growth</p>
-            </div>
-            <div>
-              <h4 className="text-4xl font-bold">$50m</h4>
-              <p className="text-gray-600 text-sm">Funded</p>
-            </div>
-            <div>
-              <h4 className="text-4xl font-bold">10k</h4>
-              <p className="text-gray-600 text-sm">Downloads</p>
-            </div>
+          <div ref={statsRef} className="grid grid-cols-2 gap-8">
+            {statsData.map((stat, index) => (
+              <div key={index}>
+                <h4 className="text-4xl font-bold">
+                  {stat.prefix || ''}{animatedValues[index]}{stat.suffix || ''}
+                </h4>
+                <p className="text-gray-600 text-sm">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
 

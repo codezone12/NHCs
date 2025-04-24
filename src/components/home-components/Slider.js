@@ -49,17 +49,29 @@ const Slider = () => {
         <div className="container mx-auto px-4 md:px-6 pt-8 md:pt-16">
           <div className="max-w-2xl">
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
-              Discover the Future of Development Documentation
+              <span className='text-yellow-500'>Discover</span> the Future of <span className='text-blue-600'>Development Documentation</span>
             </h1>
             <p className="text-base md:text-lg text-white mb-6 md:mb-8">
               Welcome to NHCS, your go-to platform for all things development. Stay updated with the latest news and insights while engaging with our vibrant community.
             </p>
             <div className="flex flex-wrap gap-3 md:gap-4">
-              <a href="/learn-more" className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-4 md:px-6 py-2 md:py-3 rounded font-medium transition text-sm md:text-base">
-                Learn More
+              {/* <a href="/news" className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-4 md:px-6 py-2 md:py-3 rounded font-medium transition text-sm md:text-base">
+                Go to News
+              </a> */}
+              <a href="/news" className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10">
+                <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-yellow-300 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+                <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
+                Go to News
+                </span>
               </a>
-              <a href="/signup" className="bg-transparent hover:bg-white/10 text-white border border-white px-4 md:px-6 py-2 md:py-3 rounded font-medium transition text-sm md:text-base">
-                Sign Up
+              {/* <a href="/signup" className="bg-transparent hover:bg-white/10 text-white border border-white px-4 md:px-6 py-2 md:py-3 rounded font-medium transition text-sm md:text-base">
+                Join
+              </a> */}
+              <a className="px-5 py-3 border-2 border-white text-lg font-semibold rounded-lg border-white-2px overflow-hidden relative group cursor-pointer bg-transparent hover:scale-105 duration-[700ms] z-10">
+                  <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-gray-100 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+                  <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
+                  Join Community
+                  </span>
               </a>
             </div>
           </div>

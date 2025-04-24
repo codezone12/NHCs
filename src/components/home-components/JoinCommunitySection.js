@@ -16,11 +16,20 @@ const JoinCommunitySection = () => {
             </p>
             
             <div className="flex flex-wrap gap-4">
-              <a href="#learn-more" className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
-                Learn More
+              <a href="/news" className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10">
+                <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-yellow-300 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+                <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
+                Go to News
+                </span>
               </a>
-              <a href="#sign-up" className="bg-white hover:bg-gray-50 text-gray-800 px-6 py-2 rounded font-medium border border-gray-300 transition">
-                Sign Up
+              {/* <a href="/news" className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
+                Go to News
+              </a> */}
+              <a className="px-5 py-3 border-2 border-blue-500 text-lg font-semibold rounded-lg border-white-2px overflow-hidden relative group cursor-pointer bg-transparent hover:scale-105 duration-[700ms] z-10">
+                <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-blue-300 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+                <span className="relative text-blue-600 transition duration-[700ms] group-hover:text-white-600 ease">
+                Join Community
+                </span>
               </a>
             </div>
           </div>
