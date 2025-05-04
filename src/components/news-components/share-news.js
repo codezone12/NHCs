@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ImagePreview from '../image-preview';
 
 const ShareNewsSection = () => {
   const [email, setEmail] = useState('');
@@ -44,7 +45,7 @@ const ShareNewsSection = () => {
         </div>
         
         <div className="w-full md:w-1/2">
-          <img 
+          <ImagePreview 
             src="/images/join-section-image.png" 
             alt="Community members in yellow jackets" 
             className="w-full h-auto rounded-md shadow-md"

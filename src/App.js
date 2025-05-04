@@ -20,13 +20,17 @@ import MyNewsPage from './pages/editor/my-news';
 import EditorProfilePage from './pages/editor/profile';
 import AddNewsPage from './pages/editor/add-news';
 import EditorAnalyticsPage from './pages/editor/analytics';
+import { ToastContainer } from 'react-toastify';
+import NewsDetailPage from './pages/NewsDetailsPage';
 
 function App() {
   return (
     <Router>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/news" element={<NewsPage />} />
+        <Route path="/news-details" element={<NewsDetailPage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
       
         <Route path="/login" element={<LoginPage />} />

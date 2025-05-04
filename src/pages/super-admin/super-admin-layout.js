@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronRight, Menu, X, Search, Bell } from 'lucide-react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, Link } from 'react-router-dom';
 
 const AdminLayout = ({ children }) => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const location = useLocation();
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -38,8 +39,8 @@ const AdminLayout = ({ children }) => {
           {!isSidebarCollapsed && "Platform"}
         </div>
 
-        {/* Nav Links */}
-        <SidebarNavigation collapsed={isSidebarCollapsed} />
+        {/* Nav Links - Pass current path to determine active state */}
+        <SidebarNavigation collapsed={isSidebarCollapsed} currentPath={location.pathname} />
 
         {/* User Profile */}
         <div className="border-t border-gray-800 p-4 mt-auto">
@@ -70,7 +71,7 @@ const AdminLayout = ({ children }) => {
             <div className="flex items-center text-sm">
               <span className="text-gray-500">Super Admin</span>
               <ChevronRight size={16} className="mx-1 text-gray-400" />
-              <span className="font-medium">Dashboard</span>
+              <span className="font-medium">{getCurrentPageTitle(location.pathname)}</span>
             </div>
           </div>
           <div className="flex items-center space-x-4">
@@ -98,17 +99,24 @@ const AdminLayout = ({ children }) => {
   );
 };
 
+// Helper function to get the current page title from the path
+const getCurrentPageTitle = (path) => {
+  const pathSegments = path.split('/');
+  const lastSegment = pathSegments[pathSegments.length - 1];
+  return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
+};
+
 // SidebarNavigation Component
-const SidebarNavigation = ({ collapsed }) => {
+const SidebarNavigation = ({ collapsed, currentPath }) => {
   // Import these from Lucide or your icon library
   const { Layout, Users, Settings, Calendar, BarChart2 } = require('lucide-react');
   
   const navItems = [
-    { icon: Layout, label: "Dashboard", isActive: true, href: "/super-admin/dashboard" },
-    { icon: Users, label: "Users", isActive: false, href: "/super-admin/users" },
-    { icon: Settings, label: "Settings", isActive: false, href: "/super-admin/settings" },
-    { icon: Calendar, label: "Schedule", isActive: false, href: "/super-admin/schedule" },
-    { icon: BarChart2, label: "Analytics", isActive: false, href: "/super-admin/analytics" }
+    { icon: Layout, label: "Dashboard", href: "/super-admin/dashboard" },
+    { icon: Users, label: "Users", href: "/super-admin/users" },
+    { icon: Settings, label: "Settings", href: "/super-admin/settings" },
+    { icon: Calendar, label: "Schedule", href: "/super-admin/schedule" },
+    { icon: BarChart2, label: "Analytics", href: "/super-admin/analytics" }
   ];
 
   return (
@@ -118,7 +126,7 @@ const SidebarNavigation = ({ collapsed }) => {
           key={index}
           icon={<item.icon />} 
           label={item.label} 
-          isActive={item.isActive} 
+          isActive={currentPath.includes(item.href)}
           collapsed={collapsed} 
           href={item.href}
         />
@@ -130,13 +138,13 @@ const SidebarNavigation = ({ collapsed }) => {
 // NavItem Component
 const NavItem = ({ icon, label, isActive = false, collapsed, href }) => {
   return (
-    <a 
-      href={href} 
+    <Link 
+      to={href} 
       className={`flex items-center py-3 px-4 ${isActive ? 'bg-blue-700 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}`}
     >
       <span className="text-lg">{icon}</span>
       {!collapsed && <span className="ml-4">{label}</span>}
-    </a>
+    </Link>
   );
 };
 

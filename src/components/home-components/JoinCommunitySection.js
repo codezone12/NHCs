@@ -1,4 +1,5 @@
 import React from 'react';
+import ImagePreview from '../image-preview';
 
 const JoinCommunitySection = () => {
   return (
@@ -36,7 +37,7 @@ const JoinCommunitySection = () => {
           
           {/* Right Side - Image */}
           <div className="w-full md:w-1/2 mt-8 md:mt-0">
-            <img 
+            <ImagePreview 
               src="/images/join-section-image.png" 
               alt="Crowd of people in yellow jackets" 
               className="w-full h-auto rounded-lg shadow-md"

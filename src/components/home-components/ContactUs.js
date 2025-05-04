@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { submitContactForm } from '../../apis/authService';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -6,6 +7,12 @@ const ContactUs = () => {
     lastName: '',
     email: '',
     phone: '',
+    message: ''
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({
+    success: false,
     message: ''
   });
   
@@ -40,10 +47,35 @@ const ContactUs = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission logic here
+    setIsSubmitting(true);
+    setSubmitStatus({ success: false, message: '' });
+    
+    try {
+      const response = await submitContactForm(formData);
+      
+      setSubmitStatus({
+        success: true,
+        message: response.message || 'Your message has been sent successfully!'
+      });
+      
+      // Reset form after successful submission
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
+    } catch (error) {
+      setSubmitStatus({
+        success: false,
+        message: error.message || 'Failed to send your message. Please try again later.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -101,10 +133,17 @@ const ContactUs = () => {
           <div className="w-full md:w-2/3">
             <h3 className="text-3xl font-bold mb-8">Get In Touch</h3>
             
+            {/* Status message */}
+            {submitStatus.message && (
+              <div className={`p-4 mb-6 rounded-lg ${submitStatus.success ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                {submitStatus.message}
+              </div>
+            )}
+            
             <form onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name*</label>
                   <input
                     type="text"
                     id="firstName"
@@ -112,12 +151,13 @@ const ContactUs = () => {
                     placeholder="Enter First Name"
                     value={formData.firstName}
                     onChange={handleChange}
+                    required
                     className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500 bg-transparent"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name*</label>
                   <input
                     type="text"
                     id="lastName"
@@ -125,6 +165,7 @@ const ContactUs = () => {
                     placeholder="Enter Last Name"
                     value={formData.lastName}
                     onChange={handleChange}
+                    required
                     className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500 bg-transparent"
                   />
                 </div>
@@ -132,7 +173,7 @@ const ContactUs = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email*</label>
                   <input
                     type="email"
                     id="email"
@@ -140,6 +181,7 @@ const ContactUs = () => {
                     placeholder="Enter Email"
                     value={formData.email}
                     onChange={handleChange}
+                    required
                     className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500 bg-transparent"
                   />
                 </div>
@@ -159,13 +201,14 @@ const ContactUs = () => {
               </div>
               
               <div className="mb-6">
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message*</label>
                 <textarea
                   id="message"
                   name="message"
                   placeholder="Enter Message"
                   value={formData.message}
                   onChange={handleChange}
+                  required
                   rows="3"
                   className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-yellow-500 bg-transparent"
                 ></textarea>
@@ -174,11 +217,12 @@ const ContactUs = () => {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10"
+                  disabled={isSubmitting}
+                  className={`px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
                   <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-yellow-300 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
                   <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
-                  Contact Now
+                    {isSubmitting ? 'Sending...' : 'Contact Now'}
                   </span>
                 </button>
               </div>

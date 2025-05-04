@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ImagePreview from '../image-preview';
 
 const TopWeekly = () => {
   const [articles, setArticles] = useState([
@@ -70,7 +71,7 @@ const TopWeekly = () => {
   const ArticleCard = ({ article, isLarge }) => (
     <div className={`mb-6 ${isLarge ? 'md:col-span-1' : ''}`}>
       <div className="relative overflow-hidden rounded-lg">
-        <img 
+        <ImagePreview 
           src={article.image} 
           alt={article.title} 
           className="w-full h-48 object-cover" 
@@ -137,7 +138,7 @@ const TopWeekly = () => {
             {popularArticles.map(article => (
               <div key={article.id} className="flex flex-col mb-6">
                 <div className="relative overflow-hidden rounded-lg mb-3">
-                  <img 
+                  <ImagePreview 
                     src={article.image} 
                     alt={article.title} 
                     className="w-full h-36 object-cover" 

@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
-const API_URL = 'https://nhcs-be.vercel.app/api/v1/users';
+const API_URL = 'http://localhost:5000/api/v1/users';
 
 // Create axios instance with base configuration
 const api = axios.create({
@@ -99,5 +100,18 @@ export const getCurrentUser = async () => {
     console.error('Get user error:', error);
     localStorage.removeItem('token');
     return null;
+  }
+};
+
+// Submit contact form
+export const submitContactForm = async (contactData) => {
+  try {
+    const response = await api.post('/contact', contactData);
+    toast.success('Message sent successfully!');
+    return response;
+  } catch (error) {
+    console.error('Contact form submission error:', error);
+    toast.error('Failed to send message!');
+    throw error;
   }
 };

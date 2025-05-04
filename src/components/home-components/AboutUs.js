@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ImagePreview from '../image-preview';
 
 const AboutUs = () => {
   // Stats data with start and end values
@@ -108,7 +109,7 @@ const AboutUs = () => {
           <div className="grid grid-cols-2 gap-4">
             {/* Top image - full width */}
             <div className="col-span-2">
-              <img 
+              <ImagePreview 
                 src="/images/about-us-first.png" 
                 alt="Mountain landscape" 
                 className="w-full h-48 object-cover rounded-lg"
@@ -117,7 +118,7 @@ const AboutUs = () => {
             
             {/* Middle right image */}
             <div className="col-span-2">
-              <img 
+              <ImagePreview 
                 src="/images/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg" 
                 alt="Coastal village" 
                 className="w-full h-48 object-cover rounded-lg"
@@ -126,7 +127,7 @@ const AboutUs = () => {
             
             {/* Bottom left image with overlay */}
             <div className="relative col-span-1 -mt-16 -ml-10 border-2 border-white rounded-lg">
-              <img 
+              <ImagePreview 
                 src="/images/about-us-third.png" 
                 alt="People hiking" 
                 className="w-full h-32 object-cover rounded-lg"

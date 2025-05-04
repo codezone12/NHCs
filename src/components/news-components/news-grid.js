@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import ImagePreview from '../image-preview';
 
 const NewsGrid = () => {
   const [newsItems, setNewsItems] = useState([
@@ -113,7 +114,7 @@ const NewsGrid = () => {
       className="bg-white rounded-lg overflow-hidden shadow-md mb-8 h-full"
     >
       <div className="relative">
-        <img 
+        <ImagePreview 
           src={item.image} 
           alt={item.title} 
           className="w-full h-64 object-cover"

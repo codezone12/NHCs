@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronRight, Menu, X, Search, Bell, FileText, PlusCircle, BarChart2, User } from 'lucide-react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, Link } from 'react-router-dom';
 
 const EditorLayout = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const location = useLocation();
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -38,8 +39,8 @@ const EditorLayout = () => {
           {!isSidebarCollapsed && "Editor Panel"}
         </div>
 
-        {/* Nav Links */}
-        <SidebarNavigation collapsed={isSidebarCollapsed} />
+        {/* Nav Links - Pass current path to determine active state */}
+        <SidebarNavigation collapsed={isSidebarCollapsed} currentPath={location.pathname} />
 
         {/* User Profile */}
         <div className="border-t border-gray-800 p-4 mt-auto">
@@ -70,7 +71,7 @@ const EditorLayout = () => {
             <div className="flex items-center text-sm">
               <span className="text-gray-500">Editor</span>
               <ChevronRight size={16} className="mx-1 text-gray-400" />
-              <span className="font-medium">Dashboard</span>
+              <span className="font-medium">{getCurrentPageTitle(location.pathname)}</span>
             </div>
           </div>
           <div className="flex items-center space-x-4">
@@ -98,13 +99,26 @@ const EditorLayout = () => {
   );
 };
 
+// Helper function to get the current page title from the path
+const getCurrentPageTitle = (path) => {
+  const pathSegments = path.split('/');
+  const lastSegment = pathSegments[pathSegments.length - 1];
+  
+  // Convert kebab-case to Title Case
+  return lastSegment
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 // SidebarNavigation Component
-const SidebarNavigation = ({ collapsed }) => {
+const SidebarNavigation = ({ collapsed, currentPath }) => {
   const navItems = [
-    { icon: FileText, label: "My News", isActive: true, href: "/editor/my-news" },
-    { icon: PlusCircle, label: "Add News", isActive: false, href: "/editor/add-news" },
-    { icon: BarChart2, label: "Analytics", isActive: false, href: "/editor/analytics" },
-    { icon: User, label: "Profile", isActive: false, href: "/editor/profile" }
+    { icon: FileText, label: "Dashboard", href: "/editor/dashboard" },
+    { icon: FileText, label: "My News", href: "/editor/my-news" },
+    { icon: PlusCircle, label: "Add News", href: "/editor/add-news" },
+    { icon: BarChart2, label: "Analytics", href: "/editor/analytics" },
+    { icon: User, label: "Profile", href: "/editor/profile" }
   ];
 
   return (
@@ -114,7 +128,7 @@ const SidebarNavigation = ({ collapsed }) => {
           key={index}
           icon={<item.icon size={20} />} 
           label={item.label} 
-          isActive={item.isActive} 
+          isActive={currentPath.includes(item.href)}
           collapsed={collapsed} 
           href={item.href}
         />
@@ -126,13 +140,13 @@ const SidebarNavigation = ({ collapsed }) => {
 // NavItem Component
 const NavItem = ({ icon, label, isActive = false, collapsed, href }) => {
   return (
-    <a 
-      href={href} 
+    <Link 
+      to={href} 
       className={`flex items-center py-3 px-4 ${isActive ? 'bg-green-700 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}`}
     >
       <span className="text-lg">{icon}</span>
       {!collapsed && <span className="ml-4">{label}</span>}
-    </a>
+    </Link>
   );
 };
 
