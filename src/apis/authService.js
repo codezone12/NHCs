@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const API_URL = 'http://nh-cs-be.vercel.app/api/v1/users';
+const API_URL = 'https://nh-cs-be.vercel.app/api/v1/users';
 
 // Create axios instance with base configuration
 const api = axios.create({
