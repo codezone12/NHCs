@@ -19,9 +19,9 @@ const ContactUs = () => {
   // Slider state and images
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderImages = [
-    '/images/contact-us.png',
-    '/images/slider-images-2.jpg',
-    '/images/slider-images-3.jpg'
+    '/images/newImages/IMG_7246.JPG',
+    '/images/newImages/Highres-Independence_party_portrait_2015-05-30-0256.jpg',
+    '/images/newImages/20150530-IMG_7415.JPG'
   ];
 
   // Auto slide change effect
@@ -258,9 +258,9 @@ export default ContactUs;
 //   // Slider state and images
 //   const [currentSlide, setCurrentSlide] = useState(0);
 //   const sliderImages = [
-//     '/images/contact-us.png',
-//     '/images/slider-images-2.jpg',
-//     '/images/slider-images-3.jpg'
+//     '/images/newImages/contact-us.png',
+//     '/images/newImages/slider-images-2.jpg',
+//     '/images/newImages/slider-images-3.jpg'
 //   ];
 
 //   // Auto slide change effect

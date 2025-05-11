@@ -28,7 +28,7 @@ const ThreeTornImages = () => {
               {/* Image with clip path applied */}
               <div className="w-full pt-[75%] relative">
                 <img 
-                  src="/images/Union-1.svg" 
+                  src="/images/newImages/Union-1.svg" 
                   alt="Admin Panel"
                   className="absolute inset-0 w-full h-full"
                 />
@@ -53,7 +53,7 @@ const ThreeTornImages = () => {
             <div className="relative mb-6 w-full max-w-xs">
               <div className="w-full pt-[75%] relative">
                 <img 
-                  src="/images/Union-2.svg" 
+                  src="/images/newImages/Union-2.svg" 
                   alt="User Engagement Tools"
                   className="absolute inset-0 w-full h-full"
                 />
@@ -78,7 +78,7 @@ const ThreeTornImages = () => {
             <div className="relative mb-6 w-full max-w-xs">
               <div className="w-full pt-[75%] relative">
                 <img 
-                  src="/images/Union-3.svg" 
+                  src="/images/newImages/Union-3.svg" 
                   alt="Responsive Design"
                   className="absolute inset-0 w-full h-full"
                 />

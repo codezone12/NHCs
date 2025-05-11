@@ -8,42 +8,42 @@ const FeaturesSlider = () => {
   // Feature data - 6 items total
   const features = [
     {
-      image: "/images/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg",
+      image: "/images/newImages/IMG_0204.JPG",
       title: "Streamlined Admin Panel",
       description: "Our platform offers a responsive design, ensuring optimal viewing on any device.",
       link: "#learn-more",
       linkText: "Learn More"
     },
     {
-      image: "/images/slider-images-2.jpg",
+      image: "/images/newImages/IMG_6640.JPG",
       title: "User Engagement Tools",
       description: "Engage users with feedback mechanisms and timely email notifications for updates.",
       link: "#explore",
       linkText: "Explore"
     },
     {
-      image: "/images/slider-images-3.jpg",
+      image: "/images/newImages/IMG_7246.JPG",
       title: "Responsive Design",
       description: "Enjoy a consistent and engaging experience whether on mobile or desktop.",
       link: "#explore",
       linkText: "Explore"
     },
     {
-      image: "/images/cr_weekly_post04.jpg.png",
+      image: "/images/newImages/IMG_6654.JPG",
       title: "Analytics Dashboard",
       description: "Track user behavior and content performance with our comprehensive analytics.",
       link: "#learn-more",
       linkText: "Learn More"
     },
     {
-      image: "/images/cr_trending_post05.jpg.png",
+      image: "/images/newImages/rollerCoaster1.jpg",
       title: "Content Scheduling",
       description: "Plan and automate your content publication for maximum audience reach.",
       link: "#discover",
       linkText: "Discover"
     },
     {
-      image: "/images/cr_mining_post05.jpg.png",
+      image: "/images/newImages/IMG_8764.JPG",
       title: "Integration Capabilities",
       description: "Connect seamlessly with your favorite tools and services for enhanced workflow.",
       link: "#integrate",

@@ -14,8 +14,8 @@ export default function NewsDetailPage() {
     category: "Technology",
     readTime: "8 min read",
     views: "2.4K",
-    image: "/images/slider-images-2.jpg",
-    profile: "/images/images.jpg",
+    image: "/images/newImages/slider-images-2.jpg",
+    profile: "/images/newImages/images.jpg",
     content: [
       "Researchers at the Global Energy Institute have announced a significant breakthrough in solar energy conversion efficiency. The new technology, developed over the past five years, promises to increase solar panel efficiency by up to 37% while reducing manufacturing costs.",
       "Lead scientist Dr. Robert Chen explained that the team developed a novel semiconductor material that captures a wider spectrum of sunlight than conventional panels. 'This could be the advancement we've been waiting for to make renewable energy more accessible worldwide,' Chen stated at yesterday's press conference.",
@@ -30,28 +30,28 @@ export default function NewsDetailPage() {
     {
       id: 1,
       title: "Global Climate Summit Results in New Emissions Targets",
-      image: "/images/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg",
+      image: "/images/newImages/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg",
       date: "April 24, 2025",
       readTime: "6 min read"
     },
     {
       id: 2,
       title: "Electric Vehicle Sales Surpass Traditional Cars For First Time",
-      image: "/images/slider-images-2.jpg",
+      image: "/images/newImages/slider-images-2.jpg",
       date: "April 23, 2025",
       readTime: "5 min read"
     },
     {
       id: 3,
       title: "Tech Companies Pledge Carbon Neutrality by 2030",
-      image: "/images/slider-images-3.jpg",
+      image: "/images/newImages/slider-images-3.jpg",
       date: "April 22, 2025",
       readTime: "4 min read"
     },
     {
       id: 4,
       title: "New Battery Technology Doubles Electric Vehicle Range",
-      image: "/images/cr_weekly_post04.jpg.png",
+      image: "/images/newImages/cr_weekly_post04.jpg.png",
       date: "April 21, 2025",
       readTime: "7 min read"
     }
@@ -62,7 +62,7 @@ export default function NewsDetailPage() {
     {
       id: 1,
       user: "Alex Johnson",
-      avatar: "/images/download (1).jpg",
+      avatar: "/images/newImages/download (1).jpg",
       date: "2 hours ago",
       content: "This is incredible news! I've been following Dr. Chen's work for years and knew they were onto something big. Can't wait to see this technology implemented widely.",
       likes: 45,
@@ -70,7 +70,7 @@ export default function NewsDetailPage() {
         {
           id: 101,
           user: "Maria Garcia",
-          avatar: "/images/download.jpg",
+          avatar: "/images/newImages/download.jpg",
           date: "1 hour ago",
           content: "I agree! The efficiency improvements are impressive. My concern is how quickly this can be scaled for mass production.",
           likes: 12
@@ -80,7 +80,7 @@ export default function NewsDetailPage() {
     {
       id: 2,
       user: "Sam Wilson",
-      avatar: "/images/images (1).jpg",
+      avatar: "/images/newImages/images (1).jpg",
       date: "5 hours ago",
       content: "I'm curious about the longevity of these new panels. The article doesn't mention durability testing or expected lifespan compared to traditional panels.",
       likes: 28,
@@ -89,7 +89,7 @@ export default function NewsDetailPage() {
     {
       id: 3,
       user: "Taylor Kim",
-      avatar: "/images/images.jpg",
+      avatar: "/images/newImages/images.jpg",
       date: "6 hours ago",
       content: "As someone working in the renewable energy sector, this is exactly the kind of innovation we need to see more of. The cost reduction potential alone makes this revolutionary.",
       likes: 56,

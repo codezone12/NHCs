@@ -18,11 +18,15 @@ const AboutUs = () => {
   const statsRef = useRef(null);
 
   useEffect(() => {
-    // Initialize AOS
+    // Initialize AOS with improved settings
     AOS.init({
       duration: 800,
-      once: true,
-      easing: 'ease-in-out'
+      once: false, // Changed from true to false to enable animations when scrolling up
+      easing: 'ease-in-out',
+      offset: 120, // Increased offset so elements animate when more visible
+      delay: 50, // Small initial delay
+      throttleDelay: 99, // Reduce number of animations happening at once
+      mirror: true, // Enable mirroring effect when scrolling back up
     });
 
     // Create intersection observer for stats counter
@@ -32,7 +36,7 @@ const AboutUs = () => {
         animateNumbers();
         setHasAnimated(true);
       }
-    }, { threshold: 0.3 });
+    }, { threshold: 0.5 }); // Increased threshold so animation starts when more visible
 
     // Observe the stats section
     if (statsRef.current) {
@@ -86,7 +90,7 @@ const AboutUs = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       {/* Header */}
-      <div className="text-center mb-10" data-aos="fade-down">
+      <div className="text-center mb-10" data-aos="fade-up">
         <h2 className="text-3xl font-bold mb-4">About Us</h2>
         <p className="max-w-2xl mx-auto text-gray-600 text-sm">
         Alenalki is a digital platform that aims to collect and share relevant information for Eritreans in the diaspora, with a special focus on culture, history and identity. It supports young people in their dual belonging and aims to create community and pride. At the same time, the platform acts as a bridge between Eritreans and other communities, promoting integration and collaboration.
@@ -96,7 +100,7 @@ const AboutUs = () => {
       {/* Main content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
         {/* Left side - Stats */}
-        <div data-aos="fade-right" data-aos-delay="100">
+        <div data-aos="fade-up" data-aos-delay="100" data-aos-anchor-placement="top-bottom">
           <h3 className="text-xl font-bold mb-6">
             Highlight achievements by the numbers
           </h3>
@@ -120,12 +124,12 @@ const AboutUs = () => {
         </div>
 
         {/* Right side - Images */}
-        <div className="relative" data-aos="fade-left" data-aos-delay="200">
+        <div className="relative" data-aos="fade-up" data-aos-delay="200" data-aos-anchor-placement="top-bottom">
           <div className="grid grid-cols-2 gap-4">
             {/* Top image - full width */}
             <div className="col-span-2">
               <ImagePreview 
-                src="/images/about-us-first.png" 
+                src="/images/newImages/IMG_8845.JPG" 
                 alt="Mountain landscape" 
                 className="w-full h-48 object-cover rounded-lg"
               />
@@ -134,7 +138,7 @@ const AboutUs = () => {
             {/* Middle right image */}
             <div className="col-span-2">
               <ImagePreview 
-                src="/images/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg" 
+                src="/images/newImages/IMG_6851.JPG" 
                 alt="Coastal village" 
                 className="w-full h-48 object-cover rounded-lg"
               />
@@ -143,7 +147,7 @@ const AboutUs = () => {
             {/* Bottom left image with overlay */}
             <div className="relative col-span-1 -mt-16 -ml-10 border-2 border-white rounded-lg">
               <ImagePreview 
-                src="/images/about-us-third.png" 
+                src="/images/newImages/IMG_4818.JPG" 
                 alt="People hiking" 
                 className="w-full h-32 object-cover rounded-lg"
               />
@@ -163,7 +167,8 @@ const AboutUs = () => {
             key={section}
             className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-xl"
             data-aos="fade-up"
-            data-aos-delay={index * 100}
+            data-aos-delay={index * 150}
+            data-aos-anchor-placement="center-bottom"
           >
             <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-4">
               <div className="flex items-center justify-between">
@@ -195,7 +200,8 @@ const AboutUs = () => {
       {/* Animated quote section */}
       <div 
         className="bg-blue-800 text-white p-8 rounded-xl mb-16 relative overflow-hidden"
-        data-aos="zoom-in"
+        data-aos="fade-up"
+        data-aos-anchor-placement="top-bottom"
       >
         <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400 rounded-full -mr-16 -mt-16 opacity-20"></div>
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-yellow-400 rounded-full -ml-12 -mb-12 opacity-20"></div>
@@ -214,6 +220,7 @@ const AboutUs = () => {
         className="text-center"
         data-aos="fade-up"
         data-aos-delay="100"
+        data-aos-anchor-placement="top-bottom"
       >
         <h3 className="text-2xl font-bold mb-4">Join Our Community Today</h3>
         <p className="max-w-2xl mx-auto text-gray-600 text-sm mb-6">

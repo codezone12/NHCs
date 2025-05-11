@@ -38,7 +38,7 @@ const JoinCommunitySection = () => {
           {/* Right Side - Image */}
           <div className="w-full md:w-1/2 mt-8 md:mt-0">
             <ImagePreview 
-              src="/images/join-section-image.png" 
+              src="/images/newImages/20150530-IMG_7397.JPG" 
               alt="Crowd of people in yellow jackets" 
               className="w-full h-auto rounded-lg shadow-md"
             />

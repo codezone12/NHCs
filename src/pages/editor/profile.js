@@ -10,7 +10,7 @@ const EditorProfilePage = () => {
     bio: 'Senior editor with over 10 years of experience in technology and science journalism. Previously worked at Tech Today and Science Weekly.',
     joinDate: 'January 15, 2022',
     expertise: ['Technology', 'Science', 'Environment', 'Health'],
-    avatar: '/images/profile-placeholder.jpg'
+    avatar: '/images/newImages/profile-placeholder.jpg'
   });
 
   const [newExpertise, setNewExpertise] = useState('');

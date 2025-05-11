@@ -1,3 +1,4 @@
+import { ChartArea, Home, Newspaper, Phone, Users } from 'lucide-react';
 import React, { useState } from 'react';
 
 const Header = () => {
@@ -20,26 +21,26 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6 lg:ml-3">
-          <a href="/" className="text-white hover:text-yellow-400 transition relative group">
-            Home
+          <a href="/" className="flex gap-2 text-white hover:text-yellow-400 transition relative group">
+            <Home />Home
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           <button 
             onClick={() => scrollToSection('contact-section')}
-            className="text-white hover:text-yellow-400 transition cursor-pointer relative group"
+            className="flex gap-2 text-white hover:text-yellow-400 transition cursor-pointer relative group"
           >
-            Contact Us
+            <Phone />Contact Us
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
           <button 
             onClick={() => scrollToSection('about-section')}
-            className="text-white hover:text-yellow-400 transition cursor-pointer relative group"
+            className="flex gap-2 text-white hover:text-yellow-400 transition cursor-pointer relative group"
           >
-            About Us
+            <Users />About Us
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
-          <a href="/news" className="text-white hover:text-yellow-400 transition relative group">
-            News Feed
+          <a href="/news" className="flex gap-2 text-white hover:text-yellow-400 transition relative group">
+            <Newspaper />News Feed
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           
@@ -49,7 +50,7 @@ const Header = () => {
               More <span className="ml-1">▼</span>
               <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
             </button>
-            <div className="absolute hidden group-hover:block bg-yellow-500/50 backdrop-blur-md rounded mt-0 w-40">
+            <div className="absolute hidden group-hover:block bg-yellow-500 rounded-lg mt-0 w-40">
               <a href="/privacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
                 Privacy Policy
                 {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
@@ -67,7 +68,7 @@ const Header = () => {
           <img 
             src="/images/NHCC LOGO.png" 
             alt="NHCS Logo" 
-            className="h-10"
+            className="h-20 -mt-3 hover:scale-105 duration-[300ms]"
           />
           
           {/* Menu Button */}
