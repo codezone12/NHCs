@@ -14,14 +14,14 @@ const AdminLayout = ({ children }) => {
         <div className="flex items-center justify-between p-4 border-b border-gray-800">
           {!isSidebarCollapsed && (
             <img 
-              src="/images/logo.png" 
+              src="/images/NHCC LOGO.png" 
               alt="TIME-PAL Logo" 
               className="h-10" 
             />
           )}
           {isSidebarCollapsed && (
             <img 
-              src="/images/logo.png" 
+              src="/images/NHCC LOGO.png" 
               alt="TIME-PAL Icon" 
               className="h-8" 
             />

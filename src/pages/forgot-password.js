@@ -38,7 +38,7 @@ const ForgotPasswordPage = () => {
       {/* App Logo */}
       <div className="absolute top-8 left-8">
         <img 
-          src="/images/logo.png" 
+          src="/images/NHCC LOGO.png" 
           alt="Company Logo" 
           className="h-12 w-auto"
         />

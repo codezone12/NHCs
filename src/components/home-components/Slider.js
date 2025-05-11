@@ -8,6 +8,16 @@ const Slider = () => {
   ];
   
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [typewriterText, setTypewriterText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(150);
+  
+  const headings = [
+    'Development Document',
+    'Technical Resources',
+    'Programming Guides'
+  ];
   
   // Function to handle auto-sliding
   useEffect(() => {
@@ -18,13 +28,41 @@ const Slider = () => {
     return () => clearInterval(interval);
   }, []);
   
+  // Typewriter effect
+  useEffect(() => {
+    const currentHeading = headings[loopNum % headings.length];
+    
+    const handleTyping = () => {
+      setTypewriterText(currentHeading.substring(0, isDeleting 
+        ? typewriterText.length - 1 
+        : typewriterText.length + 1
+      ));
+      
+      // Set typing speed
+      if (!isDeleting && typewriterText === currentHeading) {
+        // Pause at end of word
+        setTimeout(() => setIsDeleting(true), 1500);
+        setTypingSpeed(100);
+      } else if (isDeleting && typewriterText === '') {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+        setTypingSpeed(150);
+      } else {
+        setTypingSpeed(isDeleting ? 100 : 150);
+      }
+    };
+    
+    const timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [typewriterText, isDeleting, loopNum, typingSpeed]);
+  
   // Function to handle manual navigation
   const goToSlide = (index) => {
     setCurrentSlide(index);
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden mt-0 md:mt-[-70px]">
+    <div className="relative w-full h-screen overflow-hidden mt-0 md:mt-[-0px]">
       {/* Background Images */}
       {images.map((image, index) => (
         <div 
@@ -49,24 +87,18 @@ const Slider = () => {
         <div className="container mx-auto px-4 md:px-6 pt-8 md:pt-16">
           <div className="max-w-2xl">
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
-              <span className='text-yellow-500'>Discover</span> the Future of <span className='text-blue-600'>Development Documentation</span>
+               <span className='text-yellow-500'>Discover</span> the Future of <br /><span className='text-blue-600 inline-block min-h-[40px] md:min-h-[60px]'>{typewriterText}<span className="animate-pulse">|</span></span>
             </h1>
             <p className="text-base md:text-lg text-white mb-6 md:mb-8">
               Welcome to NHCS, your go-to platform for all things development. Stay updated with the latest news and insights while engaging with our vibrant community.
             </p>
             <div className="flex flex-wrap gap-3 md:gap-4">
-              {/* <a href="/news" className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-4 md:px-6 py-2 md:py-3 rounded font-medium transition text-sm md:text-base">
-                Go to News
-              </a> */}
               <a href="/news" className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10">
                 <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-yellow-300 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
                 <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
                 Go to News
                 </span>
               </a>
-              {/* <a href="/signup" className="bg-transparent hover:bg-white/10 text-white border border-white px-4 md:px-6 py-2 md:py-3 rounded font-medium transition text-sm md:text-base">
-                Join
-              </a> */}
               <a className="px-5 py-3 border-2 border-white text-lg font-semibold rounded-lg border-white-2px overflow-hidden relative group cursor-pointer bg-transparent hover:scale-105 duration-[700ms] z-10">
                   <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-gray-100 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
                   <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">

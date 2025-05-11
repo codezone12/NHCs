@@ -11,7 +11,7 @@ const Footer = () => {
             {/* Logo */}
             <div className="mb-6">
               <img 
-                src="/images/logo.png" 
+                src="/images/NHCC LOGO.png" 
                 alt="NHCS Logo" 
                 className="h-16"
               />

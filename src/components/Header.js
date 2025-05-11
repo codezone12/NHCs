@@ -65,7 +65,7 @@ const Header = () => {
         {/* Logo - Centered */}
         <div className="flex gap-6 items-center">
           <img 
-            src="/images/logo.png" 
+            src="/images/NHCC LOGO.png" 
             alt="NHCS Logo" 
             className="h-10"
           />
