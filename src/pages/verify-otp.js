@@ -137,7 +137,7 @@ const VerifyOTPPage = () => {
       {/* App Logo */}
       <div className="absolute top-8 left-8">
         <img 
-          src="/images/NHCC LOGO.png" 
+          src="/images/alenalki.Logo.png" 
           alt="Company Logo" 
           className="h-12 w-auto"
           // onError={(e) => {

@@ -66,7 +66,7 @@ const Header = () => {
         {/* Logo - Centered */}
         <div className="flex gap-6 items-center">
           <img 
-            src="/images/NHCC LOGO.png" 
+            src="/images/alenalki.Logo.png" 
             alt="NHCS Logo" 
             className="h-20 -mt-3 hover:scale-105 duration-[300ms]"
           />

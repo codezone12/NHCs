@@ -23,6 +23,7 @@ import EditorAnalyticsPage from './pages/editor/analytics';
 import { ToastContainer } from 'react-toastify';
 import NewsDetailPage from './pages/NewsDetailsPage';
 import SubPage from './pages/SubPage';
+import BlogPost from './pages/BlogPost';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/news-details" element={<NewsDetailPage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/sub-page" element={<SubPage />} />
+        <Route path="/blog" element={<BlogPost />} />
       
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
