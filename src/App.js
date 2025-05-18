@@ -34,8 +34,8 @@ function App() {
         <Route path="/news" element={<NewsPage />} />
         <Route path="/news-details" element={<NewsDetailPage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/sub-page" element={<SubPage />} />
-        <Route path="/blog" element={<BlogPost />} />
+        <Route path="/festival" element={<SubPage />} />
+        <Route path="/publicdiplomacy" element={<BlogPost />} />
       
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

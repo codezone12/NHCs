@@ -13,7 +13,7 @@ const Footer = () => {
               <img 
                 src="/images/alenalki.Logo.png" 
                 alt="NHCS Logo" 
-                className="h-16"
+                className="h-16 rounded-full hover:scale-105 duration-[300ms]"
               />
             </div>
             

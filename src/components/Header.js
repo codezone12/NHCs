@@ -23,36 +23,52 @@ const Header = () => {
         <nav className="hidden md:flex items-center space-x-6 lg:ml-3">
           <a href="/" className="flex gap-2 text-white hover:text-yellow-400 transition relative group">
             <Home />Home
-            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+            <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           <button 
             onClick={() => scrollToSection('contact-section')}
             className="flex gap-2 text-white hover:text-yellow-400 transition cursor-pointer relative group"
           >
             <Phone />Contact Us
-            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+            <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
           <button 
             onClick={() => scrollToSection('about-section')}
             className="flex gap-2 text-white hover:text-yellow-400 transition cursor-pointer relative group"
           >
             <Users />About Us
-            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+            <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
           <a href="/news" className="flex gap-2 text-white hover:text-yellow-400 transition relative group">
             <Newspaper />News Feed
-            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+            <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
+          {/* <a href="/festival" className="flex gap-2 text-white hover:text-yellow-400 transition relative group">
+            <Newspaper />Festival
+            <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
+          <a href="/blog" className="flex gap-2 text-white hover:text-yellow-400 transition relative group">
+            <Newspaper />Blog
+            <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a> */}
           
           {/* More Dropdown */}
           <div className="relative group">
             <button className="text-white hover:text-yellow-400 transition flex items-center relative">
               More <span className="ml-1">▼</span>
-              <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+              <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
             </button>
             <div className="absolute hidden group-hover:block bg-yellow-500 rounded-lg mt-0 w-40">
               <a href="/privacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
                 Privacy Policy
+                {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
+              </a>
+              <a href="/festival" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
+                Festival
+                {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
+              </a>
+              <a href="/publicdiplomacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
+                Public Diplomacy
                 {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
               </a>
               <a href="/login" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
@@ -68,7 +84,7 @@ const Header = () => {
           <img 
             src="/images/alenalki.Logo.png" 
             alt="NHCS Logo" 
-            className="h-20 -mt-3 hover:scale-105 duration-[300ms]"
+            className="h-12 rounded-full overflow-hidden hover:scale-105 duration-[300ms]"
           />
           
           {/* Menu Button */}
@@ -109,6 +125,14 @@ const Header = () => {
           </button>
           <a href="/news" className="block p-4 text-white hover:bg-blue-800/50 relative group">
             News Feed
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
+          <a href="/festival" className="block p-4 text-white hover:bg-blue-800/50 relative group">
+            Festival
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
+          <a href="/publicdiplomacy" className="block p-4 text-white hover:bg-blue-800/50 relative group">
+            Public Diplomacy
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           <button 
