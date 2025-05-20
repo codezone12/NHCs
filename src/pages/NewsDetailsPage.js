@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ThumbsUp, ThumbsDown, Share2, Bookmark, MoreHorizontal, Send } from 'lucide-react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import GoToTop from '../components/GotToTop';
 
 export default function NewsDetailPage() {
   const [commentText, setCommentText] = useState('');
@@ -349,6 +350,7 @@ export default function NewsDetailPage() {
         </div>
       </main>
     </div>
+    <GoToTop />
     <Footer />
     </>
   );

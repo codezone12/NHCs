@@ -1,5 +1,6 @@
-import { ChartArea, Home, Newspaper, Phone, Users } from 'lucide-react';
+import { ChartArea, Home, Menu, Newspaper, Phone, Users, X } from 'lucide-react';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -81,11 +82,13 @@ const Header = () => {
         
         {/* Logo - Centered */}
         <div className="flex gap-6 items-center">
-          <img 
-            src="/images/alenalki.Logo.png" 
-            alt="NHCS Logo" 
-            className="h-12 rounded-full overflow-hidden hover:scale-105 duration-[300ms]"
-          />
+          <Link to='/'>
+            <img 
+              src="/images/alenalki.Logo.png" 
+              alt="NHCS Logo" 
+              className="h-12 rounded-full overflow-hidden hover:scale-105 duration-[300ms]"
+            />
+          </Link>
           
           {/* Menu Button */}
           {/* <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
@@ -104,7 +107,7 @@ const Header = () => {
           className="md:hidden text-white relative group"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          {isMenuOpen ? 'Close' : 'Menu'}
+          {isMenuOpen ? <X /> : <Menu />}
           <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
         </button>
       </div>
@@ -112,42 +115,42 @@ const Header = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-blue-900/80 backdrop-blur-md">
-          <a href="/" className="block p-4 text-white hover:bg-blue-800/50 relative group">
-            Home
+          <a href="/" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
+            <Home /> Home
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           <button 
             onClick={() => scrollToSection('about-section')}
-            className="block p-4 text-white hover:bg-blue-800/50 w-full text-left relative group"
+            className="block p-4 text-white hover:bg-blue-800/50 w-full text-left relative group flex items-center gap-2"
           >
-            About Us
+            <Users /> About Us
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
-          <a href="/news" className="block p-4 text-white hover:bg-blue-800/50 relative group">
-            News Feed
+          <a href="/news" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
+            <Newspaper /> News Feed
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
-          <a href="/festival" className="block p-4 text-white hover:bg-blue-800/50 relative group">
-            Festival
+          <a href="/festival" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
+            <Newspaper /> Festival
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
-          <a href="/publicdiplomacy" className="block p-4 text-white hover:bg-blue-800/50 relative group">
-            Public Diplomacy
+          <a href="/publicdiplomacy" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
+            <ChartArea /> Public Diplomacy
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           <button 
             onClick={() => scrollToSection('contact-section')}
-            className="block p-4 text-white hover:bg-blue-800/50 w-full text-left relative group"
+            className="block p-4 text-white hover:bg-blue-800/50 w-full text-left relative group flex items-center gap-2"
           >
-            Contact Us
+            <Phone /> Contact Us
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
-          <a href="/privacy" className="block p-4 text-white hover:bg-blue-800/50 relative group">
-            Privacy Policy
+          <a href="/privacy" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
+            <X /> Privacy Policy
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
-          <a href="/login" className="block p-4 text-white hover:bg-blue-800/50 relative group">
-            User Login
+          <a href="/login" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
+            <Users /> User Login
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
         </div>

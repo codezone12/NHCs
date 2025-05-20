@@ -7,6 +7,7 @@ import LatestInsightsUpdatesSection from '../components/news-components/latest-i
 import TopWeekly from '../components/news-components/top-weekly';
 import ShareNewsSection from '../components/news-components/share-news';
 import NewsGrid from '../components/news-components/news-grid';
+import GoToTop from '../components/GotToTop';
 
 const NewsPage = () => {
   return (
@@ -18,6 +19,7 @@ const NewsPage = () => {
       <NewsGrid />
       <TopWeekly />
       <ShareNewsSection />
+      <GoToTop />
       <Footer />
     </div>
   );

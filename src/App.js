@@ -24,6 +24,7 @@ import { ToastContainer } from 'react-toastify';
 import NewsDetailPage from './pages/NewsDetailsPage';
 import SubPage from './pages/SubPage';
 import BlogPost from './pages/BlogPost';
+import NhccPage from './pages/Nhcc';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/festival" element={<SubPage />} />
         <Route path="/publicdiplomacy" element={<BlogPost />} />
+        <Route path="/nhcc" element={<NhccPage />} />
       
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

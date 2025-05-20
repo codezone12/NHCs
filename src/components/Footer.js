@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -10,11 +11,13 @@ const Footer = () => {
           <div className="w-full lg:w-1/3">
             {/* Logo */}
             <div className="mb-6">
-              <img 
-                src="/images/alenalki.Logo.png" 
-                alt="NHCS Logo" 
-                className="h-16 rounded-full hover:scale-105 duration-[300ms]"
-              />
+              <Link to='/'>
+                <img 
+                  src="/images/alenalki.Logo.png" 
+                  alt="NHCS Logo" 
+                  className="h-16 rounded-full hover:scale-105 duration-[300ms]"
+                />
+              </Link>
             </div>
             
             {/* Newsletter */}
@@ -114,7 +117,7 @@ const Footer = () => {
         
         {/* Footer Bottom */}
         <div className="pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-gray-400">© 2025 NHCS. All rights reserved.</p>
+          <p className="text-xs text-gray-400">© 2025 Alenalki. All rights reserved.</p>
           
           <div className="flex flex-wrap gap-6">
             {[

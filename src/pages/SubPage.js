@@ -5,6 +5,7 @@ import 'aos/dist/aos.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUsers, FaHandshake, FaGlobe, FaMusic, FaChild, FaBook, FaComments, FaHeart, FaLightbulb, FaUniversity, FaTheaterMasks, FaUtensils, FaChevronLeft, FaChevronRight, FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
+import GoToTop from '../components/GotToTop';
 
 const SubPage = () => {
   const [readingProgress, setReadingProgress] = useState(0);
@@ -72,8 +73,8 @@ const SubPage = () => {
         ></div>
       </div>
       
-      {/* Hero Section with Slider */}
-      <div className="relative h-[40vh] md:h-[60vh] overflow-hidden" ref={sliderRef}>
+            {/* Hero Section with Slider */}
+            <div className="relative h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] overflow-hidden" ref={sliderRef}>
         <div className="absolute inset-0 bg-blue-900/70 z-10"></div>
         
         {/* Slider Images */}
@@ -97,26 +98,26 @@ const SubPage = () => {
         {/* Slider Controls */}
         <button 
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition-colors"
+          className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 rounded-full transition-colors"
           aria-label="Previous slide"
         >
-          <FaChevronLeft />
+          <FaChevronLeft className="text-sm sm:text-base" />
         </button>
         <button 
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition-colors"
+          className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 rounded-full transition-colors"
           aria-label="Next slide"
         >
-          <FaChevronRight />
+          <FaChevronRight className="text-sm sm:text-base" />
         </button>
         
         {/* Slider Indicators */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+        <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-1 sm:space-x-2">
           {festivalImages.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
+              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${
                 index === currentSlide ? 'bg-white' : 'bg-white/50'
               }`}
               aria-label={`Go to slide ${index + 1}`}
@@ -125,26 +126,26 @@ const SubPage = () => {
         </div>
         
         <div className="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
-          <span className="bg-yellow-400 text-blue-900 px-4 py-1 rounded-full text-sm font-medium mb-4" data-aos="fade-down">
-            <FaGlobe className="inline mr-2" /> Cultural Event
+          <span className="bg-yellow-400 text-blue-900 px-2 py-1 sm:px-4 sm:py-1 rounded-full text-xs sm:text-sm font-medium mb-2 sm:mb-4" data-aos="fade-down">
+            <FaGlobe className="inline mr-1 sm:mr-2" /> Cultural Event
           </span>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4" data-aos="fade-up">
             Eritreanska Kulturfestivalen
           </h1>
-          <p className="text-xl text-blue-100 max-w-2xl" data-aos="fade-up" data-aos-delay="100">
+          <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl px-2" data-aos="fade-up" data-aos-delay="100">
             En årlig kulturfestival som förenar generationer och stärker kulturell identitet
           </p>
-          <div className="flex flex-wrap justify-center gap-4 mt-8" data-aos="fade-up" data-aos-delay="200">
-            <div className="flex items-center text-white bg-blue-800/50 px-4 py-2 rounded-lg">
-              <FaCalendarAlt className="mr-2" />
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-4 sm:mt-8" data-aos="fade-up" data-aos-delay="200">
+            <div className="flex items-center text-white bg-blue-800/50 px-2 py-1 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm">
+              <FaCalendarAlt className="mr-1 sm:mr-2" />
               <span>28–31 juli</span>
             </div>
-            <div className="flex items-center text-white bg-blue-800/50 px-4 py-2 rounded-lg">
-              <FaMapMarkerAlt className="mr-2" />
+            <div className="flex items-center text-white bg-blue-800/50 px-2 py-1 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm">
+              <FaMapMarkerAlt className="mr-1 sm:mr-2" />
               <span>Eggebygård, Järvafältet</span>
             </div>
-            <div className="flex items-center text-white bg-blue-800/50 px-4 py-2 rounded-lg">
-              <FaUsers className="mr-2" />
+            <div className="flex items-center text-white bg-blue-800/50 px-2 py-1 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm">
+              <FaUsers className="mr-1 sm:mr-2" />
               <span>10,000+ besökare</span>
             </div>
           </div>
@@ -212,7 +213,7 @@ const SubPage = () => {
                     {['Husby-Kista', 'Rinkeby', 'Tensta-Hjulsta', 'Hässelby', 'Södra Stockholm', 'Sydvästra', 'Sundbyberg', 'Solna-Nacka', 'EKF'].map((org, index) => (
                       <div 
                         key={index} 
-                        className="bg-white p-3 rounded-lg text-center border border-blue-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1 duration-300"
+                        className="flex justify-center items-center bg-white p-3 rounded-lg text-center border border-blue-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1 duration-300"
                       >
                         <span className="text-blue-800 font-medium text-sm">{org}</span>
                       </div>
@@ -412,7 +413,7 @@ const SubPage = () => {
                     hade egna tält.
                   </p>
                 </div>
-                <div className="md:w-1/2">
+                <div className="md:w-1/2 mb-[200px] md:mb-0">
                   <div className="relative h-64">
                     <ImagePreview 
                       src="/images/newImages/IMG_7246.JPG"
@@ -704,7 +705,7 @@ const SubPage = () => {
 </div>
 </div>
 </div>
-
+<GoToTop />
 <Footer />
 </div>
 );

@@ -90,7 +90,7 @@ const Slider = () => {
                <span className='text-yellow-500'>Discover</span> the Future of <br /><span className='text-blue-600 inline-block min-h-[40px] md:min-h-[60px]'>{typewriterText}<span className="animate-pulse">|</span></span>
             </h1>
             <p className="text-base md:text-lg text-white mb-6 md:mb-8">
-              Welcome to NHCS, your go-to platform for all things development. Stay updated with the latest news and insights while engaging with our vibrant community.
+              Welcome to Alenalki, your go-to platform for all things development. Stay updated with the latest news and insights while engaging with our vibrant community.
             </p>
             <div className="flex flex-wrap gap-3 md:gap-4">
               <a href="/news" className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10">

@@ -98,51 +98,54 @@
 // lockat så många besökare och kunnat bidra till ett positivt Järva, säger ordföranden för
 // samordningsgruppen Alem Teklegiorgis.
 
-Vi är idag tre generationer svensk- eritreaner 
-ERITREANER ÄR IDAG EN DEL AV DET SVENSKA SAMHÄLLET
+
+// -------------------------------------------------------
+
+// Vi är idag tre generationer svensk- eritreaner 
+// ERITREANER ÄR IDAG EN DEL AV DET SVENSKA SAMHÄLLET
 
 
-SVENSKA-ERITREANER ÄR DEN NÄST STÖRSTA
-afrikanska invandrargruppen i Sverige. Enligt statistiska centralbyrån finns knappt 60 100
-folkbokförda personer med eritreanskt ursprung i Sverige, många kom till Sverige på 70-, 80- och 90-talet bestående av 1:a, 2:a och 3:e generatio- nens svenska-eritreaner.
+// SVENSKA-ERITREANER ÄR DEN NÄST STÖRSTA
+// afrikanska invandrargruppen i Sverige. Enligt statistiska centralbyrån finns knappt 60 100
+// folkbokförda personer med eritreanskt ursprung i Sverige, många kom till Sverige på 70-, 80- och 90-talet bestående av 1:a, 2:a och 3:e generatio- nens svenska-eritreaner.
 
-SOM HOS ALLA ANDRA GRUPPER har vi bety-
-dande åldersfördelning och finns på olika platser i samhället. Inom offentliga och privata sektorn. Våra yngsta går på dagis, några går i grundsko-
-lan, andra läser på universitet, vi jobbar inom olika branscher av serviceyrken. Vi kör bussar, jobbar i skolor, inom hälso- och sjukvården,
-hotell- och restaurangbranschen. Många jobbar även inom IT- och telecom, samt inom bank- och finansbranschen.
+// SOM HOS ALLA ANDRA GRUPPER har vi bety-
+// dande åldersfördelning och finns på olika platser i samhället. Inom offentliga och privata sektorn. Våra yngsta går på dagis, några går i grundsko-
+// lan, andra läser på universitet, vi jobbar inom olika branscher av serviceyrken. Vi kör bussar, jobbar i skolor, inom hälso- och sjukvården,
+// hotell- och restaurangbranschen. Många jobbar även inom IT- och telecom, samt inom bank- och finansbranschen.
 
-VI ÄR FULLT MEDVETNA att vårt ursprungsland Eritrea har stora utmaningar på flera områden, som vi eritreaner energiskt arbetar för att
-bemöta. Förutsättningarna för utveckling måste komma från Eritrea. Vår övertygelse är att
-huvudansvaret för tillväxt och utveckling vilar ytterst på oss eritreaner och vår befolkning.
-OMVÄRLDEN KAN STÖDJA OCH FRÄMJA, men
-inte skapa, dessa förutsättningar. Omvärldens
-stöd måste möjliggöra för Eritrea att stå på egna ben och att växa utifrån egna förutsättningar. Det ska inte styra eller ersätta ansträngningarna hos ett utvecklingsland som Eritrea som söker resa
-sig ur fattigdom!
+// VI ÄR FULLT MEDVETNA att vårt ursprungsland Eritrea har stora utmaningar på flera områden, som vi eritreaner energiskt arbetar för att
+// bemöta. Förutsättningarna för utveckling måste komma från Eritrea. Vår övertygelse är att
+// huvudansvaret för tillväxt och utveckling vilar ytterst på oss eritreaner och vår befolkning.
+// OMVÄRLDEN KAN STÖDJA OCH FRÄMJA, men
+// inte skapa, dessa förutsättningar. Omvärldens
+// stöd måste möjliggöra för Eritrea att stå på egna ben och att växa utifrån egna förutsättningar. Det ska inte styra eller ersätta ansträngningarna hos ett utvecklingsland som Eritrea som söker resa
+// sig ur fattigdom!
 
-RELATIONEN MELLAN SVERIGE OCH ERITREA
-berör oss svensk-eritreaner mycket starkt. Vi
-förstår att vi har en hel del att bidra med för att relationen ska vara god och konstruktiv. Vi strä- var att överföra vad vi har lärt oss i Sverige för att förbättra förhållandena i vårt ursprungsland.
-Som festivalarrangörer har EFKF av många prak- tisk skäl en kommunikation med den eritreanska ambassaden i Sverige, för inbjudan av musiker
-och artister från Eritrea. Eritreanska festivaler runt om världen bjuder ofta in en representant
-från den eritreanska regeringen för att svara på frågor som främst berör diaspora eritreaner. Ett tillfälle som är mycket uppskattad där besökar- na kan säga direkt vad de tycker och kräva svar på känsliga politiska frågor.
+// RELATIONEN MELLAN SVERIGE OCH ERITREA
+// berör oss svensk-eritreaner mycket starkt. Vi
+// förstår att vi har en hel del att bidra med för att relationen ska vara god och konstruktiv. Vi strä- var att överföra vad vi har lärt oss i Sverige för att förbättra förhållandena i vårt ursprungsland.
+// Som festivalarrangörer har EFKF av många prak- tisk skäl en kommunikation med den eritreanska ambassaden i Sverige, för inbjudan av musiker
+// och artister från Eritrea. Eritreanska festivaler runt om världen bjuder ofta in en representant
+// från den eritreanska regeringen för att svara på frågor som främst berör diaspora eritreaner. Ett tillfälle som är mycket uppskattad där besökar- na kan säga direkt vad de tycker och kräva svar på känsliga politiska frågor.
 
-ERITREAS SJÄLVSTÄNDIGHET
-Den 24 maj är Eritreas nationaldag och den firas av eritreaner runt om i världen. Den var den 24 maj 1991 när Eritrea befriades från den Etiopiska kolonialmakten efter trettio års krig. I andra delar av världen, exempelvis en
-del stater i USA, proklameras den 24 maj officiellt av sina borgmästare som Eritreas självständighetsdag; och den eritreanska flaggan hissas vid stadshusen i respektive
-stat.
-MARTYRERNAS DAG
-Den 20 juni är en helgdag i Eritrea. Under den eritreanska befrielsekampen mellan 1961-1991 har orsakat över 65 000 människors liv. Det finns ingen familj
-som inte berörs av detta. I Stockholm firas det med en gemensam promenad och manifestation som avslutas i Järvafältet med diktläsning och tända ljus.
-VÅR KULTURFÖRENING
-Eritreanska föreningarnas kulturforum (EFKF) består av ett råd och en styrelse. Rådet består av 13 personer, som representerar följande 11 olika eritreanska-svenska föreningar i Stockholm: Husby-Kista, Solna, Sundbyberg, Vällingby-Hässelby, Rinkeby, Tensta Hjulsta, Järfälla-Upplands-Bro, Söder Stockholm, Sydvästra Stockholm, Nacka, Kvinnoföreningen och Ungdoms föreningen i Stockholm. I rådet ingår även representanter från Uppsala, Västerås, Eskilstuna, Örebro, Umeå och Göteborg. Eftersom festivalen vuxit till att bli ett skandinaviskt evenemang, är även eritreanska föreningar från Norge och Danmark representerade. Styrelsen består av nio personer som ansvarar för arbetet inom olika arbetsgrupper.
+// ERITREAS SJÄLVSTÄNDIGHET
+// Den 24 maj är Eritreas nationaldag och den firas av eritreaner runt om i världen. Den var den 24 maj 1991 när Eritrea befriades från den Etiopiska kolonialmakten efter trettio års krig. I andra delar av världen, exempelvis en
+// del stater i USA, proklameras den 24 maj officiellt av sina borgmästare som Eritreas självständighetsdag; och den eritreanska flaggan hissas vid stadshusen i respektive
+// stat.
+// MARTYRERNAS DAG
+// Den 20 juni är en helgdag i Eritrea. Under den eritreanska befrielsekampen mellan 1961-1991 har orsakat över 65 000 människors liv. Det finns ingen familj
+// som inte berörs av detta. I Stockholm firas det med en gemensam promenad och manifestation som avslutas i Järvafältet med diktläsning och tända ljus.
+// VÅR KULTURFÖRENING
+// Eritreanska föreningarnas kulturforum (EFKF) består av ett råd och en styrelse. Rådet består av 13 personer, som representerar följande 11 olika eritreanska-svenska föreningar i Stockholm: Husby-Kista, Solna, Sundbyberg, Vällingby-Hässelby, Rinkeby, Tensta Hjulsta, Järfälla-Upplands-Bro, Söder Stockholm, Sydvästra Stockholm, Nacka, Kvinnoföreningen och Ungdoms föreningen i Stockholm. I rådet ingår även representanter från Uppsala, Västerås, Eskilstuna, Örebro, Umeå och Göteborg. Eftersom festivalen vuxit till att bli ett skandinaviskt evenemang, är även eritreanska föreningar från Norge och Danmark representerade. Styrelsen består av nio personer som ansvarar för arbetet inom olika arbetsgrupper.
 
-KULTURFESTIVALEN OCH EKONOMI
-Festivalen bedrivs ideellt utan vinstintresse. Arrangören EFKF förlitar sig på att medverkande föreningar bidrar med såväl frivillig arbetskraft samt ekonomiska medel. De åren som festivalen går med förlust hjälps man åt för att täcka underskottet. Kulturfestivalen bedrivs utan bidrag från staten eller kommunen.
-Festivalen har dessutom blivit en plats för många småföretag att marknadsföra och sälja sina produkter. Kulturfestivalen har också blivit en “boost” för Järvafältet som annars främst nämns och sammankopplas med våld och gängkriminalitet de senaste åren. Det har blivit ett konkret motvikt.
-Butiker, restauranger och hotell i närområden vittnar om att kulturfestivalen bidrar positivt till det kommersiella livet. Det är tack
-vare de hundratals eldsjälar och kreativa föreningsmedlemmar som festivalen kan fortsätta arrangeras trots de stora ekonomiska och logistiska utmaningarna.
+// KULTURFESTIVALEN OCH EKONOMI
+// Festivalen bedrivs ideellt utan vinstintresse. Arrangören EFKF förlitar sig på att medverkande föreningar bidrar med såväl frivillig arbetskraft samt ekonomiska medel. De åren som festivalen går med förlust hjälps man åt för att täcka underskottet. Kulturfestivalen bedrivs utan bidrag från staten eller kommunen.
+// Festivalen har dessutom blivit en plats för många småföretag att marknadsföra och sälja sina produkter. Kulturfestivalen har också blivit en “boost” för Järvafältet som annars främst nämns och sammankopplas med våld och gängkriminalitet de senaste åren. Det har blivit ett konkret motvikt.
+// Butiker, restauranger och hotell i närområden vittnar om att kulturfestivalen bidrar positivt till det kommersiella livet. Det är tack
+// vare de hundratals eldsjälar och kreativa föreningsmedlemmar som festivalen kan fortsätta arrangeras trots de stora ekonomiska och logistiska utmaningarna.
 
-Låt oss mötas
-UNDER BEFRIELSEKAMPEN SAMLADES ERITREANER
-från hela världen i Bologna, Italien, varje sommar för en veckasfirande, seminarier, utställningarochsportaktiviteter. Den eritreanska festivalen i Stockholm är nu en årlig familjefestival som hålls i slutet på juli månad vid Eggebygård Järvafältet. Festivalen är den största eritreansk kulturfestival i Skandinavien och år 2022 lockades över 15 000 besökare. En festival där barn och ungdomar med eritreanskt påbrå från hela Sverige får möjlighet att lära känna varandra och känna stolthet över sin identitet . Det är en folkrörelse i ordets sanna bemärkelse. En festival och etablerad mötesplats där man som svensk-eritrean inte behöver krympa och skämmas över sin identitet och status i samhället utan kan växa som människa och känna stolthet över vem man är. En plats där vi gärna
-möter andra svenskar som vill möta oss. Välkomna!
+// Låt oss mötas
+// UNDER BEFRIELSEKAMPEN SAMLADES ERITREANER
+// från hela världen i Bologna, Italien, varje sommar för en veckasfirande, seminarier, utställningarochsportaktiviteter. Den eritreanska festivalen i Stockholm är nu en årlig familjefestival som hålls i slutet på juli månad vid Eggebygård Järvafältet. Festivalen är den största eritreansk kulturfestival i Skandinavien och år 2022 lockades över 15 000 besökare. En festival där barn och ungdomar med eritreanskt påbrå från hela Sverige får möjlighet att lära känna varandra och känna stolthet över sin identitet . Det är en folkrörelse i ordets sanna bemärkelse. En festival och etablerad mötesplats där man som svensk-eritrean inte behöver krympa och skämmas över sin identitet och status i samhället utan kan växa som människa och känna stolthet över vem man är. En plats där vi gärna
+// möter andra svenskar som vill möta oss. Välkomna!

@@ -9,6 +9,7 @@ import JoinCommunitySection from '../components/home-components/JoinCommunitySec
 import Footer from '../components/Footer';
 import ContactUs from '../components/home-components/ContactUs';
 import AboutUs from '../components/home-components/AboutUs';
+import GoToTop from '../components/GotToTop';
 
 const HomePage = () => {
   return (
@@ -26,6 +27,7 @@ const HomePage = () => {
       <div id="contact-section">
         <ContactUs />
       </div>
+      <GoToTop />
       <Footer />
     </div>
   );
