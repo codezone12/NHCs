@@ -18,7 +18,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-20 bg-blue-500 backdrop-blur-md">
+    <header className="sticky top-0 left-0 right-0 z-[100] bg-blue-500 backdrop-blur-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6 lg:ml-3">

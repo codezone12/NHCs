@@ -28,7 +28,7 @@ const NhccPage = () => {
       
       {/* Hero Section */}
       <div className="relative h-[40vh] sm:h-[50vh] md:h-[60vh] overflow-hidden">
-        <div className="absolute inset-0 bg-blue-900/80 z-10"></div>
+        {/* <div className="absolute inset-0 bg-blue-900/80 z-10"></div> */}
         <img 
           src="/images/newImages/IMG_6851.JPG" 
           alt="NHCC Festival" 
@@ -328,7 +328,7 @@ const NhccPage = () => {
                     <ImagePreview 
                       src="/images/newImages/IMG_7246.JPG"
                       alt="NHCC Committee Meeting"
-                      className="w-full h-full object-cover rounded-lg shadow-md"
+                      className="w-full h-48 object-cover rounded-lg shadow-md"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent rounded-lg"></div>
                     <div className="absolute bottom-4 left-4 right-4 text-white">
@@ -604,15 +604,15 @@ const NhccPage = () => {
           
           {/* Newsletter Section */}
           <div className="mb-12 sm:mb-16 bg-gradient-to-r from-blue-500 to-blue-700 p-4 sm:p-8 rounded-lg shadow-lg text-white" data-aos="fade-up">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="w-full md:w-2/3">
+            <div className="w-full flex flex-col md:flex-row items-center justify-center gap-6">
+              <div className="w-full">
                 <h3 className="text-xl sm:text-2xl font-bold mb-2">Stay Updated</h3>
                 <p className="text-blue-100 text-sm sm:text-base mb-4 md:mb-0">
                   Subscribe to our newsletter to receive updates about upcoming events, community news, and cultural activities.
                 </p>
               </div>
               
-              <div className="w-full md:w-1/3">
+              <div className="w-full">
                 <div className="flex">
                   <input 
                     type="email" 

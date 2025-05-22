@@ -75,7 +75,7 @@ const SubPage = () => {
       
             {/* Hero Section with Slider */}
             <div className="relative h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] overflow-hidden" ref={sliderRef}>
-        <div className="absolute inset-0 bg-blue-900/70 z-10"></div>
+        {/* <div className="absolute inset-0 bg-blue-900/70 z-10"></div> */}
         
         {/* Slider Images */}
         <div className="relative h-full w-full">

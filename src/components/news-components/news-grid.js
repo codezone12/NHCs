@@ -2,18 +2,20 @@ import { useState, useEffect, useRef } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ImagePreview from '../image-preview';
+import { Link } from 'react-router-dom';
 
 const NewsGrid = () => {
   const [newsItems, setNewsItems] = useState([
     {
       id: 1,
       category: "TECHNOLOGY",
-      image: "/images/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg",
-      title: "The Future of Quantum Computing in Everyday Applications",
-      description: "Exploring how quantum computing technologies are beginning to impact consumer products and daily technological interactions.",
+      image: "/images/bf30b922-36c6-4ba7-b88b-41d7e9009c73.jpg",
+      title: "A Historic Gathering Marks the Beginning of an Eritrean Professional Network in Sweden",
+      description: "On the 18th of May, an inspiring and emotionally rich event brought together three generations of Eritrean professionals in Sweden",
       author: "Sarah Johnson",
       date: "April 22, 2025",
-      readTime: "8 Min Read"
+      readTime: "8 Min Read",
+      anchor: "/news-details"
     },
     {
       id: 2,
@@ -113,6 +115,7 @@ const NewsGrid = () => {
       data-aos-anchor-placement="center-bottom"
       className="bg-white rounded-lg overflow-hidden shadow-md mb-8 h-full"
     >
+      <Link to={item.anchor}>
       <div className="relative">
         <ImagePreview 
           src={item.image} 
@@ -140,6 +143,7 @@ const NewsGrid = () => {
           </div>
         </div>
       </div>
+    </Link>
     </div>
   );
 
