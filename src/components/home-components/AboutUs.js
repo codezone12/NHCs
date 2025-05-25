@@ -105,9 +105,7 @@ const AboutUs = () => {
             Highlight achievements by the numbers
           </h3>
           <p className="text-gray-600 text-sm mb-8">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
-            in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor
-            interdum nulla, ut commodo diam libero vitae erat.
+          Alenalki is a digital platform that aims to collect and share relevant information for Eritreans in the diaspora, with a special focus on culture, history and identity. It supports young people in their dual belonging and aims to create community and pride. At the same time, the platform acts as a bridge between Eritreans and other communities, promoting integration and collaboration.
           </p>
 
           {/* Stats Grid */}
@@ -178,7 +176,7 @@ const AboutUs = () => {
                 </span>
               </div>
             </div>
-            <div className="p-6">
+            <div className="flex flex-col gap-2 p-6">
               <p className="text-gray-600 text-sm">
                 {section === 'Background' && 
                   "Alenalki emerged from the need for a dynamic website for Eritreans in the diaspora, where they could easily access news and information about their culture, history and identity. The project aimed to fill the gap in relevant resources for both adults and young Eritreans growing up in other countries."}
@@ -187,11 +185,12 @@ const AboutUs = () => {
                 {section === 'Mission' && 
                   "Alenalki's mission is to strengthen the community by providing reliable information, highlighting news and activities, and creating opportunities for collaboration and engagement. The platform seeks to foster pride in Eritrean culture and identity, especially among young people."}
               </p>
-              <button 
-                className="mt-4 px-4 py-2 bg-yellow-400 text-blue-800 font-bold rounded-lg hover:bg-yellow-500 transition-colors hover:scale-105"
+              <a
+                href="https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com"
+                className="text-center mt-4 px-4 py-2 bg-yellow-400 text-blue-800 font-bold rounded-lg hover:bg-yellow-500 transition-colors hover:scale-105"
               >
                 Learn More
-              </button>
+              </a>
             </div>
           </div>
         ))}
@@ -226,11 +225,12 @@ const AboutUs = () => {
         <p className="max-w-2xl mx-auto text-gray-600 text-sm mb-6">
           Be part of our growing network of Eritreans in the diaspora and help build a stronger, more connected community.
         </p>
-        <button 
+        <a 
+          href="https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com"
           className="px-6 py-3 bg-yellow-400 text-blue-800 font-bold rounded-lg hover:bg-yellow-500 transition-colors hover:scale-105 transform"
         >
-          Sign Up Now
-        </button>
+          Join Now
+        </a>
       </div>
     </div>
   );

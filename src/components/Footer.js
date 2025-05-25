@@ -1,7 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === '/';
+
+  // Function to handle smooth scrolling
+  const scrollToSection = (sectionId) => {
+    // If on home page, scroll to the section
+    if (isHomePage) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // If not on home page, navigate to home page with hash
+      navigate(`/#${sectionId}`);
+    }
+  };
+
   return (
     <footer className="bg-black text-white py-12 px-4">
       <div className="container mx-auto">
@@ -44,16 +62,26 @@ const Footer = () => {
             <h3 className="text-sm font-semibold mb-4">Useful Links</h3>
             <ul className="space-y-2">
               {[
-                { href: "/home", text: "Contact Us" },
-                { href: "/support", text: "Support Us" },
+                { onClick: () => scrollToSection('contact-section'), text: "Contact Us", isButton: true },
+                { href: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com", text: "Support Us" },
                 { href: "/festival", text: "FestivalPage" },
                 { href: "/nhcc", text: "Nhcc Page" },
               ].map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-sm text-gray-300 hover:text-yellow-500 transition relative inline-block group">
-                    {link.text}
-                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
-                  </a>
+                  {link.isButton ? (
+                    <button 
+                      onClick={link.onClick}
+                      className="text-sm text-gray-300 hover:text-yellow-500 transition relative inline-block group"
+                    >
+                      {link.text}
+                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+                    </button>
+                  ) : (
+                    <a href={link.href} className="text-sm text-gray-300 hover:text-yellow-500 transition relative inline-block group">
+                      {link.text}
+                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -79,7 +107,7 @@ const Footer = () => {
                   </svg>
                 },
                 { 
-                  href: "https://youtube.com", 
+                  href: "https://youtube.com/@alenalkidimtzieritrawian?si=SD6tIFutjzMBDEfB", 
                   text: "YouTube",
                   icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fillRule="evenodd" d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" clipRule="evenodd" />
@@ -107,8 +135,8 @@ const Footer = () => {
           <div className="flex flex-wrap gap-6">
             {[
               { href: "/privacy", text: "Privacy Policy" },
-              { href: "/terms", text: "Terms of Use" },
-              { href: "#", text: "Cookie Settings", isButton: true }
+              { href: "/privacy", text: "Terms of Use" },
+              { href: "/privacy", text: "Cookie Settings", isButton: true }
             ].map((item, index) => (
               item.isButton ? (
                 <button key={index} className="text-xs text-gray-400 hover:text-yellow-500 transition relative group">

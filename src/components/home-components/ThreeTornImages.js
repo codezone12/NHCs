@@ -11,42 +11,42 @@ const FeaturesSlider = () => {
       image: "/images/newImages/IMG_0204.JPG",
       title: "Streamlined Admin Panel",
       description: "Our platform offers a responsive design, ensuring optimal viewing on any device.",
-      link: "#learn-more",
+      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
       linkText: "Learn More"
     },
     {
       image: "/images/newImages/IMG_6640.JPG",
       title: "User Engagement Tools",
       description: "Engage users with feedback mechanisms and timely email notifications for updates.",
-      link: "#explore",
+      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
       linkText: "Explore"
     },
     {
       image: "/images/newImages/IMG_7246.JPG",
       title: "Responsive Design",
       description: "Enjoy a consistent and engaging experience whether on mobile or desktop.",
-      link: "#explore",
+      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
       linkText: "Explore"
     },
     {
       image: "/images/newImages/IMG_6654.JPG",
       title: "Analytics Dashboard",
       description: "Track user behavior and content performance with our comprehensive analytics.",
-      link: "#learn-more",
+      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
       linkText: "Learn More"
     },
     {
       image: "/images/newImages/rollerCoaster1.jpg",
       title: "Content Scheduling",
       description: "Plan and automate your content publication for maximum audience reach.",
-      link: "#discover",
+      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
       linkText: "Discover"
     },
     {
       image: "/images/newImages/IMG_8764.JPG",
       title: "Integration Capabilities",
       description: "Connect seamlessly with your favorite tools and services for enhanced workflow.",
-      link: "#integrate",
+      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
       linkText: "Integrate"
     }
   ];

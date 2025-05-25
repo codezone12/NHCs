@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ImagePreview from '../components/image-preview';
+import Slider from '../components/home-components/Slider';
 
 const NhccPage = () => {
   useEffect(() => {
@@ -26,10 +27,12 @@ const NhccPage = () => {
     <div className="bg-gray-50 min-h-screen">
       <Header />
       
+      <Slider />
+
       {/* Hero Section */}
-      <div className="relative h-[40vh] sm:h-[50vh] md:h-[60vh] overflow-hidden">
+      {/* <div className="relative h-[40vh] sm:h-[50vh] md:h-[60vh] overflow-hidden"> */}
         {/* <div className="absolute inset-0 bg-blue-900/80 z-10"></div> */}
-        <img 
+        {/* <img 
           src="/images/newImages/IMG_6851.JPG" 
           alt="NHCC Festival" 
           className="absolute inset-0 w-full h-full object-cover"
@@ -46,7 +49,7 @@ const NhccPage = () => {
             Preserving culture, celebrating heritage, and building community since 1998
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 sm:py-12">
@@ -463,9 +466,9 @@ const NhccPage = () => {
                       Share your skills and expertise
                     </li>
                   </ul>
-                  <button className="px-4 sm:px-6 py-2 sm:py-3 bg-yellow-400 text-blue-900 font-bold rounded-lg hover:bg-yellow-500 transition-all hover:scale-105 transform text-sm sm:text-base">
+                  <a href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com' className="px-4 sm:px-6 py-2 sm:py-3 bg-yellow-400 text-blue-900 font-bold rounded-lg hover:bg-yellow-500 transition-all hover:scale-105 transform text-sm sm:text-base">
                     Become a Volunteer
-                  </button>
+                  </a>
                 </div>
                 
                 <div className="w-full md:w-1/2">

@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUsers, FaHandshake, FaGlobe, FaMusic, FaChild, FaBook, FaComments, FaHeart, FaLightbulb, FaUniversity, FaTheaterMasks, FaUtensils, FaChevronLeft, FaChevronRight, FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
 import GoToTop from '../components/GotToTop';
+import Slider from '../components/home-components/Slider';
 
 const SubPage = () => {
   const [readingProgress, setReadingProgress] = useState(0);
@@ -73,12 +74,14 @@ const SubPage = () => {
         ></div>
       </div>
       
+        <Slider />
+
             {/* Hero Section with Slider */}
-            <div className="relative h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] overflow-hidden" ref={sliderRef}>
+            {/* <div className="relative h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] overflow-hidden" ref={sliderRef}> */}
         {/* <div className="absolute inset-0 bg-blue-900/70 z-10"></div> */}
         
         {/* Slider Images */}
-        <div className="relative h-full w-full">
+        {/* <div className="relative h-full w-full">
           {festivalImages.map((image, index) => (
             <div 
               key={index}
@@ -95,7 +98,6 @@ const SubPage = () => {
           ))}
         </div>
         
-        {/* Slider Controls */}
         <button 
           onClick={prevSlide}
           className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 rounded-full transition-colors"
@@ -111,7 +113,6 @@ const SubPage = () => {
           <FaChevronRight className="text-sm sm:text-base" />
         </button>
         
-        {/* Slider Indicators */}
         <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-1 sm:space-x-2">
           {festivalImages.map((_, index) => (
             <button
@@ -150,7 +151,7 @@ const SubPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12">
@@ -418,7 +419,7 @@ const SubPage = () => {
                     <ImagePreview 
                       src="/images/newImages/IMG_7246.JPG"
                       alt="Participating Organizations"
-                      className="w-full h-full object-cover rounded-lg shadow-md"
+                      className="w-full h-64 object-cover rounded-lg shadow-md"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent rounded-lg"></div>
                     <div className="absolute bottom-4 left-4 right-4 text-white">
@@ -493,9 +494,11 @@ const SubPage = () => {
                     professionella vakter som sköter sitt uppdrag utmärkt. Vi uppskattar Polismyndigheten och Dialogpolisen
                     för ett mycket gott samarbete.
                   </p>
-                  <button className="mt-6 px-6 py-3 bg-yellow-400 text-blue-800 font-bold rounded-lg hover:bg-yellow-500 transition-all hover:scale-105 transform flex items-center">
-                    <FaHeart className="mr-2" /> Bli Volontär
-                  </button>
+                  <a href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com'>
+                    <button className="mt-6 px-6 py-3 bg-yellow-400 text-blue-800 font-bold rounded-lg hover:bg-yellow-500 transition-all hover:scale-105 transform flex items-center">
+                      <FaHeart className="mr-2" /> Bli Volontär
+                    </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -609,9 +612,9 @@ const SubPage = () => {
         <p className="text-gray-700">Email: info@eritreafestival.se</p>
         <p className="text-gray-700">Telefon: 08-123 45 67</p>
       </div>
-      <button className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">
+      <a href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com' className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">
         Kontakta oss
-      </button>
+      </a>
     </div>
     <div className="md:w-1/2">
       <div className="bg-blue-50 p-6 rounded-lg h-full">

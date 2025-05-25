@@ -68,11 +68,11 @@ const ThreeCardsSection = () => {
         
         {/* Call to Action Buttons */}
         <div className="flex justify-center gap-4">
-          <a href="#learn-more" className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
+          <a href="https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com" className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
             Learn More
           </a>
-          <a href="#sign-up" className="bg-white hover:bg-gray-50 text-gray-800 px-6 py-2 rounded font-medium border border-gray-300 transition">
-            Sign Up
+          <a href="https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com" className="bg-white hover:bg-gray-50 text-gray-800 px-6 py-2 rounded font-medium border border-gray-300 transition">
+            Join
           </a>
         </div>
       </div>

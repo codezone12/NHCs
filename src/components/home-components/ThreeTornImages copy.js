@@ -43,7 +43,7 @@ const ThreeTornImages = () => {
               Our platform offers a responsive design, ensuring optimal viewing on any device.
             </p>
             
-            <a href="#learn-more" className="text-blue-600 hover:text-blue-800 flex items-center text-sm">
+            <a href="https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com" className="text-blue-600 hover:text-blue-800 flex items-center text-sm">
               Learn More <span className="ml-1">›</span>
             </a>
           </div>

@@ -20,11 +20,11 @@ const ImpactStatsSection = () => {
             </p>
             
             <div className="flex flex-wrap gap-4">
-              <a href="#learn-more" className="bg-transparent hover:bg-yellow-500 text-gray-900 border border-gray-900 px-6 py-2 rounded font-medium transition inline-flex items-center">
+              <a href="https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com" className="bg-transparent hover:bg-yellow-500 text-gray-900 border border-gray-900 px-6 py-2 rounded font-medium transition inline-flex items-center">
                 Learn More
               </a>
-              <a href="#sign-up" className="bg-transparent hover:bg-yellow-500 text-gray-900 border border-gray-900 px-6 py-2 rounded font-medium transition inline-flex items-center">
-                Sign Up <span className="ml-1">→</span>
+              <a href="https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com" className="bg-transparent hover:bg-yellow-500 text-gray-900 border border-gray-900 px-6 py-2 rounded font-medium transition inline-flex items-center">
+                Join now <span className="ml-1">→</span>
               </a>
             </div>
           </div>

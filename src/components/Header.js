@@ -1,21 +1,48 @@
-import { ChartArea, Home, Menu, Newspaper, Phone, Users, X } from 'lucide-react';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ChartArea, Home, Menu, Newspaper, Phone, Users, X, Shield, Award, BookOpen, LogIn } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === '/';
 
   // Function to handle smooth scrolling
   const scrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+    // If on home page, scroll to the section
+    if (isHomePage) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        // Close mobile menu if open
+        if (isMenuOpen) {
+          setIsMenuOpen(false);
+        }
+      }
+    } else {
+      // If not on home page, navigate to home page with hash
+      navigate(`/#${sectionId}`);
       // Close mobile menu if open
       if (isMenuOpen) {
         setIsMenuOpen(false);
       }
     }
   };
+
+  // Handle hash navigation when coming from another page
+  useEffect(() => {
+    if (isHomePage && location.hash) {
+      const sectionId = location.hash.substring(1); // Remove the # character
+      const section = document.getElementById(sectionId);
+      if (section) {
+        // Small delay to ensure the page is fully loaded
+        setTimeout(() => {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [isHomePage, location.hash]);
 
   return (
     <header className="sticky top-0 left-0 right-0 z-[100] bg-blue-500 backdrop-blur-md">
@@ -33,7 +60,7 @@ const Header = () => {
             <Phone />Contact Us
             <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
-          <button 
+          <button
             onClick={() => scrollToSection('about-section')}
             className="flex gap-2 text-white hover:text-yellow-400 transition cursor-pointer relative group"
           >
@@ -60,21 +87,20 @@ const Header = () => {
               <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
             </button>
             <div className="absolute hidden group-hover:block bg-yellow-500 rounded-lg mt-0 w-40">
-              <a href="/privacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
-                Privacy Policy
-                {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
+              <a href="/privacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
+                <Shield size={16} /> Privacy Policy
               </a>
-              <a href="/festival" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
-                Festival
-                {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
+              <a href="/festival" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
+                <Award size={16} /> Festival
               </a>
-              <a href="/publicdiplomacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
-                Public Diplomacy
-                {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
+              <a href="/nhcc" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
+                <Award size={16} /> Nhcc
               </a>
-              <a href="/login" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group">
-                User Login
-                {/* <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div> */}
+              <a href="/publicdiplomacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
+                <BookOpen size={16} /> Public Diplomacy
+              </a>
+              <a href="/login" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
+                <LogIn size={16} /> User Login
               </a>
             </div>
           </div>
@@ -94,7 +120,7 @@ const Header = () => {
           {/* <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
               Join
           </button> */}
-          <a className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10">
+          <a className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10" href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com'>
             <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-yellow-300 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
             <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
             Join Community
@@ -131,11 +157,15 @@ const Header = () => {
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           <a href="/festival" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
-            <Newspaper /> Festival
+            <Award /> Festival
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
+          <a href="/nhcc" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
+            <Award /> Nhcc
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           <a href="/publicdiplomacy" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
-            <ChartArea /> Public Diplomacy
+            <BookOpen /> Public Diplomacy
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           <button 
@@ -146,11 +176,11 @@ const Header = () => {
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </button>
           <a href="/privacy" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
-            <X /> Privacy Policy
+            <Shield /> Privacy Policy
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
           <a href="/login" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
-            <Users /> User Login
+            <LogIn /> User Login
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
         </div>

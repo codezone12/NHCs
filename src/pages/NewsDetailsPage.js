@@ -12,11 +12,12 @@ export default function NewsDetailPage() {
     title: "A Historic Gathering Marks the Beginning of an Eritrean Professional Network in Sweden",
     author: "Jane Smith",
     date: "April 25, 2025",
-    category: "Technology",
+    category: "Festival",
     readTime: "8 min read",
     views: "2.4K",
     image: "/images/bf30b922-36c6-4ba7-b88b-41d7e9009c73.jpg",
-    profile: "/images/newImages/images.jpg",
+    image2: "/images/47937fdb-6d1a-42e9-89e5-21c42ccbbce9.jpg",
+    profile: "/images/download.jpg",
     content: [
       "On the 18th of May, an inspiring and emotionally rich event brought together three generations of Eritrean professionals in Sweden with a shared mission: to initiate and strengthen a sustainable Eritrean professional network and forge meaningful ties with professionals in Eritrea. Held in an atmosphere of unity and reflection, the gathering became more than just a meeting; it was a moment of intergenerational connection, storytelling, and vision casting.",
       "From the outset, attendees experienced a sense of community. The afternoon began with informal mingling at 14:45, followed by a warm welcome from Dr. Metkel at 15:00. His introduction set a tone of collaboration, and the icebreaker session helped bring together participants across generations, disciplines, and backgrounds. In his opening remarks, the Head of Mission, Embassy, Muhammed Ali (Wedi Gemahir) reflected on the significance of building professional unity and networks in the diaspora. A presentation by Eden and Dr. Metkel followed, highlighting the network’s purpose: to serve as a bridge between professionals in Sweden and Eritrea, with a focus on health sector transformation, capacity building, and shared learning. What truly set this gathering apart was the depth of generational exchange. Veteran Eritrean professionals shared vivid memories of their service during Eritrea’s liberation struggle, describing makeshift clinics in Sahel, scarce supplies, and the extraordinary spirit that sustained a people in crisis. These pioneers laid the foundation of a resilient healthcare system with their grit and commitment. For the younger professionals, these stories were not just history; they were living testimonies of courage, sacrifice, and nation-building. Middle-generation professionals offered a view into the post-independence evolution of Eritrea’s health sector, rapid developments in maternal health, child vaccination, and national strategies like the National Health Policy (NHP-2020) and the Health Sector Strategic Development Plan (HSSDP III). Their insights highlighted the progress and persistent challenges still facing the nation. The youngest participants, many of whom are health practitioners and researchers, listened with reverence and responded with excitement. Their contributions centered around digital health solutions, telemedicine, and data-driven health strategies. One participant, Dr. Vivian, remarked on the vast pool of knowledge that exists among doctors in Eritrea; “a treasure we must connect with and learn from.",
@@ -31,28 +32,28 @@ export default function NewsDetailPage() {
     {
       id: 1,
       title: "Global Climate Summit Results in New Emissions Targets",
-      image: "/images/newImages/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg",
+      image: "/images/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg",
       date: "April 24, 2025",
       readTime: "6 min read"
     },
     {
       id: 2,
       title: "Electric Vehicle Sales Surpass Traditional Cars For First Time",
-      image: "/images/newImages/slider-images-2.jpg",
+      image: "/images/slider-images-2.jpg",
       date: "April 23, 2025",
       readTime: "5 min read"
     },
     {
       id: 3,
       title: "Tech Companies Pledge Carbon Neutrality by 2030",
-      image: "/images/newImages/slider-images-3.jpg",
+      image: "/images/slider-images-3.jpg",
       date: "April 22, 2025",
       readTime: "4 min read"
     },
     {
       id: 4,
       title: "New Battery Technology Doubles Electric Vehicle Range",
-      image: "/images/newImages/cr_weekly_post04.jpg.png",
+      image: "/images/cr_weekly_post04.jpg.png",
       date: "April 21, 2025",
       readTime: "7 min read"
     }
@@ -63,7 +64,7 @@ export default function NewsDetailPage() {
     {
       id: 1,
       user: "Alex Johnson",
-      avatar: "/images/newImages/download (1).jpg",
+      avatar: "/images/download (1).jpg",
       date: "2 hours ago",
       content: "This is incredible news! I've been following Dr. Chen's work for years and knew they were onto something big. Can't wait to see this technology implemented widely.",
       likes: 45,
@@ -71,7 +72,7 @@ export default function NewsDetailPage() {
         {
           id: 101,
           user: "Maria Garcia",
-          avatar: "/images/newImages/download.jpg",
+          avatar: "/images/download.jpg",
           date: "1 hour ago",
           content: "I agree! The efficiency improvements are impressive. My concern is how quickly this can be scaled for mass production.",
           likes: 12
@@ -81,7 +82,7 @@ export default function NewsDetailPage() {
     {
       id: 2,
       user: "Sam Wilson",
-      avatar: "/images/newImages/images (1).jpg",
+      avatar: "/images/images (1).jpg",
       date: "5 hours ago",
       content: "I'm curious about the longevity of these new panels. The article doesn't mention durability testing or expected lifespan compared to traditional panels.",
       likes: 28,
@@ -90,7 +91,7 @@ export default function NewsDetailPage() {
     {
       id: 3,
       user: "Taylor Kim",
-      avatar: "/images/newImages/images.jpg",
+      avatar: "/images/images.jpg",
       date: "6 hours ago",
       content: "As someone working in the renewable energy sector, this is exactly the kind of innovation we need to see more of. The cost reduction potential alone makes this revolutionary.",
       likes: 56,
@@ -159,11 +160,37 @@ export default function NewsDetailPage() {
               
               {/* Article Content */}
               <div className="p-6">
-                {article.content.map((paragraph, index) => (
-                  <p key={index} className="mb-4 text-gray-800 leading-relaxed">
-                    {paragraph}
+                {/* First paragraph */}
+                <p className="mb-4 text-gray-800 leading-relaxed">
+                  {article.content[0]}
+                </p>
+                
+                {/* Second paragraph */}
+                <p className="mb-4 text-gray-800 leading-relaxed">
+                  {article.content[1]}
+                </p>
+                
+                {/* Second Image */}
+                <div className="w-full h-80 my-6 mb-10 relative">
+                  <img 
+                    src={article.image2}
+                    alt="Eritrean Professional Network Meeting"
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <p className="text-sm text-gray-500 mt-2 italic text-center">
+                    Eritrean professionals gathered for the inaugural network meeting in Sweden
                   </p>
-                ))}
+                </div>
+                
+                {/* Third paragraph */}
+                <p className="mb-4 text-gray-800 leading-relaxed">
+                  {article.content[2]}
+                </p>
+                
+                {/* Fourth paragraph */}
+                <p className="mb-4 text-gray-800 leading-relaxed">
+                  {article.content[3]}
+                </p>
                 
                 {/* Tags */}
                 <div className="mt-8 flex flex-wrap gap-2">
@@ -206,7 +233,13 @@ export default function NewsDetailPage() {
                 {/* Comment Form */}
                 <form onSubmit={handleCommentSubmit} className="mb-8">
                   <div className="flex items-start space-x-3">
-                    <div className="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0"></div>
+                    <div className="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0 overflow-hidden">
+                      <img 
+                        src="/images/newImages/user-placeholder.jpg" 
+                        alt="Your profile"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                     <div className="flex-grow">
                       <textarea 
                         className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
