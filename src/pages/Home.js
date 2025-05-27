@@ -23,7 +23,7 @@ const HomePage = () => {
         <AboutUs />
       </div>
       {/* <ImpactStatsSection /> */}
-      <JoinCommunitySection />
+      {/* <JoinCommunitySection /> */}
       <div id="contact-section">
         <ContactUs />
       </div>

@@ -208,7 +208,7 @@ const AboutUs = () => {
         <div className="relative z-10">
           <h3 className="text-2xl font-bold mb-4">Our Community Impact</h3>
           <blockquote className="text-lg italic mb-4">
-            "By serving as a bridge between the diaspora and the local community, Alenalki strives to promote integration, togetherness, and mutual understanding."
+            "Serving the truth and acting as a bridge between the diaspora and both local and global communities, Alenalki strives to promote integration, unity, and mutual understanding. We are a bridge that connects people and communities—built on trust, collaboration, and inclusive engagement."
           </blockquote>
           <p className="text-sm text-yellow-300">— Alenalki Team</p>
         </div>
