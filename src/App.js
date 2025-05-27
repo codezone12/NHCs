@@ -23,7 +23,7 @@ import EditorAnalyticsPage from './pages/editor/analytics';
 import { ToastContainer } from 'react-toastify';
 import NewsDetailPage from './pages/NewsDetailsPage';
 import SubPage from './pages/SubPage';
-import BlogPost from './pages/BlogPost';
+import PublicDiplomacyPage from './pages/BlogPost';
 import NhccPage from './pages/Nhcc';
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
         <Route path="/news-details" element={<NewsDetailPage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/festival" element={<SubPage />} />
-        <Route path="/publicdiplomacy" element={<BlogPost />} />
+        <Route path="/publicdiplomacy" element={<PublicDiplomacyPage />} />
         <Route path="/nhcc" element={<NhccPage />} />
       
         <Route path="/login" element={<LoginPage />} />
