@@ -123,7 +123,7 @@ const Header = () => {
           <a className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10" href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com'>
             <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-yellow-300 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
             <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
-            Join Community
+            Join Alenalki
             </span>
           </a>
         </div>

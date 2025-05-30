@@ -13,14 +13,14 @@ const BlueSection = () => {
             <div className="flex gap-4 justify-center md:justify-around w-full">
               <div className="w-[30%] rounded-lg overflow-hidden hover:scale-105 duration-300 shadow-lg shadow-black">
                 <ImagePreview 
-                  src="/images/newImages/IMG_7246.JPG" 
+                  src="/images/newPics/IMG_4203.JPG" 
                   alt="Newspaper and coffee" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="w-[30%] rounded-lg overflow-hidden md:translate-y-[40px] md:translate-x-[-40px]  hover:scale-105 duration-300 shadow-lg shadow-black">
                 <ImagePreview 
-                  src="/images/newImages/Highres-Independence_party_portrait_2015-05-30-0256.jpg" 
+                  src="/images/newPics/IMG_4230.JPG" 
                   alt="Writing tools and papers" 
                   className="w-full h-full object-cover"
                 />
@@ -31,9 +31,9 @@ const BlueSection = () => {
             <div className="flex gap-4 justify-center md:justify-around w-full">
               <div className="w-[30%] rounded-lg overflow-hidden md:translate-x-[40px]  hover:scale-105 duration-300 shadow-lg shadow-black">
                 <ImagePreview 
-                  src="/images/newImages/20150530-IMG_7415.JPG" 
+                  src="/images/newImages/DSC_0696.JPG" 
                   alt="Woman celebrating with arms raised" 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
               </div>
               <div className="w-[30%] rounded-lg overflow-hidden md:translate-y-[40px]  hover:scale-105 duration-300 shadow-lg shadow-black">
@@ -100,7 +100,7 @@ const BlueSection = () => {
               <a href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com' className="px-5 py-3 border-2 border-white text-lg font-semibold rounded-lg border-white-2px overflow-hidden relative group cursor-pointer bg-transparent hover:scale-105 duration-[700ms] z-10">
                   <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-gray-100 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
                   <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
-                  Join Community
+                  Join Alenalki
                   </span>
               </a>
             </div>
