@@ -66,6 +66,7 @@ const Footer = () => {
                 { href: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com", text: "Support Us" },
                 { href: "/festival", text: "FestivalPage" },
                 { href: "/nhcc", text: "Nhcc Page" },
+                { href: "/publicdiplomacy", text: "Public Diplomacy" },
               ].map((link, index) => (
                 <li key={index}>
                   {link.isButton ? (
@@ -134,9 +135,9 @@ const Footer = () => {
           
           <div className="flex flex-wrap gap-6">
             {[
-              { href: "/privacy", text: "Privacy Policy" },
-              { href: "/privacy", text: "Terms of Use" },
-              { href: "/privacy", text: "Cookie Settings", isButton: true }
+              { href: "/privacy", text: "Disclaimer" },
+              // { href: "/privacy", text: "Terms of Use" },
+              // { href: "/privacy", text: "Cookie Settings", isButton: true }
             ].map((item, index) => (
               item.isButton ? (
                 <button key={index} className="text-xs text-gray-400 hover:text-yellow-500 transition relative group">

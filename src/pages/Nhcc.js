@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { FaCalendarAlt, FaUsers, FaGlobe, FaHandshake, FaFlag, FaHistory, FaLandmark, FaMapMarkerAlt } from 'react-icons/fa';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -6,6 +6,68 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ImagePreview from '../components/image-preview';
 import Slider from '../components/home-components/Slider';
+import { submitContactForm } from '../apis/authService';
+import FeaturesSlider from '../components/home-components/ThreeTornImages';
+
+// CountUpCard component for animated statistics
+const CountUpCard = ({ endValue, suffix = "", label }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(null);
+  const observerRef = useRef(null);
+
+  useEffect(() => {
+    observerRef.current = new window.IntersectionObserver((entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        animateCount();
+        if (countRef.current) {
+          observerRef.current.unobserve(countRef.current);
+        }
+      }
+    }, { threshold: 0.1 });
+
+    if (countRef.current) {
+      observerRef.current.observe(countRef.current);
+    }
+
+    return () => {
+      if (observerRef.current && countRef.current) {
+        observerRef.current.unobserve(countRef.current);
+      }
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  const animateCount = () => {
+    const duration = 2000;
+    const steps = 50;
+    const stepTime = duration / steps;
+    let currentStep = 0;
+
+    const timer = setInterval(() => {
+      currentStep++;
+      const progress = currentStep / steps;
+      const easedProgress = 1 - (1 - progress) * (1 - progress);
+      const currentCount = Math.floor(easedProgress * endValue);
+
+      setCount(currentCount);
+
+      if (currentStep === steps) {
+        clearInterval(timer);
+        setCount(endValue);
+      }
+    }, stepTime);
+  };
+
+  return (
+    <div className="bg-white p-4 rounded-lg shadow-sm text-center" ref={countRef}>
+      <div className="text-4xl sm:text-5xl font-bold text-blue-600 mb-2">
+        {count}{suffix}
+      </div>
+      <p className="text-gray-700 text-sm sm:text-base">{label}</p>
+    </div>
+  );
+};
 
 const NhccPage = () => {
   useEffect(() => {
@@ -23,11 +85,44 @@ const NhccPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Add state for contact form
+  const [contactForm, setContactForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [submitting, setSubmitting] = useState(false);
+
+  // Handle input changes
+  const handleContactChange = (e) => {
+    const { name, value } = e.target;
+    setContactForm((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle form submit
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await submitContactForm(contactForm);
+      setContactForm({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+    } catch (err) {
+      // Error toast handled in API
+    }
+    setSubmitting(false);
+  };
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <Header />
       
-      <Slider />
+      {/* <Slider /> */}
+      <FeaturesSlider />
 
       {/* Hero Section */}
       {/* <div className="relative h-[40vh] sm:h-[50vh] md:h-[60vh] overflow-hidden"> */}
@@ -99,7 +194,7 @@ const NhccPage = () => {
             </h2>
             
             <div className="relative border-l-2 sm:border-l-4 border-blue-500 pl-4 sm:pl-8 py-2 sm:py-4 ml-2 sm:ml-4 space-y-6 sm:space-y-8">
-              <div className="absolute top-0 left-0 w-3 sm:w-4 h-3 sm:h-4 bg-blue-500 rounded-full -ml-1.5 sm:-ml-2"></div>
+              {/* <div className="absolute top-0 left-0 w-3 sm:w-4 h-3 sm:h-4 bg-blue-500 rounded-full -ml-1.5 sm:-ml-2"></div> */}
               
               <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md relative">
                 <div className="absolute top-0 left-0 w-3 sm:w-4 h-3 sm:h-4 bg-blue-500 rounded-full -ml-7 sm:-ml-10"></div>
@@ -256,7 +351,7 @@ const NhccPage = () => {
                   title: "Positive Image",
                   description: "Profiling a good Eritrean image, tradition and history within the broader Scandinavian society.",
                   icon: <FaGlobe className="text-2xl sm:text-3xl text-indigo-500" />,
-                  color: "indigo"
+                  color: "#6664f2"
                 },
                 {
                   title: "Diaspora Engagement",
@@ -268,13 +363,13 @@ const NhccPage = () => {
                   title: "Fundraising",
                   description: "Raise funds to benefit community development projects both in Scandinavia and Eritrea.",
                   icon: <FaHandshake className="text-2xl sm:text-3xl text-teal-500" />,
-                  color: "teal"
+                  color: "#20b3a5"
                 },
                 {
                   title: "Youth Empowerment",
                   description: "Empower the next generation of Eritrean-Scandinavians to connect with their heritage.",
                   icon: <FaUsers className="text-2xl sm:text-3xl text-orange-500" />,
-                  color: "orange"
+                  color: "#f87314"
                 }
               ].map((objective, index) => (
                 <div 
@@ -358,20 +453,10 @@ const NhccPage = () => {
             
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 sm:p-8 rounded-lg shadow-md">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6">
-                <div className="bg-white p-4 rounded-lg shadow-sm text-center">
-                  <div className="text-4xl sm:text-5xl font-bold text-blue-600 mb-2">25+</div>
-                  <p className="text-gray-700 text-sm sm:text-base">Years of Service</p>
-                </div>
-                
-                <div className="bg-white p-4 rounded-lg shadow-sm text-center">
-                  <div className="text-4xl sm:text-5xl font-bold text-blue-600 mb-2">10K+</div>
-                  <p className="text-gray-700 text-sm sm:text-base">Annual Festival Attendees</p>
-                </div>
-                
-                <div className="bg-white p-4 rounded-lg shadow-sm text-center">
-                  <div className="text-4xl sm:text-5xl font-bold text-blue-600 mb-2">45+</div>
-                  <p className="text-gray-700 text-sm sm:text-base">Member Organizations</p>
-                </div>
+                {/* Animated statistic cards */}
+                <CountUpCard endValue={25} suffix="+" label="Years of Service" />
+                <CountUpCard endValue={10} suffix="K+" label="Annual Festival Attendees" />
+                <CountUpCard endValue={45} suffix="+" label="Member Organizations" />
               </div>
               
               <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
@@ -466,9 +551,11 @@ const NhccPage = () => {
                       Share your skills and expertise
                     </li>
                   </ul>
-                  <a href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com' className="px-4 sm:px-6 py-2 sm:py-3 bg-yellow-400 text-blue-900 font-bold rounded-lg hover:bg-yellow-500 transition-all hover:scale-105 transform text-sm sm:text-base">
-                    Become a Volunteer
-                  </a>
+                  <button className="px-4 sm:px-6 py-2 mt-2 sm:py-3 bg-yellow-400 text-blue-900 font-bold rounded-lg hover:bg-yellow-500 transition-all hover:scale-105 transform text-sm sm:text-base">
+                    <a href="mailto:info@alenalki.se">
+                      Become a Volunteer
+                    </a>
+                  </button>
                 </div>
                 
                 <div className="w-full md:w-1/2">
@@ -479,7 +566,7 @@ const NhccPage = () => {
                         <FaCalendarAlt className="text-yellow-400 mr-2" />
                         <h4 className="font-semibold">Independence Day Celebration</h4>
                       </div>
-                      <p className="text-sm text-blue-100 mb-1">May 24, 2023 | Stockholm</p>
+                      <p className="text-sm text-blue-100 mb-1">May 24, 2025 | Stockholm</p>
                       <p className="text-sm">Annual celebration of Eritrean independence with cultural performances, food, and community activities.</p>
                     </div>
                     
@@ -488,7 +575,7 @@ const NhccPage = () => {
                         <FaCalendarAlt className="text-yellow-400 mr-2" />
                         <h4 className="font-semibold">Summer Festival Planning Meeting</h4>
                       </div>
-                      <p className="text-sm text-blue-100 mb-1">April 15, 2023 | Online</p>
+                      <p className="text-sm text-blue-100 mb-1">April 15, 2025 | Online</p>
                       <p className="text-sm">Planning session for the upcoming summer festival. All member organizations are invited to participate.</p>
                     </div>
                   </div>
@@ -520,8 +607,7 @@ const NhccPage = () => {
                         <h4 className="font-semibold text-blue-900 mb-1">Address</h4>
                         <p className="text-gray-700 text-sm">
                           Eritrean Cultural Center<br />
-                          Sveavägen 120<br />
-                          113 50 Stockholm, Sweden
+                          Stockholm, Sweden
                         </p>
                       </div>
                     </div>
@@ -533,8 +619,8 @@ const NhccPage = () => {
                       <div>
                         <h4 className="font-semibold text-blue-900 mb-1">Email</h4>
                         <p className="text-gray-700 text-sm">
-                          info@enhcc.org<br />
-                          events@enhcc.org
+                          <a href="mailto:info@alenalki.se">info@alenalki.se</a><br />
+                          <a href="mailto:nhccsweden@gmail.com">nhccsweden@gmail.com</a>
                         </p>
                       </div>
                     </div>
@@ -548,11 +634,17 @@ const NhccPage = () => {
                         <p className="text-gray-700 text-sm">
                           Follow us on social media for the latest updates and event announcements.
                         </p>
-                        <div className="flex space-x-3 mt-2">
-                          <a href="#" className="text-blue-600 hover:text-blue-800 transition-colors">Facebook</a>
-                          <a href="#" className="text-blue-400 hover:text-blue-600 transition-colors">Twitter</a>
-                          <a href="#" className="text-pink-600 hover:text-pink-800 transition-colors">Instagram</a>
-                        </div>
+                        {/* <div className="flex space-x-3 mt-2">
+                          <a href="https://www.facebook.com/nhcc.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 transition-colors">
+                            Facebook
+                          </a>
+                          <a href="https://www.twitter.com/nhcc_org" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-600 transition-colors">
+                            Twitter
+                          </a>
+                          <a href="https://www.instagram.com/nhcc.org" target="_blank" rel="noopener noreferrer" className="text-pink-600 hover:text-pink-800 transition-colors">
+                            Instagram
+                          </a>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -561,42 +653,80 @@ const NhccPage = () => {
                 <div className="w-full md:w-1/2">
                   <div className="bg-gray-100 p-4 sm:p-6 rounded-lg h-full">
                     <h3 className="text-lg sm:text-xl font-bold text-blue-800 mb-3">Send a Message</h3>
-                    <form className="space-y-4">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                        <input 
-                          type="text" 
-                          id="name" 
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          placeholder="Your name"
-                        />
+                    <form className="space-y-4" onSubmit={handleContactSubmit}>
+                      <div className="flex gap-2">
+                        <div className="w-1/2">
+                          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                          <input 
+                            type="text" 
+                            id="firstName"
+                            name="firstName"
+                            value={contactForm.firstName}
+                            onChange={handleContactChange}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="First name"
+                            required
+                          />
+                        </div>
+                        <div className="w-1/2">
+                          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                          <input 
+                            type="text" 
+                            id="lastName"
+                            name="lastName"
+                            value={contactForm.lastName}
+                            onChange={handleContactChange}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Last name"
+                            required
+                          />
+                        </div>
                       </div>
-                      
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input 
                           type="email" 
-                          id="email" 
+                          id="email"
+                          name="email"
+                          value={contactForm.email}
+                          onChange={handleContactChange}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           placeholder="Your email address"
+                          required
                         />
                       </div>
-                      
+                      <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                        <input 
+                          type="tel" 
+                          id="phone"
+                          name="phone"
+                          value={contactForm.phone}
+                          onChange={handleContactChange}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          placeholder="Your phone number"
+                          required
+                        />
+                      </div>
                       <div>
                         <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
                         <textarea 
-                          id="message" 
-                          rows="4" 
+                          id="message"
+                          name="message"
+                          rows="4"
+                          value={contactForm.message}
+                          onChange={handleContactChange}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           placeholder="Your message"
+                          required
                         ></textarea>
                       </div>
-                      
                       <button 
                         type="submit" 
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-colors"
+                        disabled={submitting}
                       >
-                        Send Message
+                        {submitting ? 'Sending...' : 'Send Message'}
                       </button>
                     </form>
                   </div>

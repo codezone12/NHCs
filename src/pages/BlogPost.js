@@ -426,7 +426,7 @@ const PublicDiplomacyPage = () => {
           </article>
           
           {/* Contact Section */}
-          <div 
+          {/* <div 
             className="bg-white p-6 rounded-lg shadow-md my-12"
             data-aos="fade-up"
           >
@@ -476,7 +476,7 @@ const PublicDiplomacyPage = () => {
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
           
           {/* Newsletter Signup */}
           <div 

@@ -18,21 +18,22 @@ const Slider = () => {
   const contentItems = [
     {
       heading: [
-        { text: "Where three generations", color: "text-yellow-500" },
-        { text: " come together ", color: "text-white" },
-        { text: "under one roof.", color: "text-blue-600" }
-      ],
-      content: "Welcome to Alenalki.se – a dynamic force for unity. A bridge connecting people and communities, built on trust, collaboration, and inclusive engagement. Through articles, podcasts, and video discussions, we amplify voices, strengthen connections, and promote meaningful dialogue. Join us on social media to be part of the conversation and stay informed.",
-      preview: "Welcome to Alenalki.se – a dynamic force for unity. A bridge connecting people and communities, built on trust, collaboration, and inclusive engagement."
-    },
-    {
-      heading: [
         { text: "Unlock", color: "text-yellow-500" },
         { text: " the Power of the ", color: "text-white" },
         { text: "Eritrean Diaspora", color: "text-blue-600" }
       ],
       content: "The Eritrean diaspora is more than just a community—it's a dynamic force. With deep cultural roots, vibrant traditions, and an unbreakable sense of unity, Eritreans worldwide have built a powerful network that thrives on connection, resilience, and integration. From rich cultural celebrations to entrepreneurial spirit, Eritreans are shaping industries, influencing global conversations, and fostering a strong identity wherever they go. Their ability to blend tradition with innovation makes them invaluable in any space—be it business, entertainment, or social development.",
-      preview: "The Eritrean diaspora is more than just a community—it's a dynamic force. With deep cultural roots, vibrant traditions, and an unbreakable sense of unity, Eritreans worldwide have built a powerful network."
+      preview: "The Eritrean diaspora is more than just a community—it's a dynamic force. With deep cultural roots, vibrant traditions, and an unbreakable sense of unity, Eritreans worldwide have built a powerful network.",
+      hasReadMore: true
+    },
+    {
+      heading: [
+        { text: "Where three generations", color: "text-yellow-500" },
+        { text: " come together ", color: "text-white" },
+        { text: "under one roof.", color: "text-blue-600" }
+      ],
+      content: "Welcome to Alenalki.se – a dynamic force for unity. A bridge connecting people and communities, built on trust, collaboration, and inclusive engagement. Through articles, podcasts, and video discussions, we amplify voices, strengthen connections, and promote meaningful dialogue. Join us on social media to be part of the conversation and stay informed.",
+      hasReadMore: false
     }
   ];
 
@@ -81,14 +82,8 @@ const Slider = () => {
         } else {
           setIsDeleting(false);
           setIsTyping(true);
-          const nextContent = (currentContent + 1) % contentItems.length;
-          setCurrentContent(nextContent);
-          setCurrentSlide((currentSlide + 1) % images.length);
-          // Reset expanded state when switching slides
-          setExpandedContent(prev => ({
-            ...prev,
-            [nextContent]: false
-          }));
+          setCurrentContent(prev => (prev + 1) % contentItems.length);
+          setCurrentSlide(prev => (prev + 1) % images.length);
         }
       } else if (isTyping) {
         if (charIndex < currentText.length) {
@@ -103,7 +98,7 @@ const Slider = () => {
     }, isDeleting ? 50 : 100); // Faster deletion, slower typing
 
     return () => clearInterval(typewriterInterval);
-  }, [charIndex, isTyping, isDeleting, currentContent, currentSlide]);
+  }, [charIndex, isTyping, isDeleting, currentContent]);
 
   // Manual navigation
   const goToSlide = (index) => {
@@ -112,11 +107,6 @@ const Slider = () => {
     setCharIndex(0);
     setIsTyping(true);
     setIsDeleting(false);
-    // Reset expanded state when manually switching slides
-    setExpandedContent(prev => ({
-      ...prev,
-      [index % contentItems.length]: false
-    }));
   };
 
   // Toggle read more functionality
@@ -128,7 +118,7 @@ const Slider = () => {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden mt-0 md:mt-[-0px]">
+    <div className="relative w-full h-screen md:h-[80vh] overflow-hidden mt-0 md:mt-[-0px]">
       {/* Background Images */}
       {images.map((image, index) => (
         <div 
@@ -150,7 +140,7 @@ const Slider = () => {
       
       {/* Hero Content */}
       <div className="relative z-10 flex items-center h-full">
-        <div className="container mx-auto px-4 md:px-6 pt-8 md:pt-16">
+        <div className="container mx-auto px-4 md:px-6 pt-8 md:pt-12">
           <div className="max-w-4xl">
             {/* Typewriter Heading */}
             <div className="min-h-[120px] md:min-h-[140px] mb-4">
@@ -178,14 +168,19 @@ const Slider = () => {
                     }`}
                   >
                     <p className="text-base md:text-lg text-white mb-4 max-w-[800px] leading-relaxed">
-                      {isExpanded ? item.content : item.preview}
+                      {item.hasReadMore && !isExpanded ? item.preview : item.content}
                     </p>
-                    <button
-                      onClick={() => toggleReadMore(index)}
-                      className="text-yellow-400 hover:text-yellow-300 transition-colors duration-200 font-medium mb-6 md:mb-8"
-                    >
-                      {isExpanded ? 'Read Less' : 'Read More'}
-                    </button>
+                    {item.hasReadMore && (
+                      <button
+                        onClick={() => toggleReadMore(index)}
+                        className="text-yellow-400 hover:text-yellow-300 transition-colors duration-200 font-medium mb-6 md:mb-8"
+                      >
+                        {isExpanded ? 'Read Less' : 'Read More'}
+                      </button>
+                    )}
+                    {!item.hasReadMore && (
+                      <div className="mb-6 md:mb-8"></div>
+                    )}
                   </div>
                 );
               })}

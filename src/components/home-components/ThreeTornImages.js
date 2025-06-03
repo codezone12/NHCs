@@ -5,6 +5,29 @@ const FeaturesSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
   
+  // Typewriter animation states
+  const [currentHeadingIndex, setCurrentHeadingIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const headings = [
+    [
+      { text: "Where Three Generations", color: "text-red-500" },
+      { text: " Come Together ", color: "text-white" },
+      { text: "Under one Roof.", color: "text-blue-600" }
+    ],
+    [
+      { text: "Unlock", color: "text-red-500" },
+      { text: " the Power of the ", color: "text-white" },
+      { text: "Eritrean Diaspora", color: "text-blue-600" }
+    ]
+  ];
+
+  // Get full text for current heading
+  const getCurrentFullText = () => {
+    return headings[currentHeadingIndex].map(segment => segment.text).join('');
+  };
+  
   // Feature data - 6 items total
   const features = [
     {
@@ -52,8 +75,63 @@ const FeaturesSlider = () => {
   ];
 
   // Create an extended array for infinite scroll effect
-  // We duplicate the items to create a seamless transition
   const extendedFeatures = [...features, ...features, ...features];
+
+  // Typewriter animation effect
+  useEffect(() => {
+    const fullText = getCurrentFullText();
+    
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        // Typing
+        if (displayedText.length < fullText.length) {
+          setDisplayedText(fullText.substring(0, displayedText.length + 1));
+        } else {
+          // Wait then start deleting
+          setTimeout(() => setIsDeleting(true), 2000);
+        }
+      } else {
+        // Deleting
+        if (displayedText.length > 0) {
+          setDisplayedText(fullText.substring(0, displayedText.length - 1));
+        } else {
+          // Move to next heading
+          setIsDeleting(false);
+          setCurrentHeadingIndex(prev => (prev + 1) % headings.length);
+        }
+      }
+    }, isDeleting ? 50 : 100);
+
+    return () => clearTimeout(timer);
+  }, [displayedText, isDeleting, currentHeadingIndex]);
+
+  // Render text with colors
+  const renderColoredText = () => {
+    const currentHeading = headings[currentHeadingIndex];
+    let charCount = 0;
+    const result = [];
+    
+    for (let i = 0; i < currentHeading.length; i++) {
+      const segment = currentHeading[i];
+      const segmentStart = charCount;
+      const segmentEnd = charCount + segment.text.length;
+      
+      if (displayedText.length > segmentStart) {
+        const visiblePart = displayedText.substring(segmentStart, Math.min(segmentEnd, displayedText.length));
+        if (visiblePart) {
+          result.push(
+            <span key={i} className={segment.color}>
+              {visiblePart}
+            </span>
+          );
+        }
+      }
+      
+      charCount += segment.text.length;
+    }
+    
+    return result;
+  };
 
   // Update items per view based on screen size
   useEffect(() => {
@@ -67,13 +145,8 @@ const FeaturesSlider = () => {
       }
     };
 
-    // Set initial value
     handleResize();
-    
-    // Add event listener
     window.addEventListener('resize', handleResize);
-    
-    // Clean up
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -82,7 +155,6 @@ const FeaturesSlider = () => {
     const interval = setInterval(() => {
       setCurrentIndex(prev => {
         const nextIndex = prev + 1;
-        // When we reach the end of the first duplicate set, reset to the beginning of the second set
         if (nextIndex === features.length * 2) {
           return features.length;
         }
@@ -114,15 +186,17 @@ const FeaturesSlider = () => {
     });
   };
 
-  // Calculate the transform value based on items per view
   const transformValue = `translateX(-${(currentIndex * (100 / itemsPerView))}%)`;
 
   return (
     <section className="py-8 md:py-16 px-4 bg-yellow-400">
       <div className="container mx-auto">
-        {/* Section Title */}
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-16 max-w-3xl mx-auto px-4">
-          Discover Our Innovative Features for Enhanced User Engagement
+        {/* Typewriter Heading */}
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-16 max-w-3xl mx-auto px-4 min-h-[3rem] md:min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center">
+          <span className="inline-block">
+            {renderColoredText()}
+            <span className="animate-pulse text-white">|</span>
+          </span>
         </h2>
         
         {/* Slider Container */}
@@ -141,7 +215,7 @@ const FeaturesSlider = () => {
             ))}
           </div>
           
-          {/* Slides - showing dynamic number based on screen size */}
+          {/* Slides */}
           <div className="overflow-hidden">
             <div 
               className="flex transition-transform duration-500 ease-in-out"
@@ -156,7 +230,6 @@ const FeaturesSlider = () => {
                   }`}
                 >
                   <div className="flex flex-col items-center h-full bg-white rounded-lg shadow-md p-4 md:p-6">
-                    {/* Box Image */}
                     <div className="mb-4 md:mb-6 w-full">
                       <div className="w-full pt-[75%] relative rounded-lg overflow-hidden shadow-lg">
                         <img 
@@ -190,7 +263,7 @@ const FeaturesSlider = () => {
             </div>
           </div>
           
-          {/* Navigation Arrows - Responsive sizing */}
+          {/* Navigation Arrows */}
           <button 
             onClick={handlePrev}
             className="absolute top-1/2 left-0 -translate-y-1/2 bg-white bg-opacity-70 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-md z-10 hover:bg-opacity-100 transition-all"

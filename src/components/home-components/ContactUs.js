@@ -187,11 +187,12 @@ const ContactUs = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
+                    required
                     placeholder="Enter Phone Number"
                     value={formData.phone}
                     onChange={handleChange}

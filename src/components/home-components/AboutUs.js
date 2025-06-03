@@ -1,54 +1,72 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ImagePreview from '../image-preview';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-const AboutUs = () => {
-  // Stats data with start and end values
+const AboutUs = ({ showCards = false }) => {
+  // Stats data with start and end values and icons
   const statsData = [
-    { start: 0, end: 500, suffix: '+', label: 'Projects completed' },
-    { start: 0, end: 200, suffix: '%', label: 'Year on year growth' },
-    { start: 0, end: 50, suffix: 'm', prefix: '$', label: 'Funded' },
-    { start: 0, end: 10, suffix: 'k', label: 'Downloads' }
+    { start: 0, end: 500, suffix: '+', label: 'Projects completed', icon: '🚀' },
+    { start: 0, end: 200, suffix: '%', label: 'Year on year growth', icon: '📈' },
+    { start: 0, end: 50, suffix: 'm', prefix: '$', label: 'Funded', icon: '💰' },
+    { start: 0, end: 10, suffix: 'k', label: 'Downloads', icon: '📱' }
   ];
 
   // State to track animated values
   const [animatedValues, setAnimatedValues] = useState(statsData.map(stat => stat.start));
   const [hasAnimated, setHasAnimated] = useState(false);
   const statsRef = useRef(null);
+  const paragraphRef = useRef(null);
 
   useEffect(() => {
     // Initialize AOS with improved settings
     AOS.init({
       duration: 800,
-      once: false, // Changed from true to false to enable animations when scrolling up
+      once: false,
       easing: 'ease-in-out',
-      offset: 120, // Increased offset so elements animate when more visible
-      delay: 50, // Small initial delay
-      throttleDelay: 99, // Reduce number of animations happening at once
-      mirror: true, // Enable mirroring effect when scrolling back up
+      offset: 120,
+      delay: 50,
+      throttleDelay: 99,
+      mirror: true,
     });
 
     // Create intersection observer for stats counter
-    const observer = new IntersectionObserver((entries) => {
+    const statsObserver = new IntersectionObserver((entries) => {
       const [entry] = entries;
       if (entry.isIntersecting && !hasAnimated) {
         animateNumbers();
         setHasAnimated(true);
       }
-    }, { threshold: 0.5 }); // Increased threshold so animation starts when more visible
+    }, { threshold: 0.5 });
 
     // Observe the stats section
     if (statsRef.current) {
-      observer.observe(statsRef.current);
+      statsObserver.observe(statsRef.current);
     }
 
     return () => {
       if (statsRef.current) {
-        observer.unobserve(statsRef.current);
+        statsObserver.unobserve(statsRef.current);
       }
     };
   }, [hasAnimated]);
+
+  // Scroll to paragraph when it becomes visible
+  useEffect(() => {
+    if (showCards && paragraphRef.current) {
+      setTimeout(() => {
+        // Get the element's position
+        const elementPosition = paragraphRef.current.getBoundingClientRect().top;
+        // Get the current scroll position
+        const offsetPosition = elementPosition + window.pageYOffset - (window.innerHeight * 0.5);
+        
+        // Scroll to the adjusted position
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+  }, [showCards]);
 
   // Function to animate numbers
   const animateNumbers = () => {
@@ -88,78 +106,64 @@ const AboutUs = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
+    <div className="max-w-6xl mx-auto px-4 py-12" id="about-section">
       {/* Header */}
       <div className="text-center mb-10" data-aos="fade-up">
         <h2 className="text-3xl font-bold mb-4">About Us</h2>
-        <p className="max-w-2xl mx-auto text-gray-600 text-sm">
-        Alenalki is a digital platform that aims to collect and share relevant information for Eritreans in the diaspora, with a special focus on culture, history and identity. It supports young people in their dual belonging and aims to create community and pride. At the same time, the platform acts as a bridge between Eritreans and other communities, promoting integration and collaboration.
-        </p>
-      </div>
-
-      {/* Main content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-        {/* Left side - Stats */}
-        <div data-aos="fade-up" data-aos-delay="100" data-aos-anchor-placement="top-bottom">
-          <h3 className="text-xl font-bold mb-6">
-            Highlight achievements by the numbers
-          </h3>
-          <p className="text-gray-600 text-sm mb-8">
+        
+        {/* Paragraph with show/hide functionality */}
+        <div 
+          ref={paragraphRef}
+          className={`max-w-2xl mx-auto text-gray-600 text-sm transition-all duration-700 ${
+            showCards 
+              ? 'opacity-100 max-h-[2000px] transform translate-y-0' 
+              : 'opacity-0 max-h-[80px] overflow-hidden transform translate-y-0'
+          }`}
+        >
+          <p>
           Alenalki is a digital platform that aims to collect and share relevant information for Eritreans in the diaspora, with a special focus on culture, history and identity. It supports young people in their dual belonging and aims to create community and pride. At the same time, the platform acts as a bridge between Eritreans and other communities, promoting integration and collaboration.
           </p>
-
-          {/* Stats Grid */}
-          <div ref={statsRef} className="grid grid-cols-2 gap-8">
-            {statsData.map((stat, index) => (
-              <div key={index}>
-                <h4 className="text-4xl font-bold">
-                  {stat.prefix || ''}{animatedValues[index]}{stat.suffix || ''}
-                </h4>
-                <p className="text-gray-600 text-sm">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right side - Images */}
-        <div className="relative" data-aos="fade-up" data-aos-delay="200" data-aos-anchor-placement="top-bottom">
-          <div className="grid grid-cols-2 gap-4">
-            {/* Top image - full width */}
-            <div className="col-span-2">
-              <ImagePreview 
-                src="/images/newImages/IMG_8845.JPG" 
-                alt="Mountain landscape" 
-                className="w-full h-48 object-cover rounded-lg"
-              />
-            </div>
-            
-            {/* Middle right image */}
-            <div className="col-span-2">
-              <ImagePreview 
-                src="/images/newImages/IMG_6851.JPG" 
-                alt="Coastal village" 
-                className="w-full h-48 object-cover rounded-lg"
-              />
-            </div>
-            
-            {/* Bottom left image with overlay */}
-            <div className="relative col-span-1 -mt-16 -ml-10 border-2 border-white rounded-lg">
-              <ImagePreview 
-                src="/images/newImages/IMG_4818.JPG" 
-                alt="People hiking" 
-                className="w-full h-32 object-cover rounded-lg"
-              />
-              <div className="absolute -bottom-4 -right-4 bg-yellow-400 text-blue-800 font-bold p-2 rounded">
-                <p className="text-lg mb-0">10k+</p>
-                <p className="text-xs">Community Members</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Enhanced sections with cards and animations */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      {/* Stats Cards Section */}
+      <div className="mb-16" data-aos="fade-up" data-aos-delay="100">
+        <h3 className="text-xl font-bold mb-8 text-center">
+          Highlight achievements by the numbers
+        </h3>
+        
+        {/* Stats Grid */}
+        <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {statsData.map((stat, index) => (
+            <div 
+              key={index}
+              className="bg-white rounded-xl shadow-lg p-6 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-gradient-to-br hover:from-yellow-50 hover:to-yellow-100 group"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
+              {/* Icon */}
+              <div className="text-6xl mb-4 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
+                {stat.icon}
+              </div>
+              
+              {/* Number */}
+              <h4 className="text-4xl font-bold mb-2 text-gray-800 group-hover:text-yellow-600 transition-colors duration-300">
+                {stat.prefix || ''}{animatedValues[index]}{stat.suffix || ''}
+              </h4>
+              
+              {/* Label */}
+              <p className="text-gray-600 text-sm font-medium group-hover:text-gray-700 transition-colors duration-300">
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Enhanced sections with cards and animations - Always visible */}
+      <div 
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+      >
         {['Background', 'Vision', 'Mission'].map((section, index) => (
           <div
             key={section}
@@ -194,43 +198,6 @@ const AboutUs = () => {
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Animated quote section */}
-      <div 
-        className="bg-blue-800 text-white p-8 rounded-xl mb-16 relative overflow-hidden"
-        data-aos="fade-up"
-        data-aos-anchor-placement="top-bottom"
-      >
-        <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400 rounded-full -mr-16 -mt-16 opacity-20"></div>
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-yellow-400 rounded-full -ml-12 -mb-12 opacity-20"></div>
-        
-        <div className="relative z-10">
-          <h3 className="text-2xl font-bold mb-4">Our Community Impact</h3>
-          <blockquote className="text-lg italic mb-4">
-            "Serving the truth and acting as a bridge between the diaspora and both local and global communities, Alenalki strives to promote integration, unity, and mutual understanding. We are a bridge that connects people and communities—built on trust, collaboration, and inclusive engagement."
-          </blockquote>
-          <p className="text-sm text-yellow-300">— Alenalki Team</p>
-        </div>
-      </div>
-
-      {/* Call to action */}
-      <div 
-        className="text-center"
-        data-aos="fade-up"
-        data-aos-delay="100"
-        data-aos-anchor-placement="top-bottom"
-      >
-        <h3 className="text-2xl font-bold mb-4">Join Our Community Today</h3>
-        <p className="max-w-2xl mx-auto text-gray-600 text-sm mb-6">
-          Be part of our growing network of Eritreans in the diaspora and help build a stronger, more connected community.
-        </p>
-        <a 
-          href="https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com"
-          className="px-6 py-3 bg-yellow-400 text-blue-800 font-bold rounded-lg hover:bg-yellow-500 transition-colors hover:scale-105 transform"
-        >
-          Join Now
-        </a>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { ChartArea, Home, Menu, Newspaper, Phone, Users, X, Shield, Award, BookO
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ onAboutUsClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,6 +15,15 @@ const Header = () => {
       const section = document.getElementById(sectionId);
       if (section) {
         section.scrollIntoView({ behavior: 'smooth' });
+        
+        // Trigger the About Us cards visibility when About Us is clicked
+        if (sectionId === 'about-section' && onAboutUsClick) {
+          // Small delay to ensure scrolling starts first
+          setTimeout(() => {
+            onAboutUsClick();
+          }, 300);
+        }
+        
         // Close mobile menu if open
         if (isMenuOpen) {
           setIsMenuOpen(false);
@@ -22,7 +31,24 @@ const Header = () => {
       }
     } else {
       // If not on home page, navigate to home page with hash
-      navigate(`/#${sectionId}`);
+      if (sectionId === 'about-section') {
+        navigate('/');
+        // Delay the scroll and show cards after navigation
+        setTimeout(() => {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+            if (onAboutUsClick) {
+              setTimeout(() => {
+                onAboutUsClick();
+              }, 300);
+            }
+          }
+        }, 100);
+      } else {
+        navigate(`/#${sectionId}`);
+      }
+      
       // Close mobile menu if open
       if (isMenuOpen) {
         setIsMenuOpen(false);
@@ -39,10 +65,16 @@ const Header = () => {
         // Small delay to ensure the page is fully loaded
         setTimeout(() => {
           section.scrollIntoView({ behavior: 'smooth' });
+          // If it's about-section, show the cards
+          if (sectionId === 'about-section' && onAboutUsClick) {
+            setTimeout(() => {
+              onAboutUsClick();
+            }, 300);
+          }
         }, 100);
       }
     }
-  }, [isHomePage, location.hash]);
+  }, [isHomePage, location.hash, onAboutUsClick]);
 
   return (
     <header className="sticky top-0 left-0 right-0 z-[100] bg-blue-500 backdrop-blur-md">
@@ -71,14 +103,6 @@ const Header = () => {
             <Newspaper />News Feed
             <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
-          {/* <a href="/festival" className="flex gap-2 text-white hover:text-yellow-400 transition relative group">
-            <Newspaper />Festival
-            <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
-          </a>
-          <a href="/blog" className="flex gap-2 text-white hover:text-yellow-400 transition relative group">
-            <Newspaper />Blog
-            <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
-          </a> */}
           
           {/* More Dropdown */}
           <div className="relative group">
@@ -116,11 +140,7 @@ const Header = () => {
             />
           </Link>
           
-          {/* Menu Button */}
-          {/* <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-2 rounded font-medium transition">
-              Join
-          </button> */}
-          <a className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10" href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com'>
+          <a className="px-5 py-3 border-yellow-500 border-2 text-lg font-semibold rounded-lg overflow-hidden relative group cursor-pointer bg-yellow-500 hover:scale-105 duration-[700ms] z-10" href="mailto:info@alenalki.se">
             <span className="absolute w-64 h-0 transition-all duration-[700ms] origin-center rotate-45 -translate-x-16 bg-yellow-300 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
             <span className="relative text-white transition duration-[700ms] group-hover:text-yellow-600 ease">
             Join Alenalki

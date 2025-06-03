@@ -53,25 +53,27 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       {/* App Logo */}
-      <div className="absolute top-8 left-8">
-        <img 
-          src="/images/alenalki.Logo.png" 
-          alt="Company Logo" 
-          className="h-12 w-auto"
-          // onError={(e) => {
-          //   e.target.onerror = null;
-          //   e.target.src = "https://via.placeholder.com/120x48/0B5394/FFFFFF?text=LOGO";
-          // }}
-        />
-      </div>
-      
+      <Link to='/'>
+        <div className="absolute top-8 left-8">  
+          <img 
+            src="/images/alenalki.Logo.png" 
+            alt="Company Logo" 
+            className="h-12 w-auto rounded-full"
+            // onError={(e) => {
+            //   e.target.onerror = null;
+            //   e.target.src = "https://via.placeholder.com/120x48/0B5394/FFFFFF?text=LOGO";
+            // }}
+          />
+        </div>
+      </Link>
+
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
         <div>
           <h2 className="text-center text-3xl font-extrabold text-gray-900">
             Welcome Back
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Sign in to your account
+            Login to your account
           </p>
         </div>
         
@@ -162,23 +164,23 @@ const LoginPage = () => {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Signing in...
+                  Loging in...
                 </span>
               ) : (
-                'Sign in'
+                'Login'
               )}
             </button>
           </div>
         </form>
         
-        <div className="text-center mt-6">
+        {/* <div className="text-center mt-6">
           <p className="text-sm text-gray-600">
             Don't have an account?{' '}
             <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500">
               Sign up
             </Link>
           </p>
-        </div>
+        </div> */}
       </div>
       
       {/* Toast Container */}

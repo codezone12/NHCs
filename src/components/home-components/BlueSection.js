@@ -13,14 +13,14 @@ const BlueSection = () => {
             <div className="flex gap-4 justify-center md:justify-around w-full">
               <div className="w-[30%] rounded-lg overflow-hidden hover:scale-105 duration-300 shadow-lg shadow-black">
                 <ImagePreview 
-                  src="/images/newPics/IMG_4203.JPG" 
+                  src="/images/NewPics/IMG_4203.JPG" 
                   alt="Newspaper and coffee" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="w-[30%] rounded-lg overflow-hidden md:translate-y-[40px] md:translate-x-[-40px]  hover:scale-105 duration-300 shadow-lg shadow-black">
                 <ImagePreview 
-                  src="/images/newPics/IMG_4230.JPG" 
+                  src="/images/NewPics/IMG_4230.JPG" 
                   alt="Writing tools and papers" 
                   className="w-full h-full object-cover"
                 />
