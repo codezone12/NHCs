@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ChevronRight, Menu, X, Search, Bell, FileText, PlusCircle, BarChart2, User } from 'lucide-react';
+import { ChevronRight, Menu, X, Search, Bell, FileText, PlusCircle, BarChart2, User, LogOut } from 'lucide-react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
+import { handleLogout } from '../../utils/authUtils';
 
 const EditorLayout = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -53,10 +54,18 @@ const EditorLayout = () => {
             {!isSidebarCollapsed && (
               <div className="ml-3">
                 <p className="text-sm font-medium">Editor</p>
-                <p className="text-xs text-gray-400 truncate">editor@timepal.com</p>
               </div>
             )}
           </div>
+          
+          {/* Logout Button */}
+          <button 
+            onClick={handleLogout}
+            className={`mt-3 flex items-center text-red-400 hover:text-red-300 transition-colors ${isSidebarCollapsed ? 'justify-center' : ''}`}
+          >
+            <LogOut size={18} />
+            {!isSidebarCollapsed && <span className="ml-2 text-sm">Logout</span>}
+          </button>
         </div>
       </div>
 
@@ -101,6 +110,14 @@ const EditorLayout = () => {
 
 // Helper function to get the current page title from the path
 const getCurrentPageTitle = (path) => {
+  if (path.includes('edit-blog')) {
+    return 'Edit Blog';
+  } else if (path.includes('add-blog')) {
+    return 'Add Blog';
+  } else if (path.includes('blog-list')) {
+    return 'Blog Management';
+  }
+  
   const pathSegments = path.split('/');
   const lastSegment = pathSegments[pathSegments.length - 1];
   
@@ -115,9 +132,12 @@ const getCurrentPageTitle = (path) => {
 const SidebarNavigation = ({ collapsed, currentPath }) => {
   const navItems = [
     { icon: FileText, label: "Dashboard", href: "/editor/dashboard" },
-    { icon: FileText, label: "My News", href: "/editor/my-news" },
+    { icon: FileText, label: "News List", href: "/editor/news-list" },
+    // { icon: FileText, label: "My News", href: "/editor/my-news" },
     { icon: PlusCircle, label: "Add News", href: "/editor/add-news" },
-    { icon: BarChart2, label: "Analytics", href: "/editor/analytics" },
+    { icon: FileText, label: "Blog List", href: "/editor/blog-list" },
+    { icon: PlusCircle, label: "Add Blog", href: "/editor/add-blog" },
+    // { icon: BarChart2, label: "Analytics", href: "/editor/analytics" },
     { icon: User, label: "Profile", href: "/editor/profile" }
   ];
 

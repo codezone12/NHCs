@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ChevronRight, Menu, X, Search, Bell } from 'lucide-react';
+import { ChevronRight, Menu, X, Search, Bell, LogOut, User } from 'lucide-react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
+import { handleLogout } from '../../utils/authUtils';
 
 const AdminLayout = ({ children }) => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -53,10 +54,18 @@ const AdminLayout = ({ children }) => {
             {!isSidebarCollapsed && (
               <div className="ml-3">
                 <p className="text-sm font-medium">Super Admin</p>
-                <p className="text-xs text-gray-400 truncate">admin@timepal.com</p>
               </div>
             )}
           </div>
+          
+          {/* Logout Button */}
+          <button 
+            onClick={handleLogout}
+            className={`mt-3 flex items-center text-red-400 hover:text-red-300 transition-colors ${isSidebarCollapsed ? 'justify-center' : ''}`}
+          >
+            <LogOut size={18} />
+            {!isSidebarCollapsed && <span className="ml-2 text-sm">Logout</span>}
+          </button>
         </div>
       </div>
 
@@ -109,14 +118,19 @@ const getCurrentPageTitle = (path) => {
 // SidebarNavigation Component
 const SidebarNavigation = ({ collapsed, currentPath }) => {
   // Import these from Lucide or your icon library
-  const { Layout, Users, Settings, Calendar, BarChart2 } = require('lucide-react');
+  const { Layout, Users, Settings, Calendar, BarChart2, Award, Map, User } = require('lucide-react');
   
   const navItems = [
     { icon: Layout, label: "Dashboard", href: "/super-admin/dashboard" },
     { icon: Users, label: "Users", href: "/super-admin/users" },
-    { icon: Settings, label: "Settings", href: "/super-admin/settings" },
-    { icon: Calendar, label: "Schedule", href: "/super-admin/schedule" },
-    { icon: BarChart2, label: "Analytics", href: "/super-admin/analytics" }
+    { icon: Calendar, label: "Events", href: "/super-admin/events" },
+    { icon: Calendar, label: "Festival Events", href: "/super-admin/festival-events" },
+    { icon: Award, label: "Festival Highlights", href: "/super-admin/festival-highlights" },
+    { icon: Map, label: "Transportation", href: "/super-admin/transportations" },
+    { icon: User, label: "My Profile", href: "/super-admin/profile" },
+    // { icon: Settings, label: "Settings", href: "/super-admin/settings" },
+    // { icon: Calendar, label: "Schedule", href: "/super-admin/schedule" },
+    // { icon: BarChart2, label: "Analytics", href: "/super-admin/analytics" }
   ];
 
   return (

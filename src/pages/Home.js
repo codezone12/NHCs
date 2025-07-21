@@ -11,6 +11,7 @@ import ContactUs from '../components/home-components/ContactUs';
 import AboutUs from '../components/home-components/AboutUs';
 import GoToTop from '../components/GotToTop';
 import AlenalkiSlider from '../components/home-components/AlenalkiHeritageSlider';
+import TopWeekly from '../components/news-components/top-weekly';
 
 const HomePage = () => {
   const [showAboutUsCards, setShowAboutUsCards] = useState(false);
@@ -41,14 +42,18 @@ const HomePage = () => {
   // Handle viewport detection
   useEffect(() => {
     let ticking = false;
-
+    
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          // Only hide cards if they are showing AND the About Us section is not in viewport
-          if (showAboutUsCards && !isAboutSectionInViewport()) {
-            setShowAboutUsCards(false);
-          }
+          // Add delay before checking and hiding cards
+          setTimeout(() => {
+            // Only hide cards if they are showing AND the About Us section is not in viewport
+            if (showAboutUsCards && !isAboutSectionInViewport()) {
+              setShowAboutUsCards(false);
+            }
+          }, 300); // 300ms delay - adjust as needed
+          
           ticking = false;
         });
         ticking = true;
@@ -74,6 +79,7 @@ const HomePage = () => {
       <Header onAboutUsClick={handleAboutUsClick} />
       {/* <Slider /> */}
       <FeaturesSlider />
+      <TopWeekly />
       <AlenalkiSlider />
       {/* <BlueSection /> */}
       {/* <ThreeCardsSection /> */}

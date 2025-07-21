@@ -1,103 +1,37 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import ImagePreview from '../image-preview';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { FaImage } from 'react-icons/fa';
 
 const NewsGrid = () => {
-  const [newsItems, setNewsItems] = useState([
-    {
-      id: 1,
-      category: "TECHNOLOGY",
-      image: "/images/bf30b922-36c6-4ba7-b88b-41d7e9009c73.jpg",
-      title: "A Historic Gathering Marks the Beginning of an Eritrean Professional Network in Sweden",
-      description: "On the 18th of May, an inspiring and emotionally rich event brought together three generations of Eritrean professionals in Sweden",
-      author: "Sarah Johnson",
-      date: "April 22, 2025",
-      readTime: "8 Min Read",
-      anchor: "/news-details"
-    },
-    {
-      id: 2,
-      category: "SCIENCE",
-      image: "/images/slider-images-2.jpg",
-      title: "New Breakthrough in Sustainable Energy Storage",
-      description: "Researchers have developed a revolutionary battery technology that could solve renewable energy's biggest challenge.",
-      author: "Michael Chang",
-      date: "April 20, 2025",
-      readTime: "6 Min Read"
-    },
-    {
-      id: 3,
-      category: "BUSINESS",
-      image: "/images/slider-images-3.jpg",
-      title: "Global Markets Respond to Central Bank Policy Shifts",
-      description: "How recent changes in monetary policy across major economies are reshaping investment strategies worldwide.",
-      author: "Elena Rodriguez",
-      date: "April 19, 2025",
-      readTime: "7 Min Read"
-    },
-    {
-      id: 4,
-      category: "HEALTH",
-      image: "/images/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg",
-      title: "Revolutionary Gene Therapy Shows Promise for Chronic Conditions",
-      description: "Clinical trials demonstrate unprecedented success in treating previously incurable genetic disorders.",
-      author: "Dr. James Wilson",
-      date: "April 18, 2025",
-      readTime: "10 Min Read"
-    },
-    {
-      id: 5,
-      category: "CULTURE",
-      image: "/images/slider-images-2.jpg",
-      title: "Digital Art Renaissance: NFTs Enter Museum Collections",
-      description: "Major cultural institutions are now acquiring digital artworks, signaling a new era for art preservation and exhibition.",
-      author: "Amara Okafor",
-      date: "April 17, 2025",
-      readTime: "5 Min Read"
-    },
-    {
-      id: 6,
-      category: "ENVIRONMENT",
-      image: "/images/slider-images-3.jpg",
-      title: "Ocean Cleanup Initiative Reports 50% Reduction in Pacific Garbage Patch",
-      description: "Innovative technologies and international cooperation lead to significant progress in addressing ocean plastic pollution.",
-      author: "Thomas Greene",
-      date: "April 16, 2025",
-      readTime: "9 Min Read"
-    },
-    {
-      id: 7,
-      category: "POLITICS",
-      image: "/images/range-buildings-shore-reflecting-lake-clear-blue-sky.jpg",
-      title: "Global Summit Addresses AI Governance Frameworks",
-      description: "World leaders gather to establish international standards for artificial intelligence development and implementation.",
-      author: "Leila Hassan",
-      date: "April 15, 2025",
-      readTime: "12 Min Read"
-    },
-    {
-      id: 8,
-      category: "EDUCATION",
-      image: "/images/slider-images-2.jpg",
-      title: "Reimagining Higher Education: Universities Adopt Hybrid Learning Models",
-      description: "Traditional institutions are transforming their approach to education in response to changing student needs and technological capabilities.",
-      author: "Robert Chen",
-      date: "April 14, 2025",
-      readTime: "7 Min Read"
-    },
-    {
-      id: 9,
-      category: "SPACE",
-      image: "/images/slider-images-3.jpg",
-      title: "Private Sector Space Habitat Successfully Deploys in Low Earth Orbit",
-      description: "The first commercially operated space habitat marks a milestone in the privatization and accessibility of space exploration.",
-      author: "Sophia Müller",
-      date: "April 13, 2025",
-      readTime: "8 Min Read"
-    }
-  ]);
+  const [newsItems, setNewsItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch news from API
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/news/public`);
+        
+        if (response.data.success) {
+          setNewsItems(response.data.data.news);
+        } else {
+          setError('Failed to fetch news');
+        }
+      } catch (err) {
+        console.error('Error fetching news:', err);
+        setError('Error fetching news. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   // Initialize AOS when component mounts
   useEffect(() => {
@@ -108,44 +42,109 @@ const NewsGrid = () => {
     });
   }, []);
 
-  const NewsCard = ({ item, index }) => (
-    <div 
-      data-aos="fade-up"
-      data-aos-delay={index * 100}
-      data-aos-anchor-placement="center-bottom"
-      className="bg-white rounded-lg overflow-hidden shadow-md mb-8 h-full"
-    >
-      <Link to={item.anchor}>
-      <div className="relative">
-        <ImagePreview 
-          src={item.image} 
-          alt={item.title} 
-          className="w-full h-64 object-cover"
-        />
-        <span className="absolute top-4 left-4 bg-yellow-400 text-xs font-bold px-3 py-1 rounded">
-          {item.category}
-        </span>
-      </div>
-      
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-2 leading-tight">{item.title}</h2>
-        <p className="text-gray-600 mb-4">{item.description}</p>
-        
-        <div className="flex items-center border-t pt-4">
-          <div className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"></div>
-          <div className="ml-3">
-            <p className="font-medium">{item.author}</p>
-            <div className="flex items-center text-xs text-gray-500">
-              <span>{item.date}</span>
-              <span className="mx-2">•</span>
-              <span>{item.readTime}</span>
+  // Function to extract the first image from HTML content
+  const extractFirstImageFromContent = (content) => {
+    if (!content) return null;
+    
+    const imgRegex = /<img[^>]+src="([^">]+)"/i;
+    const match = content.match(imgRegex);
+    
+    return match ? match[1] : null;
+  };
+
+  // Function to strip HTML tags and get plain text
+  const stripHtmlTags = (html) => {
+    if (!html) return '';
+    return html.replace(/<[^>]*>/g, ' ').replace(/\s{2,}/g, ' ').trim();
+  };
+
+  const NewsCard = ({ item, index }) => {
+    // Determine which image to display
+    let imageToShow = null;
+    
+    if (item.imageUrl) {
+      // Use the dedicated image if it exists
+      imageToShow = item.imageUrl;
+    } else {
+      // Try to extract image from content
+      const contentImage = extractFirstImageFromContent(item.content);
+      if (contentImage) {
+        // Check if it's a data URL or regular URL
+        imageToShow = contentImage.startsWith('data:') ? contentImage : contentImage;
+      }
+    }
+    
+    // Get plain text content for preview
+    const plainTextContent = stripHtmlTags(item.content);
+    
+    return (
+      <div 
+        data-aos="fade-up"
+        data-aos-delay={index * 100}
+        data-aos-anchor-placement="center-bottom"
+        className="bg-white rounded-lg overflow-hidden shadow-md mb-8 h-full flex flex-col"
+      >
+        <Link to={`/news-details?id=${item.id}`} className="flex-grow flex flex-col">
+          <div className="relative h-48 overflow-hidden">
+            {imageToShow ? (
+              <img 
+                src={imageToShow} 
+                alt={item.title} 
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                <FaImage className="text-gray-400 text-5xl" />
+              </div>
+            )}
+            <span className="absolute top-4 left-4 bg-yellow-400 text-xs font-bold px-3 py-1 rounded">
+              {item.category}
+            </span>
+          </div>
+          
+          <div className="p-6 flex-grow">
+            <h2 className="text-2xl font-bold mb-3 leading-tight">{item.title}</h2>
+            <p className="text-gray-600 mb-4 line-clamp-3">
+              {plainTextContent.length > 120 ? `${plainTextContent.substring(0, 120)}...` : plainTextContent}
+            </p>
+            
+            <div className="flex items-center border-t pt-4 mt-auto">
+              <div className="flex items-center text-xs text-gray-500">
+                <span>{new Date(item.createdAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}</span>
+                <span className="mx-2">•</span>
+                <span>{Math.ceil(plainTextContent.length / 1000)} Min Read</span>
+              </div>
             </div>
           </div>
+        </Link>
+      </div>
+    );
+  };
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-12 bg-gray-50">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-green-600 mb-4"></div>
+          <p className="text-gray-600">Loading news...</p>
         </div>
       </div>
-    </Link>
-    </div>
-  );
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-12 bg-gray-50">
+        <div className="text-center text-red-500">
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 bg-gray-50">
@@ -154,11 +153,17 @@ const NewsGrid = () => {
         <p className="text-gray-600 text-lg">Stay informed with our curated selection of top stories</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {newsItems.map((item, index) => (
-          <NewsCard key={item.id} item={item} index={index} />
-        ))}
-      </div>
+      {newsItems.length === 0 ? (
+        <div className="text-center text-gray-500">
+          <p>No news articles available at the moment.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {newsItems.map((item, index) => (
+            <NewsCard key={item.id} item={item} index={index} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

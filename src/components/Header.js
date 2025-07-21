@@ -1,6 +1,7 @@
-import { ChartArea, Home, Menu, Newspaper, Phone, Users, X, Shield, Award, BookOpen, LogIn } from 'lucide-react';
+import { ChartArea, Home, Menu, Newspaper, Phone, Users, X, Shield, Award, BookOpen, LogIn, LogOut } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { handleLogout } from '../utils/authUtils';
 
 const Header = ({ onAboutUsClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -108,11 +109,14 @@ const Header = ({ onAboutUsClick }) => {
           <div className="relative group">
             <button className="text-white hover:text-yellow-400 transition flex items-center relative">
               More <span className="ml-1">▼</span>
-              <div className="absolute -bottom-1 left-0 w-0 h-0.5 mt-1 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
             </button>
             <div className="absolute hidden group-hover:block bg-yellow-500 rounded-lg mt-0 w-40">
               <a href="/privacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
                 <Shield size={16} /> Privacy Policy
+              </a>
+              <a target='_blank' href="https://www.erfis.org" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
+                <Award size={16} /> Emash - ERFIS
               </a>
               <a href="/festival" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
                 <Award size={16} /> Festival
@@ -123,9 +127,18 @@ const Header = ({ onAboutUsClick }) => {
               <a href="/publicdiplomacy" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
                 <BookOpen size={16} /> Public Diplomacy
               </a>
+              {localStorage.getItem('token') ? (
+                <button 
+                onClick={handleLogout} 
+                className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2 w-full text-left"
+              >
+                <LogOut size={16} /> Logout
+              </button>
+              ) : (
               <a href="/login" className="block px-4 py-3 text-white hover:bg-blue-600/30 transition relative group flex items-center gap-2">
                 <LogIn size={16} /> User Login
               </a>
+              )}
             </div>
           </div>
         </nav>
@@ -199,10 +212,24 @@ const Header = ({ onAboutUsClick }) => {
             <Shield /> Privacy Policy
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
-          <a href="/login" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
+          <a href="https://www.erfis.org" target="_blank" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
+            <Award /> Emash - ERFIS
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </a>
+          {localStorage.getItem('token') ? (
+            <button 
+            onClick={handleLogout}
+            className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2 w-full text-left"
+          >
+            <LogOut /> Logout
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
+          </button>
+          ) : (
+            <a href="/login" className="block p-4 text-white hover:bg-blue-800/50 relative group flex items-center gap-2">
             <LogIn /> User Login
             <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 ease-in-out group-hover:w-full"></div>
           </a>
+          )}
         </div>
       )}
     </header>

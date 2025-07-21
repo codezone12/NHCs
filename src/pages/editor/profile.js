@@ -1,38 +1,93 @@
-import React, { useState } from 'react';
-import { User, Mail, Phone, MapPin, Calendar, Save, Camera, X } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { User, Mail, Calendar, Save, AlertCircle, Eye, EyeOff, Lock } from 'lucide-react';
+import { useUserServices } from '../../apis/userService';
+import { toast } from 'react-toastify';
+import UpdatePasswordModal from '../../components/admin-users-components/update-password-modal';
 
 const EditorProfilePage = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [profile, setProfile] = useState({
-    name: 'Alex Johnson',
-    email: 'alex.johnson@newswebsite.com',
-    phone: '+1 (555) 123-4567',
-    location: 'New York, NY',
-    bio: 'Senior editor with over 10 years of experience in technology and science journalism. Previously worked at Tech Today and Science Weekly.',
-    joinDate: 'January 15, 2022',
-    expertise: ['Technology', 'Science', 'Environment', 'Health'],
+    id: '',
+    name: '',
+    email: '',
+    role: '',
+    isActive: true,
+    isVerified: false,
+    joinDate: '',
+    createdAt: '',
+    updatedAt: '',
     avatar: '/images/newImages/profile-placeholder.jpg'
   });
-
-  const [newExpertise, setNewExpertise] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
   const [editedProfile, setEditedProfile] = useState({...profile});
+  
+  const { getUser, updateUser, loading, error } = useUserServices();
+  
+  // Get user ID from local storage
+  const getUserId = () => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.id;
+  };
+  
+  // Fetch user profile with useCallback to prevent recreation on each render
+  const fetchUserProfile = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const userId = getUserId();
+      if (!userId) {
+        toast.error('User not found. Please log in again.');
+        return;
+      }
+      
+      const rawdata = await getUser(userId);
+      
+      const userData = rawdata.data
 
-  const handleAddExpertise = () => {
-    if (newExpertise.trim() !== '' && !editedProfile.expertise.includes(newExpertise.trim())) {
-      setEditedProfile({
-        ...editedProfile,
-        expertise: [...editedProfile.expertise, newExpertise.trim()]
+      // Format join date
+      const joinDate = new Date(userData.createdAt).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       });
-      setNewExpertise('');
+      
+      setProfile({
+        id: userData.id,
+        name: userData.name || '',
+        email: userData.email || '',
+        role: userData.role || 'EDITOR',
+        isActive: userData.isActive,
+        isVerified: userData.isVerified,
+        joinDate,
+        createdAt: userData.createdAt,
+        updatedAt: userData.updatedAt,
+        avatar: '/images/newImages/profile-placeholder.jpg'
+      });
+      
+      setEditedProfile({
+        id: userData.id,
+        name: userData.name || '',
+        email: userData.email || '',
+        role: userData.role || 'EDITOR',
+        isActive: userData.isActive,
+        isVerified: userData.isVerified,
+        joinDate,
+        createdAt: userData.createdAt,
+        updatedAt: userData.updatedAt,
+        avatar: '/images/newImages/profile-placeholder.jpg'
+      });
+    } catch (err) {
+      console.error('Error fetching profile:', err);
+      toast.error('Failed to load profile. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const handleRemoveExpertise = (item) => {
-    setEditedProfile({
-      ...editedProfile,
-      expertise: editedProfile.expertise.filter(exp => exp !== item)
-    });
-  };
+  }, []); // Empty dependency array to prevent infinite loops
+  
+  // Use the memoized fetchUserProfile function in useEffect
+  useEffect(() => {
+    fetchUserProfile();
+  }, []); // Empty dependency array to run only once on mount
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,11 +97,27 @@ const EditorProfilePage = () => {
     });
   };
 
-  const handleSaveProfile = () => {
-    setProfile(editedProfile);
-    setIsEditing(false);
-    // Here you would typically make an API call to update the profile
-    alert('Profile updated successfully!');
+  const handleSaveProfile = async () => {
+    try {
+      const userId = getUserId();
+      if (!userId) {
+        toast.error('User not found. Please log in again.');
+        return;
+      }
+      
+      // Prepare data for API - only send name as that's the only editable field
+      const userData = {
+        name: editedProfile.name
+      };
+      
+      await updateUser(userId, userData);
+      setProfile({...profile, name: editedProfile.name});
+      setIsEditing(false);
+      toast.success('Profile updated successfully!');
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      toast.error('Failed to update profile. Please try again.');
+    }
   };
 
   const handleCancelEdit = () => {
@@ -54,12 +125,24 @@ const EditorProfilePage = () => {
     setIsEditing(false);
   };
 
+  const handlePasswordUpdated = () => {
+    toast.success('Password updated successfully!');
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Page Title */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">My Profile</h1>
-        <p className="text-gray-500">View and manage your profile information</p>
+        <p className="text-gray-500">View and manage your editor profile information</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -75,60 +158,42 @@ const EditorProfilePage = () => {
                     className="h-full w-full object-cover"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = 'https://via.placeholder.com/128?text=Editor';
+                      e.target.style.display = 'none';
+                      e.target.parentNode.classList.add('bg-blue-600', 'text-white', 'flex', 'items-center', 'justify-center');
+                      // Create a text node with the first letter of the name
+                      const nameInitial = document.createElement('span');
+                      nameInitial.className = 'text-5xl font-bold';
+                      nameInitial.textContent = profile.name ? profile.name.charAt(0).toUpperCase() : 'E';
+                      e.target.parentNode.appendChild(nameInitial);
                     }}
                   />
                 </div>
-                {isEditing && (
-                  <button className="absolute bottom-0 right-0 bg-green-600 text-white p-2 rounded-full hover:bg-green-700">
-                    <Camera size={16} />
-                  </button>
-                )}
               </div>
               <h2 className="mt-4 text-xl font-semibold text-gray-800">{profile.name}</h2>
-              <p className="text-gray-500">Editor</p>
+              <p className="text-gray-500">{profile.role.charAt(0) + profile.role.slice(1).toLowerCase()}</p>
               <div className="mt-4 w-full">
                 <div className="flex items-center py-2">
                   <Mail size={16} className="text-gray-400 mr-2" />
                   <span className="text-sm text-gray-600">{profile.email}</span>
                 </div>
                 <div className="flex items-center py-2">
-                  <Phone size={16} className="text-gray-400 mr-2" />
-                  <span className="text-sm text-gray-600">{profile.phone}</span>
-                </div>
-                <div className="flex items-center py-2">
-                  <MapPin size={16} className="text-gray-400 mr-2" />
-                  <span className="text-sm text-gray-600">{profile.location}</span>
-                </div>
-                <div className="flex items-center py-2">
                   <Calendar size={16} className="text-gray-400 mr-2" />
                   <span className="text-sm text-gray-600">Joined {profile.joinDate}</span>
+                </div>
+                <div className="flex items-center py-2">
+                  <User size={16} className="text-gray-400 mr-2" />
+                  <span className="text-sm text-gray-600">Status: {profile.isActive ? 'Active' : 'Inactive'}</span>
                 </div>
               </div>
             </div>
             {!isEditing && (
               <button 
                 onClick={() => setIsEditing(true)}
-                className="mt-4 w-full py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-200"
+                className="mt-4 w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
               >
                 Edit Profile
               </button>
             )}
-          </div>
-
-          {/* Expertise Section */}
-          <div className="bg-white p-6 rounded-lg shadow-sm mt-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Areas of Expertise</h3>
-            <div className="flex flex-wrap gap-2">
-              {profile.expertise.map((item, index) => (
-                <span 
-                  key={index} 
-                  className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -147,7 +212,7 @@ const EditorProfilePage = () => {
                       name="name"
                       value={editedProfile.name}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                   <div>
@@ -157,87 +222,42 @@ const EditorProfilePage = () => {
                       name="email"
                       value={editedProfile.email}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      disabled
                     />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                    <input
-                      type="text"
-                      name="phone"
-                      value={editedProfile.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                    <input
-                      type="text"
-                      name="location"
-                      value={editedProfile.location}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
-                    <textarea
-                      name="bio"
-                      value={editedProfile.bio}
-                      onChange={handleInputChange}
-                      rows="4"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    ></textarea>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Areas of Expertise</label>
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {editedProfile.expertise.map((item, index) => (
-                        <div 
-                          key={index} 
-                          className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm flex items-center"
-                        >
-                          {item}
-                          <button 
-                            onClick={() => handleRemoveExpertise(item)}
-                            className="ml-1 text-green-800 hover:text-green-900"
-                          >
-                            <X size={14} />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex">
-                      <input
-                        type="text"
-                        value={newExpertise}
-                        onChange={(e) => setNewExpertise(e.target.value)}
-                        placeholder="Add new expertise"
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                      />
-                      <button
-                        onClick={handleAddExpertise}
-                        className="px-4 py-2 bg-green-600 text-white rounded-r-md hover:bg-green-700"
-                      >
-                        Add
-                      </button>
-                    </div>
+                    <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
                   </div>
                   <div className="flex space-x-4 pt-4">
                     <button
                       onClick={handleSaveProfile}
-                      className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center"
+                      disabled={loading}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center disabled:opacity-50"
                     >
-                      <Save size={16} className="mr-2" /> Save Changes
+                      {loading ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
+                          Saving...
+                        </>
+                      ) : (
+                        <>
+                          <Save size={16} className="mr-2" /> Save Changes
+                        </>
+                      )}
                     </button>
                     <button
                       onClick={handleCancelEdit}
                       className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+                      disabled={loading}
                     >
                       Cancel
                     </button>
                   </div>
+                  {error && (
+                    <div className="mt-4 p-3 bg-red-50 text-red-700 rounded-md flex items-center">
+                      <AlertCircle size={16} className="mr-2" />
+                      {error}
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (
@@ -246,27 +266,35 @@ const EditorProfilePage = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Profile Details</h3>
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500">About Me</h4>
-                    <p className="mt-1 text-gray-800">{profile.bio}</p>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-medium text-gray-500">Contact Information</h4>
+                    <h4 className="text-sm font-medium text-gray-500">Account Information</h4>
                     <div className="mt-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-xs text-gray-500">Full Name</p>
+                        <p className="text-gray-800">{profile.name}</p>
+                      </div>
                       <div>
                         <p className="text-xs text-gray-500">Email</p>
                         <p className="text-gray-800">{profile.email}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-500">Phone</p>
-                        <p className="text-gray-800">{profile.phone}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Location</p>
-                        <p className="text-gray-800">{profile.location}</p>
+                        <p className="text-xs text-gray-500">Role</p>
+                        <p className="text-gray-800">{profile.role.charAt(0) + profile.role.slice(1).toLowerCase()}</p>
                       </div>
                       <div>
                         <p className="text-xs text-gray-500">Joined</p>
                         <p className="text-gray-800">{profile.joinDate}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Status</p>
+                        <p className="text-gray-800">{profile.isActive ? 'Active' : 'Inactive'}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Verified</p>
+                        <p className="text-gray-800">{profile.isVerified ? 'Yes' : 'No'}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Last Updated</p>
+                        <p className="text-gray-800">{new Date(profile.updatedAt).toLocaleDateString()}</p>
                       </div>
                     </div>
                   </div>
@@ -280,53 +308,27 @@ const EditorProfilePage = () => {
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Security</h3>
             <div className="space-y-4">
               <div>
-                <button className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
-                  Change Password
+                <button 
+                  onClick={() => setIsPasswordModalOpen(true)}
+                  className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 flex items-center"
+                >
+                  <Lock size={16} className="mr-2" /> Change Password
                 </button>
-              </div>
-              <div>
-                <h4 className="text-sm font-medium text-gray-500 mb-2">Two-Factor Authentication</h4>
-                <div className="flex items-center">
-                  <div className="relative inline-block w-10 mr-2 align-middle select-none">
-                    <input 
-                      type="checkbox" 
-                      name="toggle" 
-                      id="toggle" 
-                      className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
-                    />
-                    <label 
-                      htmlFor="toggle" 
-                      className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
-                    ></label>
-                  </div>
-                  <label htmlFor="toggle" className="text-sm text-gray-700">Enable two-factor authentication</label>
-                </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  Add an extra layer of security to your account by requiring a verification code in addition to your password.
-                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Add some custom CSS for the toggle switch */}
-      <style jsx>{`
-        .toggle-checkbox:checked {
-          right: 0;
-          border-color: #10B981;
-        }
-        .toggle-checkbox:checked + .toggle-label {
-          background-color: #10B981;
-        }
-        .toggle-checkbox {
-          right: 0;
-          transition: all 0.3s;
-        }
-        .toggle-label {
-          transition: all 0.3s;
-        }
-      `}</style>
+      {/* Password Update Modal */}
+      {isPasswordModalOpen && (
+        <UpdatePasswordModal 
+          isOpen={isPasswordModalOpen}
+          onClose={() => setIsPasswordModalOpen(false)}
+          user={profile}
+          onPasswordUpdated={handlePasswordUpdated}
+        />
+      )}
     </>
   );
 };

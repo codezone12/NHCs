@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import ImagePreview from './../components/image-preview';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -8,20 +8,128 @@ import { FaCalendarAlt, FaMapMarkerAlt, FaUsers, FaHandshake, FaGlobe, FaMusic, 
 import GoToTop from '../components/GotToTop';
 import Slider from '../components/home-components/Slider';
 import FeaturesSlider from '../components/home-components/ThreeTornImages';
+import { MapPin, Navigation, Car, Train, Calendar, Music, Video, Camera, Star, Award, Book } from 'lucide-react';
+import { Globe, Users, Handshake, Heart, ChevronDown, Lightbulb } from 'lucide-react';
+import { useFestivalHighlightServices } from '../apis/festivalHighlightService';
+import useFestivalEventServices from '../apis/festivalEventService';
+import useTransportationServices from '../apis/transportationService';
 
 const SubPage = () => {
   const [readingProgress, setReadingProgress] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef(null);
-  
-  // Festival images for slider
-  const festivalImages = [
-    "/images/newImages/Highres-Independence_party_portrait_2015-05-30-0256.jpg",
-    "/images/newImages/IMG_8845.JPG",
-    "/images/newImages/IMG_6851.JPG",
-    "/images/newImages/IMG_4818.JPG"
+
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [festivalHighlights, setFestivalHighlights] = useState([]);
+  const [highlightsLoading, setHighlightsLoading] = useState(true);
+  const [highlightsError, setHighlightsError] = useState(null);
+
+  // Get festival highlight services
+  const { getPublicFestivalHighlights } = useFestivalHighlightServices();
+
+  // Fetch festival highlights when component mounts
+  useEffect(() => {
+    const fetchFestivalHighlights = async () => {
+      setHighlightsLoading(true);
+      try {
+        const response = await getPublicFestivalHighlights();
+        if (response.success && response.data) {
+          setFestivalHighlights(response.data);
+        } else {
+          setFestivalHighlights([]);
+          setHighlightsError('Failed to load festival highlights');
+        }
+      } catch (err) {
+        console.error('Error fetching festival highlights:', err);
+        setFestivalHighlights([]);
+        setHighlightsError('Error loading festival highlights');
+      } finally {
+        setHighlightsLoading(false);
+      }
+    };
+
+    fetchFestivalHighlights();
+  }, []);
+
+  // Fallback data in case API fails
+  const fallbackHighlights = [
+    {
+      id: 1,
+      title: "25 År av Kulturarv",
+      icon: "Globe",
+      bgColor: "bg-yellow-400",
+      hoverBg: "hover:bg-yellow-500",
+      borderColor: "border-yellow-400",
+      textColor: "text-yellow-600",
+      content: "Eritrea Festival har sedan starten 1998 vuxit från en lokal Stockholm evenemang till en nordisk och europeisk händelse. Den har satt Järva och Stockholm på kartan."
+    },
+    {
+      id: 2,
+      title: "10,000+ Besökare",
+      icon: "Users",
+      bgColor: "bg-blue-500",
+      hoverBg: "hover:bg-blue-600",
+      borderColor: "border-blue-500",
+      textColor: "text-blue-600",
+      content: "Kulturfestivalen lockar flera tusen besökare årligen från hela Skandinavien, vilket gör den till den största eritreanska kulturfestivalen i Sverige."
+    },
+    {
+      id: 3,
+      title: "70+ Föreningar",
+      icon: "Handshake",
+      bgColor: "bg-green-500",
+      hoverBg: "hover:bg-green-600",
+      borderColor: "border-green-500",
+      textColor: "text-green-600",
+      content: "Mer än 70 olika föreningar från olika delar av Sverige deltar i förberedelserna och genomförandet av festivalen."
+    },
+    {
+      id: 4,
+      title: "Kulturell Mångfald",
+      icon: "Heart",
+      bgColor: "bg-red-500",
+      hoverBg: "hover:bg-red-600",
+      borderColor: "border-red-500",
+      textColor: "text-red-600",
+      content: "Festivalen erbjuder en unik blandning av eritreansk och svensk kultur, med musik, dans, mat, konst och mycket mer för alla åldrar."
+    }
   ];
-  
+
+  // Map icon string to component
+  const getIconComponent = (iconName) => {
+    const iconMap = {
+      'Globe': Globe,
+      'Users': Users,
+      'Handshake': Handshake,
+      'Heart': Heart,
+      'Lightbulb': Lightbulb,
+      'Calendar': Calendar,
+      'Music': Music,
+      'Video': Video,
+      'Camera': Camera,
+      'Star': Star,
+      'Award': Award,
+      'Book': Book
+    };
+    return iconMap[iconName] || Globe; // Default to Globe if icon not found
+  };
+
+  // Use API data if available, otherwise use fallback
+  const displayHighlights = festivalHighlights.length > 0 ? festivalHighlights : fallbackHighlights;
+
+  const [facts, setFacts] = useState(displayHighlights);
+
+  useEffect(() => {
+    setFacts(displayHighlights);
+  }, [displayHighlights]);
+
+  const festivalImages = [
+    "/images/festival-page/Highres-Independence_party_portrait_2015-05-30-0256.jpg",
+    "/images/festival-page/IMG_8845.JPG",
+    "/images/festival-page/IMG_6851.JPG",
+    "/images/festival-page/IMG_4818.JPG"
+  ];
+
   useEffect(() => {
     // Initialize AOS animation library
     AOS.init({
@@ -63,8 +171,133 @@ const SubPage = () => {
     setCurrentSlide(prev => (prev === 0 ? festivalImages.length - 1 : prev - 1));
   };
 
+  const [festivalEvents, setFestivalEvents] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  const { getPublicFestivalEvents, getFestivalEvents } = useFestivalEventServices();
+  
+  // Use useCallback to memoize the fetch function to prevent infinite loops
+  const fetchFestivalEvents = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await getFestivalEvents({
+        upcoming: true,
+        active: true,
+        page: currentPage,
+        limit: 3
+      });
+      
+      if (response.success) {
+        setFestivalEvents(response.data.festivalEvents);
+        setTotalPages(response.data.pagination.pages);
+      } else {
+        setError('Failed to fetch festival events');
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentPage]);
+  
+  useEffect(() => {
+    fetchFestivalEvents();
+  }, [fetchFestivalEvents]);
+
+  // Transportation state
+  const [transportations, setTransportations] = useState([]);
+  const [transportationsLoading, setTransportationsLoading] = useState(true);
+  const [transportationsError, setTransportationsError] = useState(null);
+  
+  // Get transportation services
+  const { getPublicTransportations } = useTransportationServices();
+  
+  // Fetch transportation options when component mounts
+  useEffect(() => {
+    const fetchTransportations = async () => {
+      setTransportationsLoading(true);
+      try {
+        const response = await getPublicTransportations();
+        if (response.success && response.data) {
+          setTransportations(response.data);
+        } else {
+          setTransportations([]);
+          setTransportationsError('Failed to load transportation options');
+        }
+      } catch (err) {
+        console.error('Error fetching transportation options:', err);
+        setTransportations([]);
+        setTransportationsError('Error loading transportation options');
+      } finally {
+        setTransportationsLoading(false);
+      }
+    };
+
+    fetchTransportations();
+  }, []);
+
+  // Fallback transportation data in case API fails
+  const fallbackTransportations = [
+    {
+      id: 1,
+      type: "public",
+      title: "Med kollektivtrafik",
+      icon: "Train",
+      bgColor: "bg-blue-50",
+      textColor: "text-blue-900",
+      details: [
+        {
+          label: "Tunnelbana",
+          value: "Blå linje till Akalla eller Hjulsta"
+        },
+        {
+          label: "Buss",
+          value: "Från Akalla/Hjulsta till Järvafältet"
+        }
+      ],
+      tip: "Rekommenderat: Använd SL-appen för aktuella tider",
+      tipColor: "text-blue-600"
+    },
+    {
+      id: 2,
+      type: "car",
+      title: "Med bil",
+      icon: "Car",
+      bgColor: "bg-green-50",
+      textColor: "text-green-900",
+      details: [
+        {
+          label: "Från E4/E18",
+          value: "Följ skyltarna mot Järvafältet"
+        },
+        {
+          label: "Parkering",
+          value: "Tillgänglig vid Eggebygård"
+        }
+      ],
+      tip: "Tips: Kom tidigt för bästa parkeringsplatser",
+      tipColor: "text-green-600"
+    }
+  ];
+
+  // Map icon string to component for transportation
+  const getTransportIconComponent = (iconName) => {
+    const iconMap = {
+      'Train': Train,
+      'Car': Car,
+      'Navigation': Navigation
+    };
+    return iconMap[iconName] || MapPin; // Default to MapPin if icon not found
+  };
+
+  // Use API data if available, otherwise use fallback
+  const displayTransportations = transportations.length > 0 ? transportations : fallbackTransportations;
+
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen overflow-x-hidden">
       <Header />
       
       {/* Reading Progress Bar */}
@@ -166,7 +399,7 @@ const SubPage = () => {
                   <div className="absolute -top-4 -left-4 w-full h-full bg-yellow-400 rounded-lg"></div>
                   <div className="relative rounded-lg overflow-hidden shadow-xl">
                     <ImagePreview 
-                      src="/images/newImages/IMG_6640.JPG"
+                      src="/images/festival-page/IMG_7246.JPG"
                       alt="Festival Celebration"
                       className="w-full h-auto"
                     />
@@ -179,9 +412,7 @@ const SubPage = () => {
                 </h2>
                 <div className="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-500">
                   <p className="text-gray-700 mb-4 leading-relaxed">
-                    Den eritreanska festivalen i Stockholm är en årlig kulturfestival som i år kommer att hållas för
-                    25:e gången, 28–31 juli vid Eggebygård vid Järvafältet. Festivalen är den största eritreanska
-                    kulturfestival i Sverige med över 10 000 besökare årligen.
+                  Den eritreanska festivalen i Stockholm är en årlig kulturfestival som i år kommer att hållas för 27:e gången, 24–27 juli vid Eggebygård vid Järvafältet. Festivalen är den största eritreanska kulturfestival i Sverige med över 30 000 besökare årligen.
                   </p>
                   <p className="text-gray-700 leading-relaxed">
                     Det är en familjefestival där barn och ungdomar med eritreanskt påbrå från hela Sverige får möjlighet att lära känna varandra och känna stolthet över sin identitet.
@@ -212,8 +443,9 @@ const SubPage = () => {
                   </p>
                 </div>
                 <div className="md:w-1/2">
-                  <div className="grid grid-cols-3 gap-2">
-                    {['Husby-Kista', 'Rinkeby', 'Tensta-Hjulsta', 'Hässelby', 'Södra Stockholm', 'Sydvästra', 'Sundbyberg', 'Solna-Nacka', 'EKF'].map((org, index) => (
+                  <div className="grid grid-cols-4 gap-2">
+                    {/* {['Husby-Kista', 'Rinkeby', 'Tensta-Hjulsta', 'Hässelby', 'Södra Stockholm', 'Sydvästra', 'Sundby-berg', 'Solna-Nacka', 'EKF', 'Uppsala', 'Västerås', 'Eskilstuna', 'Örebro', 'Umeå', 'Göteborg', 'Norge', 'Danmark'].map((org, index) => ( */}
+                    {['Husby-Kista', 'Tensta-Hjulsta', 'Hässelby', 'Södra Stockholm', 'Sydvästra', 'Sundby-berg', 'Solna-Nacka', 'EKF', 'Uppsala', 'Västerås', 'Eskilstuna', 'Örebro', 'Umeå', 'Göteborg', 'Norge', 'Danmark'].map((org, index) => (
                       <div 
                         key={index} 
                         className="flex justify-center items-center bg-white p-3 rounded-lg text-center border border-blue-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1 duration-300"
@@ -227,67 +459,76 @@ const SubPage = () => {
             </div>
           </div>
 
-          {/* Key Facts Section - Unique icon cards */}
           <div className="mb-16" data-aos="fade-up">
-            <h2 className="text-3xl font-bold mb-6 text-blue-900 flex items-center justify-center">
-              <FaLightbulb className="text-yellow-500 mr-3" /> Festivalens Höjdpunkter
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow" data-aos="fade-right">
-                <div className="flex items-start">
-                  <div className="bg-yellow-400 p-3 rounded-full mr-4">
-                    <FaGlobe className="text-blue-900 text-xl" />
+      <h2 className="text-3xl font-bold mb-6 text-blue-900 flex items-center justify-center">
+        <Lightbulb className="text-yellow-500 mr-3" /> Festivalens Höjdpunkter
+      </h2>
+      
+      {highlightsLoading ? (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      ) : highlightsError ? (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">
+          <p>{highlightsError}</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {facts.map((fact) => {
+            const IconComponent = getIconComponent(fact.icon);
+            const isHovered = hoveredCard === fact.id;
+            
+            return (
+              <div
+                key={fact.id}
+                className={`bg-white rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer
+                  ${isHovered ? 'shadow-xl transform -translate-y-1' : 'hover:shadow-lg'}
+                  border-l-4 ${fact.borderColor}`}
+                onMouseEnter={() => setHoveredCard(fact.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                {/* Header */}
+                <div className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div className={`p-3 rounded-full mr-4 transition-all duration-300 
+                        ${fact.bgColor} ${fact.hoverBg} ${isHovered ? 'scale-110' : ''}`}>
+                        <IconComponent className="text-white text-xl" />
+                      </div>
+                      <h3 className={`font-semibold text-xl text-blue-900 transition-colors duration-300
+                        ${isHovered ? fact.textColor : ''}`}>
+                        {fact.title}
+                      </h3>
+                    </div>
+                    <ChevronDown 
+                      className={`transition-transform duration-300 ${fact.textColor}
+                        ${isHovered ? 'rotate-180' : ''}`}
+                      size={24}
+                    />
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-xl mb-3 text-blue-900">25 År av Kulturarv</h3>
-                    <p className="text-gray-600">
-                      Eritrea Festival har sedan starten 1998 vuxit från en lokal Stockholm evenemang till en
-                      nordisk och europeisk händelse. Den har satt Järva och Stockholm på kartan.
+                </div>
+
+                {/* Dropdown Content */}
+                <div className={`overflow-hidden transition-all duration-500 ease-in-out
+                  ${isHovered ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div className={`px-6 pb-6 pt-2 border-t-2 ${fact.borderColor} 
+                    bg-gradient-to-r from-gray-50 to-white`}>
+                    <p className="text-gray-600 leading-relaxed">
+                      {fact.content}
                     </p>
+                    <div className={`mt-3 inline-flex items-center text-sm font-medium 
+                      ${fact.textColor} group`}>
+                      Läs mer
+                      <ChevronDown className="ml-1 w-4 h-4 rotate-[-90deg] group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow" data-aos="fade-left">
-                <div className="flex items-start">
-                  <div className="bg-blue-500 p-3 rounded-full mr-4">
-                    <FaUsers className="text-white text-xl" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-xl mb-3 text-blue-900">10,000+ Besökare</h3>
-                    <p className="text-gray-600">
-                      Kulturfestivalen lockar flera tusen besökare årligen från hela Skandinavien, vilket gör den till den största eritreanska kulturfestivalen i Sverige.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow" data-aos="fade-right">
-                <div className="flex items-start">
-                  <div className="bg-green-500 p-3 rounded-full mr-4">
-                    <FaHandshake className="text-white text-xl" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-xl mb-3 text-blue-900">70+ Föreningar</h3>
-                    <p className="text-gray-600">
-                      Mer än 70 olika föreningar från olika delar av Sverige deltar i förberedelserna och genomförandet av festivalen.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow" data-aos="fade-left">
-                <div className="flex items-start">
-                  <div className="bg-purple-500 p-3 rounded-full mr-4">
-                    <FaHeart className="text-white text-xl" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-xl mb-3 text-blue-900">Helt Ideellt Arbete</h3>
-                    <p className="text-gray-600">
-                      Festivalen bedrivs ideellt utan vinstintresse och förlitar sig på frivillig arbetskraft och ekonomiska bidrag från medverkande föreningar.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
 
           {/* Purpose and Economy Section - Unique quote design */}
           <div className="mb-16" data-aos="fade-up">
@@ -313,7 +554,7 @@ const SubPage = () => {
               
               <div className="my-8 flex">
                 <div className="text-yellow-500 mr-4">
-                  <FaQuoteLeft className="text-4xl" />
+                  <FaQuoteLeft className="inline text-xl" />
                 </div>
                 <blockquote className="italic text-gray-700 text-lg">
                   Det är tack vare de hundratals eldsjälar och kreativa föreningsmedlemmar som festivalen kan fortsätta arrangeras trots de stora ekonomiska och logistiska utmaningarna.
@@ -337,26 +578,57 @@ const SubPage = () => {
               Festivalprogrammet är omfattande och innehåller en lång rad kulturella inslag, seminarier, debatter, aktiviteter för barn och ungdomar, kulturshower med artister från Eritrea och diasporan.
             </p>
             
-            <div className="relative h-[500px] mb-12">
-              <div className="absolute top-0 left-0 w-2/3 h-2/3 z-10" data-aos="fade-right" data-aos-delay="100">
-                <div className="w-full h-full p-3 bg-white shadow-lg rounded-lg">
-                  <div className="w-full h-full rounded-lg overflow-hidden">
-                    <ImagePreview 
-                      src="/images/newImages/IMG_6851.JPG"
-                      alt="Kulturella aktiviteter"
-                      className="w-full h-full object-cover"
-                    />
+            <div className="mb-12">
+              {/* Mobile Layout - Stacked vertically */}
+              <div className="block md:hidden space-y-6">
+                <div className="w-full" data-aos="fade-up" data-aos-delay="100">
+                  <div className="w-full p-3 bg-white shadow-lg rounded-lg">
+                    <div className="w-full max-h-64 rounded-lg overflow-hidden">
+                      <ImagePreview 
+                        src="/images/festival-page/IMG_3552-001.JPG"
+                        alt="Kulturella aktiviteter"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="w-full" data-aos="fade-up" data-aos-delay="300">
+                  <div className="w-full p-3 bg-white shadow-lg rounded-lg">
+                    <div className="w-full max-h-64 rounded-lg overflow-hidden">
+                      <ImagePreview 
+                        src="/images/festival-page/DSC01336.JPG"
+                        alt="Barn aktiviteter"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="absolute bottom-0 right-0 w-2/3 h-2/3 z-20" data-aos="fade-left" data-aos-delay="300">
-                <div className="w-full h-full p-3 bg-white shadow-lg rounded-lg">
-                  <div className="w-full h-full rounded-lg overflow-hidden">
-                    <ImagePreview 
-                      src="/images/newImages/IMG_4818.JPG"
-                      alt="Barn aktiviteter"
-                      className="w-full h-full object-cover"
-                    />
+
+              {/* Desktop/Tablet Layout - Overlapping */}
+              <div className="hidden md:block relative h-[500px]">
+                <div className="absolute top-0 left-0 w-2/3 h-2/3 z-10" data-aos="fade-right" data-aos-delay="100">
+                  <div className="w-full h-full p-3 bg-white shadow-lg rounded-lg">
+                    <div className="w-full h-full rounded-lg overflow-hidden">
+                      <ImagePreview 
+                        src="/images/festival-page/IMG_3552-001.JPG"
+                        alt="Kulturella aktiviteter"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute bottom-0 right-0 w-2/3 h-2/3 z-20" data-aos="fade-left" data-aos-delay="300">
+                  <div className="w-full h-full p-3 bg-white shadow-lg rounded-lg">
+                    <div className="w-full h-full rounded-lg overflow-hidden">
+                      <ImagePreview 
+                        src="/images/festival-page/DSC01336.JPG"
+                        alt="Barn aktiviteter"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -416,17 +688,17 @@ const SubPage = () => {
                     hade egna tält.
                   </p>
                 </div>
-                <div className="md:w-1/2 mb-[200px] md:mb-0">
-                  <div className="relative h-64">
+                <div className="md:w-1/2">
+                  <div className="relative  md:h-96">
                     <ImagePreview 
-                      src="/images/newImages/IMG_7246.JPG"
+                      src="/images/festival-page/DSC_0423.JPG"
                       alt="Participating Organizations"
-                      className="w-full h-64 object-cover rounded-lg shadow-md"
+                      className="w-full min-h-full object-cover rounded-lg shadow-md"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent rounded-lg"></div>
                     <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="font-bold text-lg">Internationellt Samarbete</h3>
-                      <p className="text-sm">Föreningar från Sverige, Norge och Danmark samarbetar för att skapa en unik kulturupplevelse</p>
+                      <h3 className="font-bold text-lg md:text-xl">Internationellt Samarbete</h3>
+                      <p className="text-sm md:text-base">Föreningar från Sverige, Norge och Danmark samarbetar för att skapa en unik kulturupplevelse</p>
                     </div>
                   </div>
                 </div>
@@ -453,17 +725,17 @@ const SubPage = () => {
                   <p className="text-gray-700">Presentation av nyutgivna böcker där 4 författare fick presentera sina verk</p>
                 </div>
                 <div className="relative" data-aos="fade-left" data-aos-delay="100">
-                  {/* <div className="absolute -left-10 top-0 w-4 h-4 bg-blue-500 rounded-full"></div> */}
+                  <div className="absolute -left-10 top-0 w-4 h-4 bg-blue-500 rounded-full"></div>
                   <h3 className="flex text-lg font-bold text-blue-900 mb-2"><FaTheaterMasks className='mr-2 mt-[4px] text-blue-600' />Teater & Drama</h3>
                   <p className="text-gray-700">En dramapjäs av en erkänd författare och skådespelare iscensattes</p>
                 </div>
                 <div className="relative" data-aos="fade-left" data-aos-delay="200">
-                  {/* <div className="absolute -left-10 top-0 w-4 h-4 bg-blue-500 rounded-full"></div> */}
+                  <div className="absolute -left-10 top-0 w-4 h-4 bg-blue-500 rounded-full"></div>
                   <h3 className="flex text-lg font-bold text-blue-900 mb-2"><FaPhotoVideo className='mr-2 mt-[4px] text-blue-600' />Utställningar</h3>
                   <p className="text-gray-700">Konstutställning samt fotoutställning av journalisten Donald Boström</p>
                 </div>
                 <div className="relative" data-aos="fade-left" data-aos-delay="300">
-                  {/* <div className="absolute -left-10 top-0 w-4 h-4 bg-blue-500 rounded-full"></div> */}
+                  <div className="absolute -left-10 top-0 w-4 h-4 bg-blue-500 rounded-full"></div>
                   <h3 className="flex text-lg font-bold text-blue-900 mb-2"><FaUsers className='mr-2 mt-[4px] text-blue-600' />Föreläsningar</h3>
                   <p className="text-gray-700">Föreläsningar om samhällsinformation och hälsa</p>
                 </div>
@@ -507,7 +779,7 @@ const SubPage = () => {
             </div>
 
 {/* Testimonials Section - Carousel */}
-<div className="mb-16" data-aos="fade-up">
+{/* <div className="mb-16" data-aos="fade-up">
   <h2 className="text-3xl font-bold mb-6 text-blue-900 flex items-center justify-center">
     <FaComments className="text-indigo-500 mr-3" /> Röster från Besökare
   </h2>
@@ -520,7 +792,7 @@ const SubPage = () => {
             <div className="md:w-1/4">
               <div className="w-24 h-24 rounded-full overflow-hidden mx-auto border-4 border-indigo-100">
                 <ImagePreview 
-                  src="/images/newImages/IMG_8845.JPG"
+                  src="/images/festival-page/IMG_8845.JPG"
                   alt="Testimonial"
                   className="w-full h-full object-cover"
                 />
@@ -550,11 +822,11 @@ const SubPage = () => {
               aria-label={`Go to testimonial ${index + 1}`}
             ></button>
           ))}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        </div> */}
+      {/* </div> */}
+    {/* </div> */}
+  {/* </div> */}
+{/* </div> */}
 
 {/* Photo Gallery */}
 <div className="mb-16" data-aos="fade-up">
@@ -564,14 +836,15 @@ const SubPage = () => {
   
   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
     {[
-      "/images/newImages/IMG_6640.JPG",
-      "/images/newImages/IMG_6851.JPG",
-      "/images/newImages/IMG_4818.JPG",
-      "/images/newImages/IMG_7246.JPG",
-      "/images/newImages/IMG_8845.JPG",
-      "/images/newImages/Highres-Independence_party_portrait_2015-05-30-0256.jpg",
-      "/images/newImages/IMG_6851.JPG",
-      "/images/newImages/IMG_4818.JPG"
+      "/images/festival-page/IMG_3552-001.JPG",
+      "/images/festival-page/DSC_0455.JPG",
+      "/images/festival-page/DSC_0437.JPG",
+      "/images/festival-page/IMG_2784.JPG",
+      "/images/festival-page/DSC_0418.JPG",
+      "/images/festival-page/IMG_2879.JPG",
+      "/images/festival-page/IMG_6851.JPG",
+      "/images/festival-page/IMG_4896.JPG",
+      "/images/festival-page/DSC_0423.JPG",
     ].map((image, index) => (
       <div 
         key={index} 
@@ -581,11 +854,11 @@ const SubPage = () => {
         data-aos="zoom-in"
         data-aos-delay={index * 50}
       >
-        <div className="relative group h-full">
+        <div className="relative group max-h-full">
           <ImagePreview 
             src={image}
             alt={`Festival Gallery Image ${index + 1}`}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            className="w-full min-h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
           {/* <div className="absolute inset-0 bg-blue-900/0 group-hover:bg-blue-900/60 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
             <button className="bg-white text-blue-900 p-2 rounded-full">
@@ -611,79 +884,172 @@ const SubPage = () => {
       </p>
       <div className="bg-blue-50 p-4 rounded-lg mb-4">
         <h3 className="font-semibold text-blue-900 mb-2">Kontaktuppgifter:</h3>
-        <p className="text-gray-700">Email: info@eritreafestival.se</p>
-        <p className="text-gray-700">Telefon: 08-123 45 67</p>
+        <p className="text-gray-700">Email: nhccsweden@gmail.com</p>
+        <p className="text-gray-700">Telefon: +4672-222 16 04</p>
       </div>
-      <a href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com' className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">
-        Kontakta oss
+      <a href='https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com'>
+        <button className="mt-6 px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">
+          Kontakta oss
+        </button>
       </a>
     </div>
     <div className="md:w-1/2">
       <div className="bg-blue-50 p-6 rounded-lg h-full">
         <h3 className="font-semibold text-xl mb-4 text-blue-900">Kommande evenemang</h3>
-        <div className="space-y-4">
-          <div className="flex items-start">
-            <div className="bg-yellow-400 text-blue-900 p-2 rounded-lg mr-4 text-center min-w-[60px]">
-              <div className="text-sm font-bold">JUL</div>
-              <div className="text-xl font-bold">28</div>
-            </div>
-            <div>
-              <h4 className="font-semibold text-blue-900">Öppningsceremoni</h4>
-              <p className="text-sm text-gray-600">Eggebygård, Järvafältet - 14:00</p>
-            </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
           </div>
-          <div className="flex items-start">
-            <div className="bg-yellow-400 text-blue-900 p-2 rounded-lg mr-4 text-center min-w-[60px]">
-              <div className="text-sm font-bold">JUL</div>
-              <div className="text-xl font-bold">29</div>
-            </div>
-            <div>
-              <h4 className="font-semibold text-blue-900">Kulturshow med artister från Eritrea</h4>
-              <p className="text-sm text-gray-600">Huvudscenen - 18:00</p>
-            </div>
+        ) : error ? (
+          <div className="text-red-500 text-center py-4">
+            Det gick inte att ladda evenemang. Försök igen senare.
           </div>
-          <div className="flex items-start">
-            <div className="bg-yellow-400 text-blue-900 p-2 rounded-lg mr-4 text-center min-w-[60px]">
-              <div className="text-sm font-bold">JUL</div>
-              <div className="text-xl font-bold">30</div>
-            </div>
-            <div>
-              <h4 className="font-semibold text-blue-900">Seminarier & Workshops</h4>
-              <p className="text-sm text-gray-600">Seminarietältet - 13:00</p>
-            </div>
+        ) : festivalEvents.length === 0 ? (
+          <div className="text-gray-500 text-center py-4">
+            Eritrea festival in Scandinavia, in Stockholm, 24-27 juli 2025
           </div>
-        </div>
+        ) : (
+          <>
+            <div className="space-y-4">
+              {festivalEvents.map((event) => {
+                const eventDate = new Date(event.date);
+                const month = eventDate.toLocaleString('sv-SE', { month: 'short' }).toUpperCase();
+                const day = eventDate.getDate();
+                const time = eventDate.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+                
+                return (
+                  <div key={event.id} className="flex items-start">
+                    <div className="bg-yellow-400 text-blue-900 p-2 rounded-lg mr-4 text-center min-w-[60px]">
+                      <div className="text-sm font-bold">{month}</div>
+                      <div className="text-xl font-bold">{day}</div>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-blue-900">{event.title}</h4>
+                      <p className="text-sm text-gray-600">
+                        {event.isOnline ? 'Online Event' : event.location} - {time}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            
+            {totalPages > 1 && (
+              <div className="flex justify-center mt-6">
+                <div className="flex space-x-2">
+                  <button 
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className={`px-3 py-1 rounded-md ${
+                      currentPage === 1 
+                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                        : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                    }`}
+                  >
+                    &laquo;
+                  </button>
+                  
+                  {[...Array(totalPages)].map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentPage(i + 1)}
+                      className={`px-3 py-1 rounded-md ${
+                        currentPage === i + 1
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                  
+                  <button 
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className={`px-3 py-1 rounded-md ${
+                      currentPage === totalPages 
+                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                        : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                    }`}
+                  >
+                    &raquo;
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   </div>
 </div>
 
-{/* Map Section */}
 <div className="mb-16" data-aos="fade-up">
-  <h2 className="text-3xl font-bold mb-6 text-blue-900 flex items-center justify-center">
-    <FaMapMarkerAlt className="text-red-500 mr-3" /> Hitta till festivalen
-  </h2>
-  <div className="bg-white p-4 rounded-lg shadow-md">
-    <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-      <div className="bg-blue-100 h-[300px] w-full flex items-center justify-center">
-        <div className="text-center">
-          <FaMapMarkerAlt className="text-red-500 text-5xl mx-auto mb-4" />
-          <p className="text-blue-900 font-medium">Eggebygård, Järvafältet</p>
-          <p className="text-gray-600">Karta laddas här</p>
+      <h2 className="text-3xl font-bold mb-6 text-blue-900 flex items-center justify-center">
+        <MapPin className="text-red-500 mr-3" /> Hitta till festivalen
+      </h2>
+      <div className="bg-white p-4 rounded-lg shadow-md">
+        <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+          <div className="h-[400px] w-full rounded-lg overflow-hidden">
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=17.8500%2C59.4200%2C17.9500%2C59.4800&layer=mapnik&marker=59.4500%2C17.9000"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Festival Location Map"
+            ></iframe>
+          </div>
+        </div>
+        
+        <div className="mt-6 grid md:grid-cols-2 gap-6">
+          {transportationsLoading ? (
+            <div className="col-span-2 flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+          ) : transportationsError ? (
+            <div className="col-span-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">
+              <p>{transportationsError}</p>
+            </div>
+          ) : (
+            displayTransportations.map((transport) => {
+              const IconComponent = getTransportIconComponent(transport.icon);
+              return (
+                <div key={transport.id} className={`p-4 ${transport.bgColor} rounded-lg`}>
+                  <h3 className={`font-semibold ${transport.textColor} mb-3 flex items-center`}>
+                    <IconComponent className="mr-2" size={20} />
+                    {transport.title}
+                  </h3>
+                  <div className="space-y-2 text-gray-700">
+                    {transport.details.map((detail, index) => (
+                      <p key={index}><strong>{detail.label}:</strong> {detail.value}</p>
+                    ))}
+                    {transport.tip && (
+                      <p className={`text-sm ${transport.tipColor}`}>{transport.tip}</p>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+        
+        <div className="mt-4 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+          <div className="flex items-start">
+            <Navigation className="text-yellow-600 mr-2 mt-1" size={20} />
+            <div>
+              <h4 className="font-semibold text-yellow-800 mb-1">Adress</h4>
+              <p className="text-yellow-700">Eggebygård, Järvafältet, Stockholm</p>
+              <p className="text-sm text-yellow-600 mt-1">
+                Klicka på kartan ovan för att öppna i fullskärm eller få vägbeskrivning
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-      <h3 className="font-semibold text-blue-900 mb-2">Vägbeskrivning:</h3>
-      <p className="text-gray-700 mb-2">
-        <strong>Med kollektivtrafik:</strong> Ta tunnelbana blå linje till Akalla eller Hjulsta. Därifrån går det bussar till Järvafältet.
-      </p>
-      <p className="text-gray-700">
-        <strong>Med bil:</strong> Parkering finns tillgänglig vid Eggebygård. Följ skyltarna från E4/E18.
-      </p>
-    </div>
-  </div>
-</div>
 
 {/* Newsletter Signup */}
 <div className="mb-16 bg-gradient-to-r from-blue-600 to-blue-800 p-8 rounded-lg shadow-lg text-white" data-aos="fade-up">

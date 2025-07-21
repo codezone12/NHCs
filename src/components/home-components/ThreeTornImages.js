@@ -31,46 +31,46 @@ const FeaturesSlider = () => {
   // Feature data - 6 items total
   const features = [
     {
-      image: "/images/newImages/IMG_0204.JPG",
-      title: "Streamlined Admin Panel",
-      description: "Our platform offers a responsive design, ensuring optimal viewing on any device.",
-      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
+      image: "/images/newImages/WhatsApp Image 2025-07-18 at 14.50.03.jpeg",
+      title: "Integration i praktiken",
+      description: "Vi bygger broar av förståelse, står enade i vår olikhet, och skapar trygghet genom mångkulturell styrka, en levande Svensk-Eritreansk gemenskap där integration blir en gemensam framgång.",
+      link: "https://www.erfis.org",
       linkText: "Learn More"
     },
     {
-      image: "/images/newImages/IMG_6640.JPG",
-      title: "User Engagement Tools",
-      description: "Engage users with feedback mechanisms and timely email notifications for updates.",
-      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
+      image: "/images/public-diplomacy-page/IMG_4232.JPG",
+      title: "Trygghet genom samhörighet",
+      description: "Trygghet genom samhörighet. Mångfald förenar oss. Broar mellan kulturer stärker gemenskapen.",
+      link: "/nhcc",
       linkText: "Explore"
     },
     {
-      image: "/images/newImages/IMG_7246.JPG",
-      title: "Responsive Design",
-      description: "Enjoy a consistent and engaging experience whether on mobile or desktop.",
-      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
+      image: "/images/newImages/WhatsApp Image 2025-07-18 at 14.50.04.jpeg",
+      title: "Kultur och mode",
+      description: "Med stil och själ bygger vi ett samhälle där alla hör hemma.",
+      link: "/festival",
       linkText: "Explore"
     },
     {
       image: "/images/newImages/IMG_6654.JPG",
-      title: "Analytics Dashboard",
-      description: "Track user behavior and content performance with our comprehensive analytics.",
-      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
-      linkText: "Learn More"
+      title: "Inkluderande framtid",
+      description: "Ett aktivt föreningsliv bland svensk-eritreanska barn och unga stärker hoppet, gemenskapen och bygger en bättre framtid tillsammans.",
+      link: "/festival",
+      linkText: "Explore"
     },
     {
       image: "/images/newImages/rollerCoaster1.jpg",
-      title: "Content Scheduling",
-      description: "Plan and automate your content publication for maximum audience reach.",
-      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
+      title: "Svensk-eritreanska diasporan:",
+      description: "🇸🇪🇪🇷 Den svensk-eritreanska gemenskapen illustrerar hur diaspora-grupper på ett diskret och engagerat sätt kan bidra till samhällsutveckling genom starka interna nätverk och långsiktigt arbete.",
+      link: "/nhcc",
       linkText: "Discover"
     },
     {
-      image: "/images/newImages/IMG_8764.JPG",
-      title: "Integration Capabilities",
-      description: "Connect seamlessly with your favorite tools and services for enhanced workflow.",
-      link: "https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com",
-      linkText: "Integrate"
+      image: "/images/public-diplomacy-page/20150530-IMG_7397.JPG",
+      title: "Osynlig påverkan",
+      description: "Svensk-eritreaner: En underskattad kraft med tyst diplomati och kollektiv styrka – bygger broar och driver förändring bakom kulisserna",
+      link: "/publicdiplomacy",
+      linkText: "Explore"
     }
   ];
 
@@ -192,7 +192,7 @@ const FeaturesSlider = () => {
     <section className="py-8 md:py-16 px-4 bg-yellow-400">
       <div className="container mx-auto">
         {/* Typewriter Heading */}
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-16 max-w-3xl mx-auto px-4 min-h-[3rem] md:min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-16 max-w-3xl mx-auto px-4 min-h-[150px] md:min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center">
           <span className="inline-block">
             {renderColoredText()}
             <span className="animate-pulse text-white">|</span>
@@ -266,7 +266,7 @@ const FeaturesSlider = () => {
           {/* Navigation Arrows */}
           <button 
             onClick={handlePrev}
-            className="absolute top-1/2 left-0 -translate-y-1/2 bg-white bg-opacity-70 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-md z-10 hover:bg-opacity-100 transition-all"
+            className="absolute top-1/2 -left-10 -translate-y-1/2 bg-white bg-opacity-70 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-md z-10 hover:bg-opacity-100 transition-all"
             aria-label="Previous slide"
           >
             <span className="text-lg md:text-xl font-bold">
@@ -276,7 +276,7 @@ const FeaturesSlider = () => {
           
           <button 
             onClick={handleNext}
-            className="absolute top-1/2 right-0 -translate-y-1/2 bg-white bg-opacity-70 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-md z-10 hover:bg-opacity-100 transition-all"
+            className="absolute top-1/2 -right-10 -translate-y-1/2 bg-white bg-opacity-70 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-md z-10 hover:bg-opacity-100 transition-all"
             aria-label="Next slide"
           >
             <span className="text-lg md:text-xl font-bold">

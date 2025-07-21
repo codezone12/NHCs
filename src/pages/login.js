@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { login } from '../apis/authService';
 import { Eye, EyeOff } from 'lucide-react';
+import Cookies from 'js-cookie';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -39,10 +40,14 @@ const LoginPage = () => {
       toast.success('Login successful!');
       
       // Store user data or token in localStorage/sessionStorage if needed
-      // localStorage.setItem('token', response.token);
-      
-      // Redirect to dashboard after successful login
-      setTimeout(() => navigate('/dashboard'), 1000);
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      Cookies.set('token', response.token);
+
+      console.log(response.data.user.role)
+
+      response.data.user.role === 'ADMIN' ? navigate('/super-admin/dashboard') : navigate('/editor/dashboard');    
+
     } catch (err) {
       toast.error(err.message || 'Failed to login');
     } finally {

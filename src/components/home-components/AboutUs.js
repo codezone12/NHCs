@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Building, Users, Calendar } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const AboutUs = ({ showCards = false }) => {
   // Stats data with start and end values and icons
   const statsData = [
-    { start: 0, end: 500, suffix: '+', label: 'Projects completed', icon: '🚀' },
-    { start: 0, end: 200, suffix: '%', label: 'Year on year growth', icon: '📈' },
-    { start: 0, end: 50, suffix: 'm', prefix: '$', label: 'Funded', icon: '💰' },
-    { start: 0, end: 10, suffix: 'k', label: 'Downloads', icon: '📱' }
+    { start: 0, end: 25, suffix: '+', label: 'Years of Service', icon: Building },
+    { start: 0, end: 30, suffix: 'K+', label: 'Annual Festival Attendees', icon: Calendar },
+    { start: 0, end: 45, suffix: '+', label: 'Member Organizations', icon: Users }
   ];
 
   // State to track animated values
@@ -54,17 +54,23 @@ const AboutUs = ({ showCards = false }) => {
   useEffect(() => {
     if (showCards && paragraphRef.current) {
       setTimeout(() => {
-        // Get the element's position
-        const elementPosition = paragraphRef.current.getBoundingClientRect().top;
-        // Get the current scroll position
-        const offsetPosition = elementPosition + window.pageYOffset - (window.innerHeight * 0.5);
+        const element = paragraphRef.current;
+        const elementRect = element.getBoundingClientRect();
+        const elementTop = elementRect.top + window.pageYOffset;
         
-        // Scroll to the adjusted position
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }, 100);
+         // More conservative offset calculation for mobile
+         const isMobile = window.innerWidth < 768;
+         const headerHeight = 80; // Approximate header height
+         const extraOffset = isMobile ? 0 : 50; // Less aggressive offset on mobile
+         
+         const offsetPosition = elementTop - headerHeight - extraOffset;
+         
+         // Scroll to the adjusted position
+         window.scrollTo({
+           top: Math.max(0, offsetPosition), // Ensure we don't scroll above page top
+           behavior: 'smooth'
+         });
+       }, 150); // Slightly longer delay for better UX
     }
   }, [showCards]);
 
@@ -106,18 +112,24 @@ const AboutUs = ({ showCards = false }) => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12" id="about-section">
+    <div className="max-w-6xl mx-auto px-4 pt-12 pb-0 md:pb-12" id="about-section">
       {/* Header */}
+      <span ref={paragraphRef}
+         className={`
+         ${showCards 
+          ? 'display-inline-blocks' 
+          : 'hidden'
+      }`}
+      >
       <div className="text-center mb-10" data-aos="fade-up">
         <h2 className="text-3xl font-bold mb-4">About Us</h2>
         
         {/* Paragraph with show/hide functionality */}
-        <div 
-          ref={paragraphRef}
+        <div
           className={`max-w-2xl mx-auto text-gray-600 text-sm transition-all duration-700 ${
             showCards 
-              ? 'opacity-100 max-h-[2000px] transform translate-y-0' 
-              : 'opacity-0 max-h-[80px] overflow-hidden transform translate-y-0'
+              ? 'display-inline-block max-h-[2000px] transform translate-y-0' 
+              : 'hidden max-h-[80px] overflow-hidden transform translate-y-0'
           }`}
         >
           <p>
@@ -125,6 +137,7 @@ const AboutUs = ({ showCards = false }) => {
           </p>
         </div>
       </div>
+      </span>
 
       {/* Stats Cards Section */}
       <div className="mb-16" data-aos="fade-up" data-aos-delay="100">
@@ -133,8 +146,10 @@ const AboutUs = ({ showCards = false }) => {
         </h3>
         
         {/* Stats Grid */}
-        <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {statsData.map((stat, index) => (
+        <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {statsData.map((stat, index) => {
+            const IconComponent = stat.icon;
+            return(
             <div 
               key={index}
               className="bg-white rounded-xl shadow-lg p-6 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-gradient-to-br hover:from-yellow-50 hover:to-yellow-100 group"
@@ -142,8 +157,8 @@ const AboutUs = ({ showCards = false }) => {
               data-aos-delay={index * 100}
             >
               {/* Icon */}
-              <div className="text-6xl mb-4 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
-                {stat.icon}
+              <div className="flex justify-center mb-4 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
+                <IconComponent className="text-blue-600 group-hover:text-yellow-600 transition-colors duration-300" size={48} />
               </div>
               
               {/* Number */}
@@ -156,7 +171,7 @@ const AboutUs = ({ showCards = false }) => {
                 {stat.label}
               </p>
             </div>
-          ))}
+          )})}
         </div>
       </div>
 
@@ -189,12 +204,6 @@ const AboutUs = ({ showCards = false }) => {
                 {section === 'Mission' && 
                   "Alenalki's mission is to strengthen the community by providing reliable information, highlighting news and activities, and creating opportunities for collaboration and engagement. The platform seeks to foster pride in Eritrean culture and identity, especially among young people."}
               </p>
-              <a
-                href="https://www.facebook.com/share/1FuRggQXLu/?mibextid=wwXIfrhttps://facebook.com"
-                className="text-center mt-4 px-4 py-2 bg-yellow-400 text-blue-800 font-bold rounded-lg hover:bg-yellow-500 transition-colors hover:scale-105"
-              >
-                Learn More
-              </a>
             </div>
           </div>
         ))}

@@ -1,93 +1,157 @@
-import React, { useState } from 'react';
-import { Save, Image, Clock, Tag, ChevronDown, X, Info, Calendar, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Save, X, FileUp, Trash2, ArrowLeft } from 'lucide-react';
+import { useNewsServices } from '../../apis/newsService';
+import { toast } from 'react-toastify';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const AddNewsPage = () => {
   const [formData, setFormData] = useState({
     title: '',
-    subtitle: '',
     content: '',
     category: '',
-    tags: [],
-    coverImage: null,
-    publishType: 'now',
-    scheduledDate: '',
-    scheduledTime: '',
-    featured: false,
-    allowComments: true,
-    draft: false
+    isTrending: false,
+    isActive: true
   });
   
-  const [currentTag, setCurrentTag] = useState('');
-  const [previewImage, setPreviewImage] = useState(null);
-  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+  const { createNews, loading, error } = useNewsServices();
 
-  const categories = ['Politics', 'Technology', 'Business', 'Sports', 'Entertainment', 'Health', 'Science', 'World'];
-
+  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-  };
-
-  const handleTagAdd = () => {
-    if (currentTag.trim() && !formData.tags.includes(currentTag.trim())) {
-      setFormData(prev => ({
-        ...prev,
-        tags: [...prev.tags, currentTag.trim()]
-      }));
-      setCurrentTag('');
+    
+    // Clear error when field is edited
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
 
-  const handleTagRemove = (tagToRemove) => {
-    setFormData(prev => ({
-      ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
-    }));
-  };
-
-  const handleTagKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleTagAdd();
+  // Handle content change from Quill editor
+  const handleContentChange = (content) => {
+    setFormData(prev => ({ ...prev, content }));
+    if (errors.content) {
+      setErrors(prev => ({ ...prev, content: '' }));
     }
   };
 
+  // Handle image file selection
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData(prev => ({
-        ...prev,
-        coverImage: file
-      }));
+      // Check if file is an image
+      if (!file.type.match('image.*')) {
+        toast.error('Only image files are allowed');
+        return;
+      }
       
-      // Create preview URL
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      // Check file size (limit to 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        toast.error('Image file size should be less than 2MB');
+        return;
+      }
+      
+      setImageFile(file);
+      
+      // Create a preview URL for the image
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
-  const handleCategorySelect = (category) => {
-    setFormData(prev => ({
-      ...prev,
-      category
-    }));
-    setShowCategoryDropdown(false);
+  // Remove selected image
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview('');
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically send the data to your API
-    console.log("Form submitted:", formData);
+  // Validate form before submission
+  const validateForm = () => {
+    const newErrors = {};
     
-    // For demonstration - you would replace this with actual API call
-    alert("News article submitted successfully!");
+    if (!formData.title.trim()) {
+      newErrors.title = 'Title is required';
+    }
+    
+    if (!formData.content.trim()) {
+      newErrors.content = 'Content is required';
+    }
+    
+    if (!formData.category.trim()) {
+      newErrors.category = 'Category is required';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+    
+    try {
+      setIsSubmitting(true);
+      const response = await createNews(formData, imageFile);
+      
+      if (response.success) {
+        toast.success('News article created successfully!');
+        // Reset form
+        setFormData({
+          title: '',
+          content: '',
+          category: '',
+          isTrending: false,
+          isActive: true
+        });
+        setImageFile(null);
+        setImagePreview('');
+      } else {
+        toast.error(response.message || 'Failed to create news article');
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'An error occurred while creating the news article');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Show error if API call fails
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  // Quill editor configuration
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ indent: '-1' }, { indent: '+1' }],
+      [{ align: [] }],
+      ['link', 'image'],
+      ['clean']
+    ]
+  };
+
+  const quillFormats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike',
+    'list', 'bullet', 'indent',
+    'link', 'image', 'align'
+  ];
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -96,29 +160,24 @@ const AddNewsPage = () => {
           <h1 className="text-2xl font-bold text-gray-800">Add New Article</h1>
           <p className="text-gray-500">Create and publish a new news article</p>
         </div>
-        <div className="flex space-x-3">
-          <button 
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 flex items-center"
-            onClick={() => setFormData(prev => ({ ...prev, draft: true }))}
-          >
-            Save as Draft
-          </button>
+        <div>
           <button 
             className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center"
             onClick={handleSubmit}
+            disabled={isSubmitting || loading}
           >
             <Save size={18} className="mr-2" />
-            Publish
+            {isSubmitting || loading ? 'Publishing...' : 'Publish'}
           </button>
         </div>
       </div>
 
-      <form className="bg-white shadow-sm rounded-lg overflow-hidden">
+      <form className="bg-white shadow-sm rounded-lg overflow-hidden" onSubmit={handleSubmit}>
         {/* Main Content Section */}
         <div className="p-6 border-b border-gray-200">
           <div className="mb-6">
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-              Article Title
+              Article Title*
             </label>
             <input
               type="text"
@@ -126,299 +185,111 @@ const AddNewsPage = () => {
               name="title"
               value={formData.title}
               onChange={handleInputChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className={`w-full p-3 border ${
+                errors.title ? 'border-red-500' : 'border-gray-300'
+              } rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent`}
               placeholder="Enter a compelling title"
             />
+            {errors.title && (
+              <p className="mt-1 text-sm text-red-500">{errors.title}</p>
+            )}
           </div>
           
           <div className="mb-6">
-            <label htmlFor="subtitle" className="block text-sm font-medium text-gray-700 mb-1">
-              Subtitle (Optional)
+            <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+              Category*
             </label>
             <input
               type="text"
-              id="subtitle"
-              name="subtitle"
-              value={formData.subtitle}
+              id="category"
+              name="category"
+              value={formData.category}
               onChange={handleInputChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              placeholder="Add a subtitle or short description"
+              className={`w-full p-3 border ${
+                errors.category ? 'border-red-500' : 'border-gray-300'
+              } rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent`}
+              placeholder="Enter news category (e.g., Politics, Technology, Sports)"
             />
+            {errors.category && (
+              <p className="mt-1 text-sm text-red-500">{errors.category}</p>
+            )}
+          </div>
+          
+          {/* Image Upload */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Featured Image
+            </label>
+            <div className="mt-1 flex items-center">
+              {imagePreview ? (
+                <div className="flex flex-col items-start space-y-2">
+                  <div className="relative">
+                    <img 
+                      src={imagePreview} 
+                      alt="Preview" 
+                      className="h-40 w-auto object-cover rounded-md border border-gray-300" 
+                    />
+                    <button
+                      type="button"
+                      onClick={removeImage}
+                      className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex w-full items-center">
+                  <label className="flex flex-col items-center px-4 py-2 bg-white text-blue-600 rounded-lg border border-blue-600 cursor-pointer hover:bg-blue-50">
+                    <FileUp size={18} className="mb-1" />
+                    <span className="text-sm">Upload Image</span>
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                  </label>
+                  <span className="ml-3 text-sm text-gray-500">Max size: 2MB</span>
+                </div>
+              )}
+            </div>
           </div>
           
           <div className="mb-6">
             <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
-              Article Content
+              Article Content*
             </label>
-            <textarea
-              id="content"
-              name="content"
-              value={formData.content}
-              onChange={handleInputChange}
-              rows="12"
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              placeholder="Write your article content here..."
-            ></textarea>
-          </div>
-        </div>
-        
-        {/* Media Section */}
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-lg font-medium text-gray-800 mb-4">Cover Image</h2>
-          
-          <div className="flex items-center space-x-4">
-            <div className="w-48 h-32 bg-gray-100 border border-dashed border-gray-300 rounded-md flex flex-col items-center justify-center overflow-hidden relative">
-              {previewImage ? (
-                <div className="w-full h-full relative">
-                  <img 
-                    src={previewImage} 
-                    alt="Cover preview" 
-                    className="w-full h-full object-cover"
-                  />
-                  <button 
-                    className="absolute top-1 right-1 bg-white rounded-full p-1 shadow-sm hover:bg-gray-100"
-                    onClick={() => {
-                      setPreviewImage(null);
-                      setFormData(prev => ({ ...prev, coverImage: null }));
-                    }}
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <Image size={24} className="text-gray-400 mb-2" />
-                  <span className="text-sm text-gray-500">Add cover image</span>
-                </>
-              )}
-              <input 
-                type="file" 
-                id="coverImage"
-                onChange={handleImageChange}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-                accept="image/*"
+            <div className={`border ${errors.content ? 'border-red-500' : 'border-gray-300'} rounded-md`}>
+              <ReactQuill
+                value={formData.content}
+                onChange={handleContentChange}
+                modules={quillModules}
+                formats={quillFormats}
+                placeholder="Write your article content here..."
+                className="h-64"
               />
             </div>
-            
-            <div className="flex-1">
-              <p className="text-sm text-gray-500 mb-2">
-                Recommended: 1200 x 628 pixels, JPG or PNG format.
-              </p>
-              <p className="text-sm text-gray-500">
-                A compelling cover image increases engagement and shares.
-              </p>
-            </div>
+            {errors.content && (
+              <p className="mt-1 text-sm text-red-500">{errors.content}</p>
+            )}
           </div>
         </div>
         
-        {/* Categories and Tags */}
-        <div className="p-6 border-b border-gray-200 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Category
+        {/* Additional Options */}
+        <div className="p-6 bg-gray-50">
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="isTrending"
+              name="isTrending"
+              checked={formData.isTrending}
+              onChange={handleInputChange}
+              className="h-4 w-4 text-green-600 focus:ring-green-500"
+            />
+            <label htmlFor="isTrending" className="ml-3 text-sm text-gray-700 flex items-center">
+              Mark as trending news
             </label>
-            <div className="relative">
-              <button
-                type="button"
-                className="w-full p-3 border border-gray-300 rounded-md bg-white text-left flex justify-between items-center"
-                onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-              >
-                <span className={formData.category ? 'text-gray-900' : 'text-gray-400'}>
-                  {formData.category || 'Select category'}
-                </span>
-                <ChevronDown size={18} className="text-gray-400" />
-              </button>
-              
-              {showCategoryDropdown && (
-                <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md border border-gray-200 py-1 max-h-60 overflow-auto">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      type="button"
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700"
-                      onClick={() => handleCategorySelect(category)}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Tags
-            </label>
-            <div className="relative">
-              <div className="flex items-center">
-                <input
-                  type="text"
-                  value={currentTag}
-                  onChange={(e) => setCurrentTag(e.target.value)}
-                  onKeyDown={handleTagKeyDown}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  placeholder="Add tag and press Enter"
-                />
-                <button
-                  type="button"
-                  onClick={handleTagAdd}
-                  className="absolute right-2 p-1 bg-green-100 text-green-600 rounded-full hover:bg-green-200"
-                >
-                  <Tag size={16} />
-                </button>
-              </div>
-              
-              {formData.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {formData.tags.map((tag) => (
-                    <span 
-                      key={tag} 
-                      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
-                    >
-                      {tag}
-                      <button 
-                        type="button"
-                        onClick={() => handleTagRemove(tag)}
-                        className="ml-1 text-green-600 hover:text-green-800"
-                      >
-                        <X size={14} />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        
-        {/* Publishing Options */}
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-lg font-medium text-gray-800 mb-4">Publishing Options</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                When to publish?
-              </label>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="publishNow"
-                    name="publishType"
-                    value="now"
-                    checked={formData.publishType === 'now'}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-green-600 focus:ring-green-500"
-                  />
-                  <label htmlFor="publishNow" className="ml-3 text-sm text-gray-700 flex items-center">
-                    <Clock size={16} className="mr-2" />
-                    Publish immediately
-                  </label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="publishLater"
-                    name="publishType"
-                    value="scheduled"
-                    checked={formData.publishType === 'scheduled'}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-green-600 focus:ring-green-500"
-                  />
-                  <label htmlFor="publishLater" className="ml-3 text-sm text-gray-700 flex items-center">
-                    <Calendar size={16} className="mr-2" />
-                    Schedule for later
-                  </label>
-                </div>
-                
-                {formData.publishType === 'scheduled' && (
-                  <div className="pl-7 flex space-x-3">
-                    <div className="w-1/2">
-                      <input
-                        type="date"
-                        name="scheduledDate"
-                        value={formData.scheduledDate}
-                        onChange={handleInputChange}
-                        className="w-full p-2 border border-gray-300 rounded-md"
-                      />
-                    </div>
-                    <div className="w-1/2">
-                      <input
-                        type="time"
-                        name="scheduledTime"
-                        value={formData.scheduledTime}
-                        onChange={handleInputChange}
-                        className="w-full p-2 border border-gray-300 rounded-md"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                Additional Options
-              </label>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="featured"
-                    name="featured"
-                    checked={formData.featured}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-green-600 focus:ring-green-500"
-                  />
-                  <label htmlFor="featured" className="ml-3 text-sm text-gray-700 flex items-center">
-                    <span className="mr-2 flex-shrink-0 w-4 h-4 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center">
-                      <Check size={12} />
-                    </span>
-                    Mark as featured article
-                  </label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="allowComments"
-                    name="allowComments"
-                    checked={formData.allowComments}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-green-600 focus:ring-green-500"
-                  />
-                  <label htmlFor="allowComments" className="ml-3 text-sm text-gray-700">
-                    Enable comments
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Submit Buttons */}
-        <div className="p-6 flex justify-between items-center bg-gray-50">
-          <div className="flex items-center text-sm text-gray-500">
-            <Info size={16} className="mr-2" />
-            All fields marked with * are required
-          </div>
-          <div className="flex space-x-3">
-            <button 
-              type="button"
-              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-              onClick={() => setFormData(prev => ({ ...prev, draft: true }))}
-            >
-              Save as Draft
-            </button>
-            <button 
-              type="submit"
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center"
-              onClick={handleSubmit}
-            >
-              <Save size={18} className="mr-2" />
-              Publish Article
-            </button>
           </div>
         </div>
       </form>

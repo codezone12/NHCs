@@ -118,9 +118,9 @@ const PrivacyPolicy = () => {
                     If you have questions about this privacy policy or our practices, please contact us at:
                   </p>
                   <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <p className="font-medium text-gray-700">NHCS Support Team</p>
-                    <p>Email: privacy@nhcs.com</p>
-                    <p>Phone: (555) 123-4567</p>
+                    {/* <p className="font-medium text-gray-700">NHCS Support Team</p> */}
+                    <a href='mailto:info@alenalki.se'>Email: info@alenalki.se</a>
+                    {/* <p>Phone: (555) 123-4567</p> */}
                   </div>
                 </div>
               </section>

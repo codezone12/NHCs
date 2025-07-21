@@ -18,7 +18,7 @@ const NewsPage = () => {
       <LatestInsightsUpdatesSection /> */}
       <NewsGrid />
       <TopWeekly />
-      <ShareNewsSection />
+      {/* <ShareNewsSection /> */}
       <GoToTop />
       <Footer />
     </div>
