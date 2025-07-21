@@ -20,10 +20,10 @@ const PublicDiplomacyPage = () => {
 
   // Hero slider images
   const heroImages = [
-    "/images/public-diplomacy-page/DSC_6257.JPG",
-    "/images/public-diplomacy-page/IMG_4228.JPG",
-    "/images/public-diplomacy-page/IMG_4232.JPG",
-    "/images/public-diplomacy-page/20150530-IMG_7397.JPG"
+    "https://nchs-fe.vercel.app/images/public-diplomacy-page/DSC_6257.JPG",
+    "https://nchs-fe.vercel.app/images/public-diplomacy-page/IMG_4228.JPG",
+    "https://nchs-fe.vercel.app/images/public-diplomacy-page/IMG_4232.JPG",
+    "https://nchs-fe.vercel.app/images/public-diplomacy-page/20150530-IMG_7397.JPG"
   ];
 
   // Page content

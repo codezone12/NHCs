@@ -272,7 +272,7 @@ const NhccPage = () => {
                   <div className="absolute -top-2 sm:-top-4 -left-2 sm:-left-4 w-full h-full bg-yellow-400 rounded-lg"></div>
                   <div className="relative rounded-lg overflow-hidden shadow-xl">
                     <ImagePreview
-                      src="/images/newImages/WhatsApp Image 2025-06-11 at 23.22.31.jpeg"
+                      src="https://nchs-fe.vercel.app/images/newImages/WhatsApp Image 2025-06-11 at 23.22.31.jpeg"
                       alt="NHCC Celebration"
                       className="w-full h-auto"
                     />
@@ -539,7 +539,7 @@ const NhccPage = () => {
                 <div className="w-full md:w-1/2">
                   <div className="relative h-48 sm:h-64 mb-4">
                     <ImagePreview
-                      src="/images/newImages/image.png"
+                      src="https://nchs-fe.vercel.app/images/newImages/image.png"
                       alt="NHCC Committee Meeting"
                       className="w-full h-48 object-cover rounded-lg shadow-md"
                     />
@@ -1007,14 +1007,14 @@ const NhccPage = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
               {[
-                "/images/nhcc-page/DSC_6951.JPG",
-                "/images/nhcc-page/IMG_1523.JPG",
-                "/images/nhcc-page/IMG_4205.JPG",
-                "/images/nhcc-page/IMG_8139.JPG",
-                "/images/nhcc-page/IMG_8296-001.JPG",
-                "/images/nhcc-page/IMG_9449.JPG",
-                "/images/nhcc-page/IMG_9456.JPG",
-                "/images/nhcc-page/IMG_9561.JPG"
+                "https://nchs-fe.vercel.app/images/nhcc-page/DSC_6951.JPG",
+                "https://nchs-fe.vercel.app/images/nhcc-page/IMG_1523.JPG",
+                "https://nchs-fe.vercel.app/images/nhcc-page/IMG_4205.JPG",
+                "https://nchs-fe.vercel.app/images/nhcc-page/IMG_8139.JPG",
+                "https://nchs-fe.vercel.app/images/nhcc-page/IMG_8296-001.JPG",
+                "https://nchs-fe.vercel.app/images/nhcc-page/IMG_9449.JPG",
+                "https://nchs-fe.vercel.app/images/nhcc-page/IMG_9456.JPG",
+                "https://nchs-fe.vercel.app/images/nhcc-page/IMG_9561.JPG"
               ].map((image, index) => (
                 <div
                   key={index}

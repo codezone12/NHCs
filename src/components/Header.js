@@ -147,7 +147,7 @@ const Header = ({ onAboutUsClick }) => {
         <div className="flex gap-6 items-center">
           <Link to='/'>
             <img 
-              src="/images/alenalki.Logo.png" 
+              src="https://nchs-fe.vercel.app/images/alenalki.Logo.png" 
               alt="NHCS Logo" 
               className="h-12 rounded-full overflow-hidden hover:scale-105 duration-[300ms]"
             />

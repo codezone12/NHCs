@@ -18,7 +18,7 @@ const EditorProfilePage = () => {
     joinDate: '',
     createdAt: '',
     updatedAt: '',
-    avatar: '/images/newImages/profile-placeholder.jpg'
+    avatar: 'https://nchs-fe.vercel.app/images/newImages/profile-placeholder.jpg'
   });
   const [editedProfile, setEditedProfile] = useState({...profile});
   
@@ -61,7 +61,7 @@ const EditorProfilePage = () => {
         joinDate,
         createdAt: userData.createdAt,
         updatedAt: userData.updatedAt,
-        avatar: '/images/newImages/profile-placeholder.jpg'
+        avatar: 'https://nchs-fe.vercel.app/images/newImages/profile-placeholder.jpg'
       });
       
       setEditedProfile({
@@ -74,7 +74,7 @@ const EditorProfilePage = () => {
         joinDate,
         createdAt: userData.createdAt,
         updatedAt: userData.updatedAt,
-        avatar: '/images/newImages/profile-placeholder.jpg'
+        avatar: 'https://nchs-fe.vercel.app/images/newImages/profile-placeholder.jpg'
       });
     } catch (err) {
       console.error('Error fetching profile:', err);

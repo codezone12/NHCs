@@ -60,7 +60,7 @@ const Footer = () => {
             <div className="mb-6">
               <Link to='/'>
                 <img 
-                  src="/images/alenalki.Logo.png" 
+                  src="https://nchs-fe.vercel.app/images/alenalki.Logo.png" 
                   alt="NHCS Logo" 
                   className="h-16 rounded-full hover:scale-105 duration-[300ms]"
                 />

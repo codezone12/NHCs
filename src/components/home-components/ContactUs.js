@@ -105,9 +105,9 @@ const ContactUs = () => {
   // Slider state and images
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderImages = [
-    '/images/main-page/20150530-IMG_7415.JPG',
-    '/images/main-page/DSC_0538.JPG',
-    '/images/main-page/FB_IMG_1691510382300.jpg'
+    'https://nchs-fe.vercel.app/images/main-page/20150530-IMG_7415.JPG',
+    'https://nchs-fe.vercel.app/images/main-page/DSC_0538.JPG',
+    'https://nchs-fe.vercel.app/images/main-page/FB_IMG_1691510382300.jpg'
   ];
 
   // Auto slide change effect

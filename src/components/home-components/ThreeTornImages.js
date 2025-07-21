@@ -31,42 +31,42 @@ const FeaturesSlider = () => {
   // Feature data - 6 items total
   const features = [
     {
-      image: "/images/newImages/WhatsApp Image 2025-07-18 at 14.50.03.jpeg",
+      image: "https://nchs-fe.vercel.app/images/newImages/WhatsApp Image 2025-07-18 at 14.50.03.jpeg",
       title: "Integration i praktiken",
       description: "Vi bygger broar av förståelse, står enade i vår olikhet, och skapar trygghet genom mångkulturell styrka, en levande Svensk-Eritreansk gemenskap där integration blir en gemensam framgång.",
       link: "https://www.erfis.org",
       linkText: "Learn More"
     },
     {
-      image: "/images/public-diplomacy-page/IMG_4232.JPG",
+      image: "https://nchs-fe.vercel.app/images/public-diplomacy-page/IMG_4232.JPG",
       title: "Trygghet genom samhörighet",
       description: "Trygghet genom samhörighet. Mångfald förenar oss. Broar mellan kulturer stärker gemenskapen.",
       link: "/nhcc",
       linkText: "Explore"
     },
     {
-      image: "/images/newImages/WhatsApp Image 2025-07-18 at 14.50.04.jpeg",
+      image: "https://nchs-fe.vercel.app/images/newImages/WhatsApp Image 2025-07-18 at 14.50.04.jpeg",
       title: "Kultur och mode",
       description: "Med stil och själ bygger vi ett samhälle där alla hör hemma.",
       link: "/festival",
       linkText: "Explore"
     },
     {
-      image: "/images/newImages/IMG_6654.JPG",
+      image: "https://nchs-fe.vercel.app/images/newImages/IMG_6654.JPG",
       title: "Inkluderande framtid",
       description: "Ett aktivt föreningsliv bland svensk-eritreanska barn och unga stärker hoppet, gemenskapen och bygger en bättre framtid tillsammans.",
       link: "/festival",
       linkText: "Explore"
     },
     {
-      image: "/images/newImages/rollerCoaster1.jpg",
+      image: "https://nchs-fe.vercel.app/images/newImages/rollerCoaster1.jpg",
       title: "Svensk-eritreanska diasporan:",
       description: "🇸🇪🇪🇷 Den svensk-eritreanska gemenskapen illustrerar hur diaspora-grupper på ett diskret och engagerat sätt kan bidra till samhällsutveckling genom starka interna nätverk och långsiktigt arbete.",
       link: "/nhcc",
       linkText: "Discover"
     },
     {
-      image: "/images/public-diplomacy-page/20150530-IMG_7397.JPG",
+      image: "https://nchs-fe.vercel.app/images/public-diplomacy-page/20150530-IMG_7397.JPG",
       title: "Osynlig påverkan",
       description: "Svensk-eritreaner: En underskattad kraft med tyst diplomati och kollektiv styrka – bygger broar och driver förändring bakom kulisserna",
       link: "/publicdiplomacy",

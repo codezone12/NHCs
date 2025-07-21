@@ -28,7 +28,7 @@ const FeaturesSlider = () => {
   // Feature data - 6 items total with expanded content
   const features = [
     {
-      image: "/images/newImages/IMG_0204.JPG",
+      image: "https://nchs-fe.vercel.app/images/newImages/IMG_0204.JPG",
       title: "Streamlined Admin Panel",
       description: "Our platform offers a responsive design, ensuring optimal viewing on any device.",
       expandedContent: [
@@ -42,7 +42,7 @@ const FeaturesSlider = () => {
       linkText: "Learn More"
     },
     {
-      image: "/images/newImages/IMG_6640.JPG",
+      image: "https://nchs-fe.vercel.app/images/newImages/IMG_6640.JPG",
       title: "User Engagement Tools",
       description: "Engage users with feedback mechanisms and timely email notifications for updates.",
       expandedContent: [
@@ -56,7 +56,7 @@ const FeaturesSlider = () => {
       linkText: "Explore"
     },
     {
-      image: "/images/newImages/IMG_7246.JPG",
+      image: "https://nchs-fe.vercel.app/images/newImages/IMG_7246.JPG",
       title: "Responsive Design",
       description: "Enjoy a consistent and engaging experience whether on mobile or desktop.",
       expandedContent: [
@@ -70,7 +70,7 @@ const FeaturesSlider = () => {
       linkText: "Explore"
     },
     {
-      image: "/images/newImages/IMG_6654.JPG",
+      image: "https://nchs-fe.vercel.app/images/newImages/IMG_6654.JPG",
       title: "Analytics Dashboard",
       description: "Track user behavior and content performance with our comprehensive analytics.",
       expandedContent: [
@@ -84,7 +84,7 @@ const FeaturesSlider = () => {
       linkText: "Learn More"
     },
     {
-      image: "/images/newImages/rollerCoaster1.jpg",
+      image: "https://nchs-fe.vercel.app/images/newImages/rollerCoaster1.jpg",
       title: "Content Scheduling",
       description: "Plan and automate your content publication for maximum audience reach.",
       expandedContent: [
@@ -98,7 +98,7 @@ const FeaturesSlider = () => {
       linkText: "Discover"
     },
     {
-      image: "/images/newImages/IMG_8764.JPG",
+      image: "https://nchs-fe.vercel.app/images/newImages/IMG_8764.JPG",
       title: "Integration Capabilities",
       description: "Connect seamlessly with your favorite tools and services for enhanced workflow.",
       expandedContent: [

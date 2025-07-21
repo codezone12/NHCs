@@ -15,14 +15,14 @@ const AdminLayout = ({ children }) => {
         <div className="flex items-center justify-between p-4 border-b border-gray-800">
           {!isSidebarCollapsed && (
             <img 
-              src="/images/alenalki.Logo.png" 
+              src="https://nchs-fe.vercel.app/images/alenalki.Logo.png" 
               alt="TIME-PAL Logo" 
               className="h-10" 
             />
           )}
           {isSidebarCollapsed && (
             <img 
-              src="/images/alenalki.Logo.png" 
+              src="https://nchs-fe.vercel.app/images/alenalki.Logo.png" 
               alt="TIME-PAL Icon" 
               className="h-8" 
             />

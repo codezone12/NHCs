@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 const Slider = () => {
   const images = [
-    "/images/newImages/DSC_0468.JPG",
-    "/images/newImages/DSC_0890.JPG",
-    "/images/newImages/DSC_0446-001.JPG"
+    "https://nchs-fe.vercel.app/images/newImages/DSC_0468.JPG",
+    "https://nchs-fe.vercel.app/images/newImages/DSC_0890.JPG",
+    "https://nchs-fe.vercel.app/images/newImages/DSC_0446-001.JPG"
   ];
   
   const [currentSlide, setCurrentSlide] = useState(0);

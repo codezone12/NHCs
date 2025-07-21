@@ -124,10 +124,10 @@ const SubPage = () => {
   }, [displayHighlights]);
 
   const festivalImages = [
-    "/images/festival-page/Highres-Independence_party_portrait_2015-05-30-0256.jpg",
-    "/images/festival-page/IMG_8845.JPG",
-    "/images/festival-page/IMG_6851.JPG",
-    "/images/festival-page/IMG_4818.JPG"
+    "https://nchs-fe.vercel.app/images/festival-page/Highres-Independence_party_portrait_2015-05-30-0256.jpg",
+    "https://nchs-fe.vercel.app/images/festival-page/IMG_8845.JPG",
+    "https://nchs-fe.vercel.app/images/festival-page/IMG_6851.JPG",
+    "https://nchs-fe.vercel.app/images/festival-page/IMG_4818.JPG"
   ];
 
   useEffect(() => {
@@ -399,7 +399,7 @@ const SubPage = () => {
                   <div className="absolute -top-4 -left-4 w-full h-full bg-yellow-400 rounded-lg"></div>
                   <div className="relative rounded-lg overflow-hidden shadow-xl">
                     <ImagePreview 
-                      src="/images/festival-page/IMG_7246.JPG"
+                      src="https://nchs-fe.vercel.app/images/festival-page/IMG_7246.JPG"
                       alt="Festival Celebration"
                       className="w-full h-auto"
                     />
@@ -585,7 +585,7 @@ const SubPage = () => {
                   <div className="w-full p-3 bg-white shadow-lg rounded-lg">
                     <div className="w-full max-h-64 rounded-lg overflow-hidden">
                       <ImagePreview 
-                        src="/images/festival-page/IMG_3552-001.JPG"
+                        src="https://nchs-fe.vercel.app/images/festival-page/IMG_3552-001.JPG"
                         alt="Kulturella aktiviteter"
                         className="w-full h-full object-cover"
                       />
@@ -597,7 +597,7 @@ const SubPage = () => {
                   <div className="w-full p-3 bg-white shadow-lg rounded-lg">
                     <div className="w-full max-h-64 rounded-lg overflow-hidden">
                       <ImagePreview 
-                        src="/images/festival-page/DSC01336.JPG"
+                        src="https://nchs-fe.vercel.app/images/festival-page/DSC01336.JPG"
                         alt="Barn aktiviteter"
                         className="w-full h-full object-cover"
                       />
@@ -612,7 +612,7 @@ const SubPage = () => {
                   <div className="w-full h-full p-3 bg-white shadow-lg rounded-lg">
                     <div className="w-full h-full rounded-lg overflow-hidden">
                       <ImagePreview 
-                        src="/images/festival-page/IMG_3552-001.JPG"
+                        src="https://nchs-fe.vercel.app/images/festival-page/IMG_3552-001.JPG"
                         alt="Kulturella aktiviteter"
                         className="w-full h-full object-cover"
                       />
@@ -624,7 +624,7 @@ const SubPage = () => {
                   <div className="w-full h-full p-3 bg-white shadow-lg rounded-lg">
                     <div className="w-full h-full rounded-lg overflow-hidden">
                       <ImagePreview 
-                        src="/images/festival-page/DSC01336.JPG"
+                        src="https://nchs-fe.vercel.app/images/festival-page/DSC01336.JPG"
                         alt="Barn aktiviteter"
                         className="w-full h-full object-cover"
                       />
@@ -691,7 +691,7 @@ const SubPage = () => {
                 <div className="md:w-1/2">
                   <div className="relative  md:h-96">
                     <ImagePreview 
-                      src="/images/festival-page/DSC_0423.JPG"
+                      src="https://nchs-fe.vercel.app/images/festival-page/DSC_0423.JPG"
                       alt="Participating Organizations"
                       className="w-full min-h-full object-cover rounded-lg shadow-md"
                     />
@@ -836,15 +836,15 @@ const SubPage = () => {
   
   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
     {[
-      "/images/festival-page/IMG_3552-001.JPG",
-      "/images/festival-page/DSC_0455.JPG",
-      "/images/festival-page/DSC_0437.JPG",
-      "/images/festival-page/IMG_2784.JPG",
-      "/images/festival-page/DSC_0418.JPG",
-      "/images/festival-page/IMG_2879.JPG",
-      "/images/festival-page/IMG_6851.JPG",
-      "/images/festival-page/IMG_4896.JPG",
-      "/images/festival-page/DSC_0423.JPG",
+      "https://nchs-fe.vercel.app/images/festival-page/IMG_3552-001.JPG",
+      "https://nchs-fe.vercel.app/images/festival-page/DSC_0455.JPG",
+      "https://nchs-fe.vercel.app/images/festival-page/DSC_0437.JPG",
+      "https://nchs-fe.vercel.app/images/festival-page/IMG_2784.JPG",
+      "https://nchs-fe.vercel.app/images/festival-page/DSC_0418.JPG",
+      "https://nchs-fe.vercel.app/images/festival-page/IMG_2879.JPG",
+      "https://nchs-fe.vercel.app/images/festival-page/IMG_6851.JPG",
+      "https://nchs-fe.vercel.app/images/festival-page/IMG_4896.JPG",
+      "https://nchs-fe.vercel.app/images/festival-page/DSC_0423.JPG",
     ].map((image, index) => (
       <div 
         key={index} 
