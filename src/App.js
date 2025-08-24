@@ -11,6 +11,12 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Dashboard from './pages/super-admin/dashboard';
 import AdminLayout from './pages/super-admin/super-admin-layout';
 import UsersPage from './pages/super-admin/users';
+import BlogListAdminPage from './pages/super-admin/blog-list';
+import AddBlogAdminPage from './pages/super-admin/add-blog';
+import EditBlogAdminPage from './pages/super-admin/edit-blog';
+import AddNewsAdminPage from './pages/super-admin/add-news';
+import NewsListAdminPage from './pages/super-admin/news-list';
+import EditNewsAdminPage from './pages/super-admin/edit-news';
 import SettingsPage from './pages/super-admin/settings';
 import SchedulePage from './pages/super-admin/schedule';
 import AnalyticsPage from './pages/super-admin/analytics';
@@ -69,6 +75,12 @@ function App() {
             <Route path="/super-admin/festival-events" element={<FestivalEventsPage />} />  
             <Route path="/super-admin/festival-highlights" element={<FestivalHighlightsPage />} />  
             <Route path="/super-admin/transportations" element={<Transportations />} />  
+            <Route path="/super-admin/news-list" element={<NewsListAdminPage />} />
+            <Route path="/super-admin/add-news" element={<AddNewsAdminPage />} />
+            <Route path="/super-admin/edit-news/:id" element={<EditNewsAdminPage />} />
+            <Route path="/super-admin/blog-list" element={<BlogListAdminPage />} />
+            <Route path="/super-admin/add-blog" element={<AddBlogAdminPage />} />
+            <Route path="/super-admin/edit-blog/:id" element={<EditBlogAdminPage />} />
             <Route path="/super-admin/settings" element={<SettingsPage />} />  
             <Route path="/super-admin/schedule" element={<SchedulePage />} />  
             <Route path="/super-admin/analytics" element={<AnalyticsPage />} />  

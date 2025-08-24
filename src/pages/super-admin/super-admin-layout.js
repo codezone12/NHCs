@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight, Menu, X, Search, Bell, LogOut, User } from 'lucide-react';
+import { ChevronRight, Menu, X, Search, Bell, LogOut, User, FileText, PlusCircle } from 'lucide-react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import { handleLogout } from '../../utils/authUtils';
 
@@ -127,6 +127,10 @@ const SidebarNavigation = ({ collapsed, currentPath }) => {
     { icon: Calendar, label: "Festival Events", href: "/super-admin/festival-events" },
     { icon: Award, label: "Festival Highlights", href: "/super-admin/festival-highlights" },
     { icon: Map, label: "Transportation", href: "/super-admin/transportations" },
+    { icon: FileText, label: "News List", href: "/super-admin/news-list" },
+    { icon: PlusCircle, label: "Add News", href: "/super-admin/add-news" },
+    { icon: FileText, label: "Blog List", href: "/super-admin/blog-list" },
+    { icon: PlusCircle, label: "Add Blog", href: "/super-admin/add-blog" },
     { icon: User, label: "My Profile", href: "/super-admin/profile" },
     // { icon: Settings, label: "Settings", href: "/super-admin/settings" },
     // { icon: Calendar, label: "Schedule", href: "/super-admin/schedule" },

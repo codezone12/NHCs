@@ -310,9 +310,18 @@ const PublicDiplomacyPage = () => {
                   data-aos-delay={index * 100}
                 >
                   {/* Blog Card Header */}
-                  <div className="h-48 bg-blue-100 relative">
-                    <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-blue-900/80 flex items-center justify-center">
-                      <h3 className="text-xl font-bold text-white px-4 text-center">
+                  <div className="h-48 relative">
+                    {blog.imageUrl ? (
+                      <img 
+                        src={blog.imageUrl} 
+                        alt={blog.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-blue-900/80"></div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 flex items-end justify-start p-4">
+                      <h3 className="text-xl font-bold text-white">
                         {blog.title}
                       </h3>
                     </div>

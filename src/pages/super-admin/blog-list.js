@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useBlogServices } from '../../apis/blogService';
 import { Link } from 'react-router-dom';
-import { Edit, Trash2, Plus, Search, AlertCircle, CheckCircle, Star, FileText } from 'lucide-react';
+import { Edit, Trash2, Plus, Search, AlertCircle, CheckCircle, Star, FileText, Image } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
 
-const BlogList = () => {
+const BlogListAdminPage = () => {
   const [blogs, setBlogs] = useState([]);
   const [pagination, setPagination] = useState({
     page: 1,
@@ -248,6 +248,7 @@ const BlogList = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PDF</th>
@@ -261,6 +262,19 @@ const BlogList = () => {
                   <tr key={item.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">{item.title}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {item.imageUrl ? (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="w-16 h-16 object-cover rounded-lg border border-gray-200"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center">
+                          <Image size={24} className="text-gray-400" />
+                        </div>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-500">{item.category}</div>
@@ -494,4 +508,4 @@ const BlogList = () => {
   );
 };
 
-export default BlogList;
+export default BlogListAdminPage;

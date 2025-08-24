@@ -49,23 +49,29 @@ export const useBlogServices = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Create a new blog post with optional PDF upload
-  const createBlog = async (blogData, pdfFile = null) => {
+  // Create a new blog post with optional PDF and image upload
+  const createBlog = async (blogData, pdfFile = null, imageFile = null) => {
     setLoading(true);
     setError(null);
     try {
-      // If there's a PDF file, use FormData to send multipart/form-data
+      // If there are files, use FormData to send multipart/form-data
       let data;
       let config = {};
       
-      if (pdfFile) {
+      if (pdfFile || imageFile) {
         data = new FormData();
         // Add blog data to FormData
         Object.keys(blogData).forEach(key => {
           data.append(key, blogData[key]);
         });
-        // Add PDF file
-        data.append('pdfFile', pdfFile);
+        // Add PDF file if provided
+        if (pdfFile) {
+          data.append('pdfFile', pdfFile);
+        }
+        // Add image file if provided
+        if (imageFile) {
+          data.append('imageFile', imageFile);
+        }
       } else {
         data = blogData;
       }
@@ -162,23 +168,29 @@ export const useBlogServices = () => {
     }
   };
 
-  // Update blog with optional PDF upload
-  const updateBlog = async (id, blogData, pdfFile = null) => {
+  // Update blog with optional PDF and image upload
+  const updateBlog = async (id, blogData, pdfFile = null, imageFile = null) => {
     setLoading(true);
     setError(null);
     try {
-      // If there's a PDF file, use FormData to send multipart/form-data
+      // If there are files, use FormData to send multipart/form-data
       let data;
       let config = {};
       
-      if (pdfFile) {
+      if (pdfFile || imageFile) {
         data = new FormData();
         // Add blog data to FormData
         Object.keys(blogData).forEach(key => {
           data.append(key, blogData[key]);
         });
-        // Add PDF file
-        data.append('pdfFile', pdfFile);
+        // Add PDF file if provided
+        if (pdfFile) {
+          data.append('pdfFile', pdfFile);
+        }
+        // Add image file if provided
+        if (imageFile) {
+          data.append('imageFile', imageFile);
+        }
       } else {
         data = blogData;
       }

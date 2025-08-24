@@ -6,7 +6,7 @@ import { Loader2, FileUp, Trash2 } from 'lucide-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const EditNews = () => {
+const EditNewsAdminPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { getNewsById, updateNews, loading, error } = useNewsServices();
@@ -374,4 +374,4 @@ const EditNews = () => {
   );
 };
 
-export default EditNews;
+export default EditNewsAdminPage;

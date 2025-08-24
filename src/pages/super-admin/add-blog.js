@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useBlogServices } from '../../apis/blogService';
 import { toast } from 'react-toastify';
-import { Save, X, FileUp, Trash2, ArrowLeft } from 'lucide-react';
+import { Save, X, FileUp, Trash2, ArrowLeft, Image } from 'lucide-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const AddBlog = () => {
+const AddBlogAdminPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditMode = Boolean(id);
@@ -20,6 +20,8 @@ const AddBlog = () => {
   });
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfPreview, setPdfPreview] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -54,6 +56,10 @@ const AddBlog = () => {
         
         if (blogData.pdfUrl) {
           setPdfPreview(blogData.pdfUrl);
+        }
+        
+        if (blogData.imageUrl) {
+          setImagePreview(blogData.imageUrl);
         }
       } else {
         toast.error('Failed to fetch blog data');
@@ -110,9 +116,40 @@ const AddBlog = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast.error('Only image files are allowed');
+        return;
+      }
+      
+      // Validate file size (2MB limit)
+      if (file.size > 2 * 1024 * 1024) {
+        toast.error('Image file size should be less than 2MB');
+        return;
+      }
+      
+      setImageFile(file);
+      
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const removePdf = () => {
     setPdfFile(null);
     setPdfPreview('');
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview('');
   };
 
   const validateForm = () => {
@@ -148,9 +185,9 @@ const AddBlog = () => {
       let response;
       
       if (isEditMode) {
-        response = await updateBlog(id, formData, pdfFile);
+        response = await updateBlog(id, formData, pdfFile, imageFile);
       } else {
-        response = await createBlog(formData, pdfFile);
+        response = await createBlog(formData, pdfFile, imageFile);
       }
       
       if (response.success) {
@@ -282,6 +319,62 @@ const AddBlog = () => {
             </div>
           </div>
 
+          {/* Image Upload */}
+          <div className="col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Blog Image
+            </label>
+            <div className="mt-1">
+              {imagePreview ? (
+                <div className="flex items-start space-x-4">
+                  <div className="relative">
+                    <img
+                      src={imagePreview}
+                      alt="Blog preview"
+                      className="w-32 h-32 object-cover rounded-lg border border-gray-300"
+                    />
+                    <button
+                      type="button"
+                      onClick={removeImage}
+                      className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-600 mb-2">
+                      {imageFile ? imageFile.name : 'Current image'}
+                    </p>
+                    <label className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer">
+                      <Image size={16} className="mr-2" />
+                      Change Image
+                      <input
+                        type="file"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                      />
+                    </label>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <label className="flex flex-col items-center px-4 py-2 bg-white text-blue-600 rounded-lg border border-blue-600 cursor-pointer hover:bg-blue-50">
+                    <Image size={18} className="mb-1" />
+                    <span className="text-sm">Upload Image</span>
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                  </label>
+                  <span className="ml-3 text-sm text-gray-500">Max size: 2MB</span>
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* PDF Upload */}
           <div className="col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -380,4 +473,4 @@ const AddBlog = () => {
   );
 };
 
-export default AddBlog;
+export default AddBlogAdminPage;

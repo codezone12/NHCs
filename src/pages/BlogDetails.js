@@ -173,6 +173,17 @@ const BlogDetails = () => {
             )}
           </div>
           
+          {/* Blog Image Display */}
+          {blog.imageUrl && (
+            <div className="mb-8" data-aos="fade-up" data-aos-delay="200">
+              <img 
+                src={blog.imageUrl} 
+                alt={blog.title}
+                className="w-full h-64 md:h-80 lg:h-96 object-cover rounded-lg shadow-md"
+              />
+            </div>
+          )}
+          
           {/* Blog Content */}
           <div 
             className="bg-white p-6 md:p-10 rounded-lg shadow-md prose prose-lg max-w-none"
